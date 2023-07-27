@@ -14,23 +14,31 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/index', pathMatch: 'full' },
-  { path: 'index', component: IndexComponent},
-  { path: 'class', component: ClassComponent},
-  { path: 'addmission', component: AddmissionComponent},
-  { path: 'allcourse', component: AllcourseComponent},
-  { path: 'online', component: OnlineComponent},
-  { path: 'coach', component: CoachComponent},
-  { path: 'career', component: CareerComponent},
-  { path: 'privacy', component: PrivacyComponent},
-  { path: 'terms', component: TermsComponent},
-  { path: 'faq', component: FaqComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'register', component: RegisterComponent},
+    { path: '', redirectTo: '/index', pathMatch: 'full' },
+    { path: 'index', component: IndexComponent },
+    { path: 'class', component: ClassComponent },
+    { path: 'addmission', component: AddmissionComponent },
+    { path: 'allcourse', component: AllcourseComponent },
+    { path: 'online', component: OnlineComponent },
+    { path: 'coach', component: CoachComponent },
+    { path: 'career', component: CareerComponent },
+    { path: 'privacy', component: PrivacyComponent },
+    { path: 'terms', component: TermsComponent },
+    { path: 'faq', component: FaqComponent },
+    {
+        path: 'login', component: LoginComponent,
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+            }
+        ]
+    },
+    { path: 'register', component: RegisterComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

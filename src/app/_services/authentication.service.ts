@@ -34,7 +34,7 @@ export class AuthenticationService {
 
     login(params: any) {
         const obj = {
-            email: params.email,
+            username: params.username,
             password: params.password
         };
 
@@ -43,7 +43,7 @@ export class AuthenticationService {
                 let response = data.data;
                 const user = {
                     id: response.id,
-                    email: response.email,
+                    username: response.username,
                     contact_no: response.contact_no,
                     employee_code: response.employee_code,
                     full_name: response.name,

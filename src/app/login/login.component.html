@@ -1,19 +1,28 @@
 <div class="container">
     <div class="row vh-100 d-flex align-items-center justify-content-center">
       <div class="col-md-4">
-        <form class="p-4">
-          <h6 class="">মোবাইল নাম্বার/ইমেইল দিয়ে এগিয়ে যান</h6>
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="" placeholder="Enter your name">
-            <label for="name">মোবাইল নাম্বার/ইমেইল</label>
+        <form class="p-4" [formGroup]="LoginForm">
+          <h6 class="">Username</h6>
+          <div class="input-group">
+            <input type="text" class="form-control" formControlName="username"
+              [ngClass]="{ 'is-invalid': submitted && f['username'].errors }" placeholder="Username" autocomplete="off">
           </div>
-          
+          <div class="input-group mb-3">
+            <div *ngIf="submitted && f['username'].errors" class="error-text">
+              <span *ngIf="f['username'].errors?.['required']" class="text-danger"> Username is required</span>
+            </div>
+          </div>
           <h6 class="">Password</h6>
-          <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="" placeholder="Enter your name">
-            <label for="name">Password</label>
+          <div class="input-group">
+            <input type="text" class="form-control" formControlName="password"
+              [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" placeholder="Password" autocomplete="off">
           </div>
-          <button type="submit" class="btn btn-secondary form-control">Submit</button>
+          <div class="input-group mb-3">
+            <div *ngIf="submitted && f['password'].errors" class="error-text">
+              <span *ngIf="f['password'].errors?.['required']" class="text-danger"> Password is required</span>
+            </div>
+          </div>
+          <button type="submit" (click)="onLoginSubmit()" class="btn btn-secondary form-control">Submit</button>
         </form>
       </div>
       <div class="col-md-6 d-none d-md-block">

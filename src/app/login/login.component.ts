@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.LoginForm = this.formBuilder.group({
-        email: [null, [Validators.required, Validators.email]],
+        username: [null, [Validators.required]],
         password: [null, [Validators.required]],
     });
 
@@ -48,16 +48,28 @@ export class LoginComponent implements OnInit {
     if (this.LoginForm.invalid) {
         return;
     }
-    this.blockUI.start('Loading...');
+    //this.blockUI.start('Loading...');
+
+    console.log(this.LoginForm.value)
 
     this.authService.login(this.LoginForm.value).subscribe(
         data => {
+            console.log(data);
+
+            if (data.status === 400) {
+                this.toastr.error('Unauthorized request found', 'Error!', { timeOut: 3000 });
+            } else if (data.status === 401) {
+                this.toastr.error('Invalid Username Or Password', 'Error!', { timeOut: 3000 });
+            } else if (data.status === 409) {
+                this.toastr.error('Invalid Username Or Password', 'Error!', { timeOut: 3000 });
+            }
+
             if(data.status){
-                this.toastr.success('Logging Successfully', 'Success!', { timeOut: 2000 });
-                this.router.navigate(['/login']).then(() => {
-                    this.blockUI.stop();
-                    window.location.reload();
-                });
+                //this.toastr.success('Logging Successfully', 'Success!', { timeOut: 2000 });
+                // this.router.navigate(['/login']).then(() => {
+                //     this.blockUI.stop();
+                //     window.location.reload();
+                // });
             }else{
                 this.toastr.error(data.message, 'Error!', { timeOut: 3000 });
                 this.blockUI.stop();

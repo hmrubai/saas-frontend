@@ -34,6 +34,24 @@ const routes: Routes = [
             }
         ]
     },
+    {
+        path: 'course-details/:course_id', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./course-details/course-details.module').then(m => m.CourseDetailsModule)
+            }
+        ]
+    },
+    {
+        path: 'course-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./course-list/course-list.module').then(m => m.CourseListModule)
+            }
+        ]
+    },
     { path: 'register', component: RegisterComponent },
 ];
 

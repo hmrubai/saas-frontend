@@ -8,66 +8,133 @@
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-around" id="navbarNav">
-          <ul class="navbar-nav flex-grow-1 bd-highlight justify-content-center">
-            <li class="nav-item active">
-              <a class="nav-link" routerLink="/index">Home</a>
-            </li>
-            <li class="nav-item dropdown" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" [attr.aria-expanded]="isDropdownOpen ? 'true' : 'false'">
-                Class Wise
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown" [ngClass]="{'show': isDropdownOpen}" id="dropdownMenu">
-                <li><a class="dropdown-item" routerLink="/class">SSC - Science</a></li>
-                <li><a class="dropdown-item" href="#">SSC - Humanities</a></li>
-                <li><a class="dropdown-item" href="#">HSC - Science</a></li>
-                <li><a class="dropdown-item" href="#">HSC - Humanities</a></li>
-                <li><a class="dropdown-item" href="#">A Level</a></li>
-                <li><a class="dropdown-item" href="#">O Level</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Life Coach</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link"  routerLink="/addmission">ভর্তি পরীক্ষা</a>
-            </li>
-            <li class="nav-item dropdown" (mouseenter)="showDropdown2()" (mouseleave)="hideDropdown2()">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" [attr.aria-expanded]="isDropdown2Open ? 'true' : 'false'">অনলাইন ব্যাচ</a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown2" [ngClass]="{'show': isDropdown2Open}" id="dropdownMenu2">
-                <li><a class="dropdown-item" routerLink="/allcourse">All Course</a></li>
+        <div class="collapse navbar-collapse justify-content-around" *ngIf="is_menu_loaded" id="navbarNav">
 
-                <li><a class="dropdown-item" routerLink="/online">HSC</a></li>
-                <li><a class="dropdown-item" href="#">A-Unit (DU)</a></li>
-                <li><a class="dropdown-item" href="#">B-Unit (DU)</a></li>
-                <li><a class="dropdown-item" href="#">Medical Admission</a></li>
-                <li><a class="dropdown-item" href="#">Engineering</a></li>
-                <li><a class="dropdown-item" href="#">IELTS</a></li>
-                <li><a class="dropdown-item" href="#">Job Preparation</a></li>
-              </ul>
-            </li>
+
+          <ul class="navbar-nav flex-grow-1 bd-highlight justify-content-center"  *ngFor="let item of menuList; let i = index;">
+                <div *ngIf="item.sub_menu.length > 0 && i==0;">
+                    <li class="nav-item dropdown" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()">
+                        <a class="nav-link dropdown-toggle" (click)="GotoPage('menu', item)" role="button" [attr.aria-expanded]="isDropdownOpen ? 'true' : 'false'">
+                            {{ item.name }}
+                        </a>
+                        <ul class="dropdown-menu" [ngClass]="{'show': isDropdownOpen}">
+                            <li *ngFor="let s_menu of item.sub_menu; let j = index;"><a class="dropdown-item" (click)="gotoSubPage('sub_menu', item, s_menu)">{{ s_menu.sub_menu }}</a></li>
+                        </ul>
+                    </li>
+                </div>
+                <div *ngIf="item.sub_menu.length > 0 && i==1;">
+                    <li class="nav-item dropdown" (mouseenter)="showDropdown2()" (mouseleave)="hideDropdown2()">
+                        <a class="nav-link dropdown-toggle" (click)="GotoPage('menu', item)" role="button" [attr.aria-expanded]="isDropdown2Open ? 'true' : 'false'">
+                            {{ item.name }}
+                        </a>
+                        <ul class="dropdown-menu" [ngClass]="{'show': isDropdown2Open}">
+                            <li *ngFor="let s_menu of item.sub_menu; let j = index;"><a class="dropdown-item" (click)="gotoSubPage('sub_menu', item, s_menu)">{{ s_menu.sub_menu }}</a></li>
+                        </ul>
+                    </li>
+                </div>
+                <div *ngIf="item.sub_menu.length > 0 && i==2;">
+                    <li class="nav-item dropdown" (mouseenter)="showDropdown3()" (mouseleave)="hideDropdown3()">
+                        <a class="nav-link dropdown-toggle" (click)="GotoPage('menu', item)" role="button" [attr.aria-expanded]="isDropdown3Open ? 'true' : 'false'">
+                            {{ item.name }}
+                        </a>
+                        <ul class="dropdown-menu" [ngClass]="{'show': isDropdown3Open}">
+                            <li *ngFor="let s_menu of item.sub_menu; let j = index;"><a class="dropdown-item" (click)="gotoSubPage('sub_menu', item, s_menu)">{{ s_menu.sub_menu }}</a></li>
+                        </ul>
+                    </li>
+                </div>
+                <div *ngIf="item.sub_menu.length > 0 && i==3;">
+                    <li class="nav-item dropdown" (mouseenter)="showDropdown4()" (mouseleave)="hideDropdown4()">
+                        <a class="nav-link dropdown-toggle" (click)="GotoPage('menu', item)" role="button" [attr.aria-expanded]="isDropdown4Open ? 'true' : 'false'">
+                            {{ item.name }}z
+                        </a>
+                        <ul class="dropdown-menu" [ngClass]="{'show': isDropdown3Open}">
+                            <li *ngFor="let s_menu of item.sub_menu; let j = index;"><a class="dropdown-item" (click)="gotoSubPage('sub_menu', item, s_menu)">{{ s_menu.sub_menu }}</a></li>
+                        </ul>
+                    </li>
+                </div>
+                <div *ngIf="item.sub_menu.length > 0 && i==4;">
+                    <li class="nav-item dropdown" (mouseenter)="showDropdown5()" (mouseleave)="hideDropdown5()">
+                        <a class="nav-link dropdown-toggle" (click)="GotoPage('menu', item)" role="button" [attr.aria-expanded]="isDropdown5Open ? 'true' : 'false'">
+                            {{ item.name }}
+                        </a>
+                        <ul class="dropdown-menu" [ngClass]="{'show': isDropdown5Open}">
+                            <li *ngFor="let s_menu of item.sub_menu; let j = index;"><a class="dropdown-item" (click)="gotoSubPage('sub_menu', item, s_menu)">{{ s_menu.sub_menu }}</a></li>
+                        </ul>
+                    </li>
+                </div>
+                <div *ngIf="item.sub_menu.length > 0 && i==5;">
+                    <li class="nav-item dropdown" (mouseenter)="showDropdown6()" (mouseleave)="hideDropdown6()">
+                        <a class="nav-link dropdown-toggle" (click)="GotoPage('menu', item)" role="button" [attr.aria-expanded]="isDropdown6Open ? 'true' : 'false'">
+                            {{ item.name }}
+                        </a>
+                        <ul class="dropdown-menu" [ngClass]="{'show': isDropdown6Open}">
+                            <li *ngFor="let s_menu of item.sub_menu; let j = index;"><a class="dropdown-item" (click)="gotoSubPage('sub_menu', item, s_menu)">{{ s_menu.sub_menu }}</a></li>
+                        </ul>
+                    </li>
+                </div>
+                
+                <li class="nav-item" *ngIf="item.sub_menu.length <= 0">
+                    <a class="nav-link" routerLink="/index">{{ item.name }}</a>
+                </li>
           </ul>
+          <!--<ul class="navbar-nav flex-grow-1 bd-highlight justify-content-center">
+                <li class="nav-item active">
+                    <a class="nav-link" routerLink="/index">Home</a>
+                </li>
+                <li class="nav-item dropdown" (mouseenter)="showDropdown()" (mouseleave)="hideDropdown()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" [attr.aria-expanded]="isDropdownOpen ? 'true' : 'false'">
+                        Class Wise
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" [ngClass]="{'show': isDropdownOpen}" id="dropdownMenu">
+                        <li><a class="dropdown-item" routerLink="/class">SSC - Science</a></li>
+                        <li><a class="dropdown-item" href="#">SSC - Humanities</a></li>
+                        <li><a class="dropdown-item" href="#">HSC - Science</a></li>
+                        <li><a class="dropdown-item" href="#">HSC - Humanities</a></li>
+                        <li><a class="dropdown-item" href="#">A Level</a></li>
+                        <li><a class="dropdown-item" href="#">O Level</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Life Coach</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  routerLink="/addmission">ভর্তি পরীক্ষা</a>
+                </li>
+                <li class="nav-item dropdown" (mouseenter)="showDropdown2()" (mouseleave)="hideDropdown2()">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" [attr.aria-expanded]="isDropdown2Open ? 'true' : 'false'">অনলাইন ব্যাচ</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown2" [ngClass]="{'show': isDropdown2Open}" id="dropdownMenu2">
+                        <li><a class="dropdown-item" routerLink="/allcourse">All Course</a></li>
+                        <li><a class="dropdown-item" routerLink="/online">HSC</a></li>
+                        <li><a class="dropdown-item" href="#">A-Unit (DU)</a></li>
+                        <li><a class="dropdown-item" href="#">B-Unit (DU)</a></li>
+                        <li><a class="dropdown-item" href="#">Medical Admission</a></li>
+                        <li><a class="dropdown-item" href="#">Engineering</a></li>
+                        <li><a class="dropdown-item" href="#">IELTS</a></li>
+                        <li><a class="dropdown-item" href="#">Job Preparation</a></li>
+                    </ul>
+                </li>
+          </ul>-->
           <div class="d-flex">
             <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link text-primary px-4" href="#"><i class="fa-solid fa-phone"></i> 1234</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active text-white px-3 py-1 text-center btn btn-primary btn-sm" routerLink="/login">Login</a>
-              </li>
-              <li class="nav-item px-3">
-                <a class="nav-link active text-white py-1  text-center btn btn-primary  btn-sm" routerLink="/register">Register</a>
-              </li>
-              <li class="nav-item dropdown" (mouseenter)="showDropdown3()" (mouseleave)="hideDropdown3()">
-                <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdown3" role="button" [attr.aria-expanded]="isDropdown3Open ? 'true' : 'false'">
-                  <i class="fa-solid fa-user"></i>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" [ngClass]="{'show': isDropdown3Open}" id="dropdownMenu3">
-                  <li><a class="dropdown-item" href="#">Student</a></li>
-                  <li><a class="dropdown-item" href="#">Mentors</a></li>
-                  <li><a class="dropdown-item" href="#">Logout</a></li>
-                </ul>
-              </li>
+                <li class="nav-item">
+                    <a class="nav-link text-primary px-4" href="#"><i class="fa-solid fa-phone"></i> 1234</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active text-white px-3 py-1 text-center btn btn-primary btn-sm" routerLink="/login">Login</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link active text-white py-1  text-center btn btn-primary  btn-sm" routerLink="/register">Register</a>
+                </li>
+                <li class="nav-item dropdown" (mouseenter)="showDropdownLogin()" (mouseleave)="hideDropdownLogin()">
+                    <a class="nav-link dropdown-toggle text-primary" href="#" id="navbarDropdownLogin" role="button" [attr.aria-expanded]="isDropdownLoginOpen ? 'true' : 'false'">
+                        <i class="fa-solid fa-user"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" [ngClass]="{'show': isDropdownLoginOpen}" id="dropdownMenu3">
+                        <li><a class="dropdown-item" href="#">Student</a></li>
+                        <li><a class="dropdown-item" href="#">Mentors</a></li>
+                        <li><a class="dropdown-item" href="#">Logout</a></li>
+                    </ul>
+                </li>
             </ul>
           </div>
         </div>

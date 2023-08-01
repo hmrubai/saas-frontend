@@ -52,6 +52,24 @@ const routes: Routes = [
             }
         ]
     },
+    {
+        path: 'content-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./content-list/content-list.module').then(m => m.ContentListModule)
+            }
+        ]
+    },
+    {
+        path: 'content-details/:content_id', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./content-details/content-details.module').then(m => m.ContentDetailsModule)
+            }
+        ]
+    },
     { path: 'register', component: RegisterComponent },
 ];
 

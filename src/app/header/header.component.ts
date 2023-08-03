@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../_services/authentication.service';
+import { environment } from '../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CommonService } from '../_services/common.service';
+import { Cookie } from 'ng2-cookies';
 
 @Component({
     selector: 'app-header',
@@ -11,9 +13,14 @@ import { CommonService } from '../_services/common.service';
 })
 export class HeaderComponent implements OnInit {
 
-
+    is_authenticated = false;
     menuList: Array<any> = [];
     is_menu_loaded = false;
+
+    public user_role = null;
+    public currentUser: any = {};
+
+    profile_image = 'assets/img/avatars/profile.png'
 
     constructor(
         private _service: CommonService,
@@ -21,7 +28,18 @@ export class HeaderComponent implements OnInit {
         private toastr: ToastrService,
         private route: ActivatedRoute,
         private router: Router
-    ) { }
+    ) { 
+        if (this.authService.isAuthenticated()) {
+            this.is_authenticated = true;
+
+            this.currentUser = this.authService.currentUserDetails.value;
+            this.user_role = this.currentUser.user_type;
+
+            if (this.currentUser.image) {
+                this.profile_image = environment.imageURL + this.currentUser.image
+            }
+        }
+    }
 
     ngOnInit(): void {
         this.getMenuList();
@@ -63,6 +81,16 @@ export class HeaderComponent implements OnInit {
         console.log(type)
         console.log(item)
         console.log(sub_item)
+    }
+
+    userLogout() {
+        this.authService.logout(window.location.hostname);
+        Cookie.delete('.BBSAASLMS.Cookie', '/', window.location.hostname);
+        this.authService.currentUserDetails.next(null);
+        this.toastr.success('Logout Successfully', 'Success!', { timeOut: 2000 });
+        this.router.navigate(['/index']).then(() => {
+            window.location.reload();
+        });
     }
 
     isDropdownOpen = false;

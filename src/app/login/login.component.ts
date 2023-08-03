@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
     LoginForm: FormGroup;
     submitted = false;
     returnUrl: string;
+    is_authenticated = false;
 
     currentUser: any = null;
     
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
 
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     if (this.authService.isAuthenticated()) {
-        this.router.navigate([this.returnUrl ? this.returnUrl : '/dashboard']);
+        this.router.navigate([this.returnUrl ? this.returnUrl : '/index']);
     }
   }
 
@@ -48,7 +49,7 @@ export class LoginComponent implements OnInit {
     if (this.LoginForm.invalid) {
         return;
     }
-    //this.blockUI.start('Loading...');
+    this.blockUI.start('Loading...');
 
     console.log(this.LoginForm.value)
 
@@ -58,18 +59,24 @@ export class LoginComponent implements OnInit {
 
             if (data.status === 400) {
                 this.toastr.error('Unauthorized request found', 'Error!', { timeOut: 3000 });
+                this.blockUI.stop();
+                return;
             } else if (data.status === 401) {
                 this.toastr.error('Invalid Username Or Password', 'Error!', { timeOut: 3000 });
+                this.blockUI.stop();
+                return;
             } else if (data.status === 409) {
                 this.toastr.error('Invalid Username Or Password', 'Error!', { timeOut: 3000 });
+                this.blockUI.stop();
+                return;
             }
 
             if(data.status){
-                //this.toastr.success('Logging Successfully', 'Success!', { timeOut: 2000 });
-                // this.router.navigate(['/login']).then(() => {
-                //     this.blockUI.stop();
-                //     window.location.reload();
-                // });
+                this.toastr.success('Logging Successfully', 'Success!', { timeOut: 2000 });
+                this.router.navigate(['/index']).then(() => {
+                    this.blockUI.stop();
+                    window.location.reload();
+                });
             }else{
                 this.toastr.error(data.message, 'Error!', { timeOut: 3000 });
                 this.blockUI.stop();

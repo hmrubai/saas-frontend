@@ -70,6 +70,15 @@ const routes: Routes = [
             }
         ]
     },
+    {
+        path: 'mentor-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./mentor-list/mentor-list.module').then(m => m.MentorListModule)
+            }
+        ]
+    },
     { path: 'register', component: RegisterComponent },
 ];
 

@@ -132,9 +132,12 @@
                         <i class="fa-solid fa-user"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown" [ngClass]="{'show': isDropdownLoginOpen}" id="dropdownMenu3">
-                        <li><a class="dropdown-item" href="#" *ngIf="user_role == 'Student'">Profile</a></li>
-                        <li><a class="dropdown-item" href="#" *ngIf="user_role == 'Expert'">Profile</a></li>
-                        <li><a class="dropdown-item" (click)="userLogout()">Logout</a></li>
+                        <li><a class="dropdown-item" href="#" *ngIf="user_role == 'Student'"><i class="fa-solid fa-user user-dd-icon"></i> Profile</a></li>
+                        <li><a class="dropdown-item" routerLink="/student-dashboard" *ngIf="user_role == 'Student'"><i class="fa-solid fa-house-laptop user-dd-icon"></i> Dashboard</a></li>
+                        <li><a class="dropdown-item" href="#" *ngIf="user_role == 'Expert'"><i class="fa-solid fa-user user-dd-icon"></i> Profile</a></li>
+                        <li><a class="dropdown-item" routerLink="/student-dashboard" href="#" *ngIf="user_role == 'Expert'"><i class="fa-solid fa-house-laptop user-dd-icon"></i> Dashboard</a></li>
+                        
+                        <li><a class="dropdown-item" (click)="userLogout()"><i class="fa-solid fa-power-off user-dd-icon"></i> Logout</a></li>
                     </ul>
                 </li>
             </ul>

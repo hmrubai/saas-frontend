@@ -79,6 +79,15 @@ const routes: Routes = [
             }
         ]
     },
+    {
+        path: 'student-dashboard', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./student-dashboard/student-dashboard.module').then(m => m.StudentDashboardModule)
+            }
+        ]
+    },
     { path: 'register', component: RegisterComponent },
 ];
 

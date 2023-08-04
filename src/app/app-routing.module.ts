@@ -88,6 +88,15 @@ const routes: Routes = [
             }
         ]
     },
+    {
+        path: 'mentor-dashboard', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./mentor-dashboard/mentor-dashboard.module').then(m => m.MentorDashboardModule)
+            }
+        ]
+    },
     { path: 'register', component: RegisterComponent },
 ];
 

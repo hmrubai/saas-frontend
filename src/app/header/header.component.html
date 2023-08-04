@@ -119,7 +119,7 @@
                     <a class="nav-link" [routerLink]="['/mentor-list']">Expert</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-primary px-4" href="#"><i class="fa-solid fa-phone"></i> 1234</a>
+                    <a class="nav-link text-primary px-4" href="#"><i class="fa-solid fa-phone"></i> 16023</a>
                 </li>
                 <li class="nav-item" *ngIf="!is_authenticated">
                     <a class="nav-link active text-white px-3 py-1 text-center btn btn-primary btn-sm" routerLink="/login">Login</a>
@@ -135,7 +135,7 @@
                         <li><a class="dropdown-item" href="#" *ngIf="user_role == 'Student'"><i class="fa-solid fa-user user-dd-icon"></i> Profile</a></li>
                         <li><a class="dropdown-item" routerLink="/student-dashboard" *ngIf="user_role == 'Student'"><i class="fa-solid fa-house-laptop user-dd-icon"></i> Dashboard</a></li>
                         <li><a class="dropdown-item" href="#" *ngIf="user_role == 'Expert'"><i class="fa-solid fa-user user-dd-icon"></i> Profile</a></li>
-                        <li><a class="dropdown-item" routerLink="/student-dashboard" href="#" *ngIf="user_role == 'Expert'"><i class="fa-solid fa-house-laptop user-dd-icon"></i> Dashboard</a></li>
+                        <li><a class="dropdown-item" routerLink="/mentor-dashboard" href="#" *ngIf="user_role == 'Expert'"><i class="fa-solid fa-house-laptop user-dd-icon"></i> Dashboard</a></li>
                         
                         <li><a class="dropdown-item" (click)="userLogout()"><i class="fa-solid fa-power-off user-dd-icon"></i> Logout</a></li>
                     </ul>

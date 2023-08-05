@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
 import { environment } from '../../environments/environment';
-import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from '../_services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
-    selector: 'app-course-details',
-    templateUrl: './course-details.component.html',
-    styleUrls: ['./course-details.component.scss']
+    selector: 'app-mentor-schedule-list',
+    templateUrl: './mentor-schedule-list.component.html',
+    styleUrls: ['./mentor-schedule-list.component.scss']
 })
-export class CourseDetailsComponent implements OnInit {
+export class MentorScheduleListComponent implements OnInit {
 
     @BlockUI() blockUI: NgBlockUI;
     is_authenticated = false;
-    courseList: Array<any> = [];
+    classList: Array<any> = [];
     is_loaded = false;
     user_id: any = '';
 
@@ -24,7 +24,7 @@ export class CourseDetailsComponent implements OnInit {
     public user_role = null;
     public currentUser: any = {};
 
-    course_id;
+    mapping_id;
     constructor(
         private _service: CommonService,
         private authService: AuthenticationService,
@@ -38,36 +38,19 @@ export class CourseDetailsComponent implements OnInit {
             this.user_role = this.currentUser.user_type;
             this.user_id = this.currentUser.id;
         }
-        this.course_id = this.route.snapshot.paramMap.get("course_id");
+        this.mapping_id = this.route.snapshot.paramMap.get("mapping_id");
+        // console.log(this.course_id)
     }
 
     ngOnInit(): void {
-        this.getCourseDetails();
+        this.getCourseDetails()
     }
 
     getCourseDetails() {
         this.blockUI.start('Loading...');
-        this.courseDetails = {};
-        this.user_id = this.user_id ? this.user_id : 0;
-        this._service.get('website/course-details-by-user/' + this.user_id + '/' + this.course_id).subscribe(res => {
-            this.courseDetails = res.data;
+        this._service.get('website/mentor-schedule-list/' + this.mapping_id).subscribe(res => {
+            this.classList = res.data;
             this.is_loaded = true;
-            this.blockUI.stop();
-        }, err => {
-            this.blockUI.stop();
-        });
-    }
-
-    PayNow(){
-        console.log("Pay")
-        this.blockUI.start('Loading...');
-        let param = {
-            course_id: this.course_id
-        };
-
-        this._service.post('website/purchase-course', param).subscribe(res => {
-            this.toastr.success(res.data.message, 'Success!', { timeOut: 2000 });
-            this.getCourseDetails();
             this.blockUI.stop();
         }, err => {
             this.blockUI.stop();

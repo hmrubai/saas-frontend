@@ -31,6 +31,11 @@ import { BlockUIModule } from 'ng-block-ui';
 import { CourseListComponent } from './course-list/course-list.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
 import { ContentListComponent } from './content-list/content-list.component';
+import { MentorDashboardComponent } from './mentor-dashboard/mentor-dashboard.component';
+import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
+import { MentorStudentListComponent } from './mentor-student-list/mentor-student-list.component';
+import { MentorScheduleListComponent } from './mentor-schedule-list/mentor-schedule-list.component';
+import { MentorCompletedClassListComponent } from './mentor-completed-class-list/mentor-completed-class-list.component';
 
 import { TruncatePipe } from './_helpers/truncate-pipe';
 
@@ -54,7 +59,12 @@ import { TruncatePipe } from './_helpers/truncate-pipe';
     RegisterComponent,
     CourseListComponent,
     ContentListComponent,
-    CourseDetailsComponent
+    CourseDetailsComponent,
+    MentorDashboardComponent,
+    StudentDashboardComponent,
+    MentorStudentListComponent,
+    MentorScheduleListComponent,
+    MentorCompletedClassListComponent
   ],
   imports: [
     CommonModule,

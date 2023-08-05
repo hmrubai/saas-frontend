@@ -12,12 +12,12 @@
                     <br/>
                     <br/>
                 </a>
-                <a [routerLink]="['/mentor-dashboard']" class="list-group-item list-group-item-action active">
+                <a [routerLink]="['/mentor-dashboard']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-receipt"></i> My Course List</p>
                     </div>
                 </a>
-                <a [routerLink]="['/mentor-student-list']" class="list-group-item list-group-item-action">
+                <a [routerLink]="['/mentor-student-list']" class="list-group-item list-group-item-action active">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-list"></i> Student List</p>
                     </div>
@@ -27,7 +27,7 @@
                         <p class="mb-1"><i class="fa-solid fa-list"></i> Classes</p>
                     </div>
                 </a>
-                <a [routerLink]="['/mentor-completed-class-list']"  class="list-group-item list-group-item-action">
+                <a [routerLink]="['/mentor-completed-class-list']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-file-invoice-dollar"></i> Attended Class List</p>
                     </div>
@@ -37,23 +37,28 @@
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
                 <div class="alert alert-success" role="alert">
-                    <i class="fa-solid fa-list"></i> My Course List
+                    <i class="fa-solid fa-users"></i> My Connected Student List
                 </div>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Course List</th>
-                            <th scope="col">Type</th>
+                            <th scope="col">Student</th>
+                            <th scope="col">Contact</th>
+                            <th scope="col">Course</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr  *ngFor="let item of courseList; let i = index;">
+                        <tr  *ngFor="let item of studentList; let i = index;">
                             <th scope="row">{{ i + 1 }}</th>
-                            <td>{{ item.title }}</td>
-                            <td>{{ item.category_name }}</td>
-                            <td><button class="btn btn-light"><i class="fa-solid fa-eye"></i> Details</button></td>
+                            <td>{{ item.student_name }}</td>
+                            <td>{{ item.student_contact_no }}</td>
+                            <td>{{ item.course_title }}</td>
+                            <td>
+                                <button class="btn btn-light mx-2"><i class="fa-solid fa-calendar-day"></i> Schedule Setup</button>
+                                <button class="btn btn-light" [routerLink]="['/mentor-schedule-list', item.mapping_id]"><i class="fa-solid fa-eye"></i> See Schedule</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

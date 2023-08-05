@@ -99,6 +99,33 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'mentor-student-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./mentor-student-list/mentor-student-list.module').then(m => m.MentorStudentListModule)
+            }
+        ]
+    },
+    {
+        path: 'mentor-schedule-list/:mapping_id', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./mentor-schedule-list/mentor-schedule-list.module').then(m => m.MentorScheduleListModule)
+            }
+        ]
+    },
+    {
+        path: 'mentor-completed-class-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./mentor-completed-class-list/mentor-completed-class-list.module').then(m => m.MentorCompletedClassListModule)
+            }
+        ]
+    },
+    {
         path: 'student-dashboard', 
         children: [
             {

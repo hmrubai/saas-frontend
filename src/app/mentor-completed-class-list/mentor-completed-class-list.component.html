@@ -12,7 +12,7 @@
                     <br/>
                     <br/>
                 </a>
-                <a [routerLink]="['/mentor-dashboard']" class="list-group-item list-group-item-action active">
+                <a [routerLink]="['/mentor-dashboard']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-receipt"></i> My Course List</p>
                     </div>
@@ -27,7 +27,7 @@
                         <p class="mb-1"><i class="fa-solid fa-list"></i> Classes</p>
                     </div>
                 </a>
-                <a [routerLink]="['/mentor-completed-class-list']"  class="list-group-item list-group-item-action">
+                <a [routerLink]="['/mentor-completed-class-list']" class="list-group-item list-group-item-action active">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-file-invoice-dollar"></i> Attended Class List</p>
                     </div>
@@ -36,24 +36,36 @@
         </div>
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
-                <div class="alert alert-success" role="alert">
-                    <i class="fa-solid fa-list"></i> My Course List
+                <div class="alert alert-info" role="alert">
+                    <i class="fa-solid fa-calendar-day"></i> My Completed Class List
                 </div>
-                <table class="table table-bordered">
+                <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Course List</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Student</th>
+                            <th scope="col">Course</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Start</th>
+                            <th scope="col">End</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr  *ngFor="let item of courseList; let i = index;">
+                        <tr  *ngFor="let item of classList; let i = index;">
                             <th scope="row">{{ i + 1 }}</th>
-                            <td>{{ item.title }}</td>
-                            <td>{{ item.category_name }}</td>
-                            <td><button class="btn btn-light"><i class="fa-solid fa-eye"></i> Details</button></td>
+                            <td>
+                                {{ item.student_name }} ({{ item.student_contact_no }})
+                            </td>
+                            <td>{{ item.course_title }}</td>
+                            <td>
+                                {{ item.schedule_datetime | date :'MMM d, y, h:mm a' }}
+                            </td>
+                            <td>
+                                {{ item.start_time | date :'MMM d, y, h:mm a' }}
+                            </td>
+                            <td>
+                                {{ item.end_time | date :'MMM d, y, h:mm a' }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>

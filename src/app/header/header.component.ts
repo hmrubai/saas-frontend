@@ -45,10 +45,9 @@ export class HeaderComponent implements OnInit {
         this.getMenuList();
     }
 
-
     getMenuList() {
         this._service.get('website/menu-list').subscribe(res => {
-            console.log(res);
+            //console.log(res);
             this.menuList = res.data;
             this.is_menu_loaded = true;
             //this.blockUI.stop();
@@ -59,28 +58,34 @@ export class HeaderComponent implements OnInit {
     }
 
     GotoPage(type: any, item: any){
-        console.log(type)
-        console.log(item)
+        //console.log(type)
+        //console.log(item)
         if(item.is_course){
-            this.router.navigate(['/course-list']);
+            this.router.onSameUrlNavigation = 'reload';
+            this.router.navigate(['/course-list/', item.id]);
         }
         if(item.is_content){
-            this.router.navigate(['/content-list']);
+            this.router.onSameUrlNavigation = 'reload';
+            this.router.navigate(['/content-list/', item.id]);
         }
     }
 
     gotoSubPage(type:any, item: any, sub_item:any){
 
         if(item.is_course){
-            this.router.navigate(['/course-details/', sub_item.sub_menu_id ]);
+            this.router.navigate(['/course-details/', sub_item.sub_menu_id]).then(() => {
+                window.location.reload();
+            });
+            // this.router.navigate(['/course-details/', sub_item.sub_menu_id ]);
         }
         if(item.is_content){
+            this.router.onSameUrlNavigation = 'reload';
             this.router.navigate(['/content-details/', sub_item.sub_menu_id ]);
         }
 
-        console.log(type)
-        console.log(item)
-        console.log(sub_item)
+        // console.log(type)
+        // console.log(item)
+        // console.log(sub_item)
     }
 
     userLogout() {

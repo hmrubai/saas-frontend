@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -18,15 +19,25 @@ import { TermsComponent } from './terms/terms.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { ErrorInterceptor } from './_helpers/error.interceptor';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { BlockUIModule } from 'ng-block-ui';
 
+import { CourseListComponent } from './course-list/course-list.component';
+import { CourseDetailsComponent } from './course-details/course-details.component';
+import { ContentListComponent } from './content-list/content-list.component';
+
+import { TruncatePipe } from './_helpers/truncate-pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
+    TruncatePipe,
     HeaderComponent,
     FooterComponent,
     IndexComponent,
@@ -40,9 +51,13 @@ import { BlockUIModule } from 'ng-block-ui';
     FaqComponent,
     TermsComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CourseListComponent,
+    ContentListComponent,
+    CourseDetailsComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -52,7 +67,13 @@ import { BlockUIModule } from 'ng-block-ui';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

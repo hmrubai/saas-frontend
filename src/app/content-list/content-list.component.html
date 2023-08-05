@@ -7,8 +7,7 @@
             <h3 class="text-white mt-2">CLASS</h3>
           </div>
           <div>
-            <p class="text-white">There are many more including recorded/live programs to add a different dimension to
-              education.</p>
+            <p class="text-white">There are many more including recorded/live programs to add a different dimension to education.</p>
           </div>
 
         </div>
@@ -21,209 +20,25 @@
     </div>
   </div>
   <div class="container">
-    <div class="row mt-5">
-      <h3>Free videos on topics</h3>
+    <div class="row  mt-5">
+      <div class="col-12 mt-3 mb-3">
+          <h5> <i class="fa-solid fa-users"></i> Content List</h5>
+      </div>
+
+      <div class="col-md-3 mb-3" *ngFor="let item of contentList; let i = index;">
+        <a [routerLink]="['/content-details', item.id]" class="text-decoration-none text-dark">
+          <div class="card p-2">
+            <span>
+                <img src="assets/images/icon_en1.jpg" class="rounded-circle" style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" />
+                <span class="ms-2"> {{ item.title }} </span>
+            </span>
+          </div>
+        </a>
+      </div>
+
+        <div class="col-12 mt-3 mb-3">
+          <br/>
+      </div>
+
     </div>
-
-    <div class="row mb-2">
-      <div class="col-md-3">
-        <a href="ff" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/b1.jpg" class="rounded-circle"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">Bangla
-                first paper</span></span>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="dd" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/b1.jpg" class="rounded-circle"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">Bangla
-                second paper</span></span>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/icon_en1.jpg" class="rounded-circle-5"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">English
-                first paper</span></span>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3 ">
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/icon_en1.jpg" class="rounded-5"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">English
-                second paper</span></span>
-          </div>
-        </a>
-      </div>
-    </div>
-
-
-    <div class="row mb-2">
-      <div class="col-md-3">
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/icon_hm.jpg" class="rounded-circle"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">Higher
-                math first</span></span>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/icon_hm.jpg" class="rounded-circle"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">Higher
-                math second</span></span>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/icon_physics.jpg" class="rounded-circle"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">Physics
-                One</span></span>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3 ">
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/icon_physics.jpg" class="icon_chemistry"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">Physics
-                Two</span></span>
-          </div>
-        </a>
-      </div>
-    </div>
-
-
-    <div class="row mb-2">
-      <div class="col-md-3 ">
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/icon_chemistry.jpg" class="rounded-circle"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">Chmistry
-                first</span></span>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/icon_chemistry.jpg" class="rounded-circle"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">Chemistry
-                two</span></span>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3 ">
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/icon_ict.jpg" class=""
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span
-                class="ms-2">ICT</span></span>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/icon_biology.jpg" class="rounded-circle"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">Biology
-                one</span></span>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <div class="row mb-5">
-      <div class="col-md-3">
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="card p-2">
-            <span><img src="assets/images/icon_biology.jpg" class="rounded-circle"
-                style="background-color: rgb(255, 255, 255);  height: 40px;width: 40px;" /><span class="ms-2">Biology
-                two</span></span>
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <!--<div class="row mt-4 mb-4">
-      <h4>Live courses</h4>
-      <div class="col-12 col-md-3">
-        <div class="card m-2 border-0 shadow-lg custom-card">
-          <img src="assets/images/3rd.JPG" class="card-img-top" alt="..." />
-          <div class="d-grid gap-2">
-            <button class="btn btn-info btn-custom" type="button"><a routerLink="/online">BCS Preli Live Course</a></button>
-          </div>
-          <div class="card-body">
-            <p class="card-text spilit">It is a long established fact that a reader will be distracted by...</p>
-          </div>
-          <div class="d-grid gap-2">
-            <button class="btn btn-secondary btn-btom btn-custom d-flex justify-content-between" type="button">
-              <div class="l-text-btn-btom">Free</div>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-3">
-        <div class="card m-2 border-0 shadow-lg custom-card">
-          <img src="assets/images/3rd.JPG" class="card-img-top" alt="..." />
-          <div class="d-grid gap-2">
-            <button class="btn btn-info btn-custom" type="button"><a routerLink="/online">BCS Preli Live Course</a></button>
-          </div>
-          <div class="card-body">
-            <p class="card-text spilit">It is a long established fact that a reader will be distracted by...</p>
-          </div>
-          <div class="d-grid gap-2">
-            <button class="btn btn-secondary btn-btom btn-custom d-flex justify-content-between" type="button">
-              <div class="l-text-btn-btom">Free</div>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-3">
-        <div class="card m-2 border-0 shadow-lg custom-card">
-          <img src="assets/images/3rd.JPG" class="card-img-top" alt="..." />
-          <div class="d-grid gap-2">
-            <button class="btn btn-info btn-custom" type="button"><a routerLink="/online">BCS Preli Live Course</a></button>
-          </div>
-          <div class="card-body">
-            <p class="card-text spilit">It is a long established fact that a reader will be distracted by...</p>
-          </div>
-          <div class="d-grid gap-2">
-            <button class="btn btn-secondary btn-btom btn-custom d-flex justify-content-between" type="button">
-              <div class="l-text-btn-btom">Free</div>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-md-3">
-        <div class="card m-2 border-0 shadow-lg custom-card">
-          <img src="assets/images/3rd.JPG" class="card-img-top" alt="..." />
-          <div class="d-grid gap-2">
-            <button class="btn btn-info btn-custom" type="button"><a routerLink="/online">BCS Preli Live Course</a></button>
-          </div>
-          <div class="card-body">
-            <p class="card-text spilit">It is a long established fact that a reader will be distracted by...</p>
-          </div>
-          <div class="d-grid gap-2">
-            <button class="btn btn-secondary btn-btom btn-custom d-flex justify-content-between" type="button">
-              <div class="l-text-btn-btom">Free</div>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>-->
   </div>

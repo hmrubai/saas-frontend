@@ -9,81 +9,30 @@
     </div>
   </div>
 
-<div class="container  content-container ">
-	<div class="row">
-		<div>
-			<h5>লাইভ কোর্সসমূহ</h5>
-		</div>
-		<div class="col-12 col-md-3">
-			<div class="card m-2 border-0 shadow-lg custom-card">
-        <img src="assets/images/3rd.JPG" class="card-img-top" alt="..." />
-        <div class="d-grid gap-2">
-          <button class="btn btn-info btn-custom" type="button"><a routerLink="/online">BCS Preli Live Course</a></button>
+  <div class="container  content-container ">
+    <div class="row mt-5">
+        <div class="col-12 mt-3 mb-3">
+            <h5> <i class="fa-solid fa-users"></i> Expert List</h5>
         </div>
-        <div class="card-body">
-          <p class="card-text spilit">It is a long established fact that a reader will be distracted by...</p>
+        <div class="col-12 col-md-3" *ngFor="let item of courseList; let i = index;">
+          <div class="card m-2 border-0 shadow-lg custom-card">
+              <img src="assets/images/3rd.JPG" class="card-img-top" alt="..." />
+              <div class="d-grid gap-2">
+                  <button class="btn btn-info btn-custom" type="button"><a [routerLink]="['/course-details', item.id]">{{ item.title }}</a></button>
+              </div>
+              <div class="card-body">
+                  <p class="card-text spilit">{{ item.description | truncate:70 }}</p>
+              </div>
+              <div class="d-grid gap-2">
+                  <button class="btn btn-secondary btn-btom btn-custom d-flex justify-content-between" type="button">
+                      <div class="l-text-btn-btom">৳{{ item.sale_price }}</div>
+                      <div class="r-text-btn-btom"><s>৳{{ item.regular_price }}</s></div>
+                  </button>
+              </div>
+          </div>
         </div>
-        <div class="d-grid gap-2">
-          <button class="btn btn-secondary btn-btom btn-custom d-flex justify-content-between" type="button">
-            <div class="l-text-btn-btom">৳1500</div>
-            <div class="r-text-btn-btom"><s>৳2000</s></div>
-          </button>
-        </div>
-			</div>
-		</div>
-		<div class="col-12 col-md-3">
-			<div class="card m-2 border-0 shadow-lg custom-card">
-        <img src="assets/images/3rd.JPG" class="card-img-top" alt="..." />
-        <div class="d-grid gap-2">
-          <button class="btn btn-info btn-custom" type="button"><a routerLink="/online">BCS Preli Live Course</a></button>
-        </div>
-        <div class="card-body">
-          <p class="card-text spilit">It is a long established fact that a reader will be distracted by...</p>
-        </div>
-        <div class="d-grid gap-2">
-          <button class="btn btn-secondary btn-btom btn-custom d-flex justify-content-between" type="button">
-            <div class="l-text-btn-btom">৳1500</div>
-            <div class="r-text-btn-btom"><s>৳2000</s></div>
-          </button>
-        </div>
-			</div>
-		</div>
-		<div class="col-12 col-md-3">
-			<div class="card m-2 border-0 shadow-lg custom-card">
-        <img src="assets/images/3rd.JPG" class="card-img-top" alt="..." />
-        <div class="d-grid gap-2">
-          <button class="btn btn-info btn-custom" type="button"><a routerLink="/online">BCS Preli Live Course</a></button>
-        </div>
-        <div class="card-body">
-          <p class="card-text spilit">It is a long established fact that a reader will be distracted by...</p>
-        </div>
-        <div class="d-grid gap-2">
-          <button class="btn btn-secondary btn-btom btn-custom d-flex justify-content-between" type="button">
-            <div class="l-text-btn-btom">৳1500</div>
-            <div class="r-text-btn-btom"><s>৳2000</s></div>
-          </button>
-        </div>
-			</div>
-		</div>
-		<div class="col-12 col-md-3">
-			<div class="card m-2 border-0 shadow-lg custom-card">
-        <img src="assets/images/3rd.JPG" class="card-img-top" alt="..." />
-        <div class="d-grid gap-2">
-          <button class="btn btn-info btn-custom" type="button"><a routerLink="/online">BCS Preli Live Course</a></button>
-        </div>
-        <div class="card-body">
-          <p class="card-text spilit">It is a long established fact that a reader will be distracted by...</p>
-        </div>
-        <div class="d-grid gap-2">
-          <button class="btn btn-secondary btn-btom btn-custom d-flex justify-content-between" type="button">
-            <div class="l-text-btn-btom">৳1500</div>
-            <div class="r-text-btn-btom"><s>৳2000</s></div>
-          </button>
-        </div>
-			</div>
-		</div>
-	</div>
-</div>
+    </div>
+  </div>
 
   <div class="container  content-container">
     <div class="row justify-content-center">
@@ -139,7 +88,6 @@
                     </div>
                   </div>
                 </div>
-
 
               </div>
             </div>
@@ -200,3 +148,5 @@
       </div>
     </div>
   </div>
+
+  <block-ui></block-ui>

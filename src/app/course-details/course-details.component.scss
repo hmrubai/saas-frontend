@@ -183,3 +183,16 @@ background: linear-gradient(90deg, rgba(223,232,238,1) 0%, rgba(221,240,240,1) 1
     font-weight: 300;
     font-style: italic;
   }
+
+  .profile-img{
+    margin: 0 auto;
+    padding: 5px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 7px solid #bbbbbb;
+  }
+
+  .price-btn{
+    width: 100%; 
+  }

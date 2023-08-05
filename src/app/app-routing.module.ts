@@ -12,6 +12,7 @@ import { TermsComponent } from './terms/terms.component';
 import { FaqComponent } from './faq/faq.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { CourseListComponent } from './course-list/course-list.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -53,7 +54,25 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'course-list/:menu_id', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./course-list/course-list.module').then(m => m.CourseListModule)
+            }
+        ]
+    },
+    {
         path: 'content-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./content-list/content-list.module').then(m => m.ContentListModule)
+            }
+        ]
+    },
+    {
+        path: 'content-list/:menu_id', 
         children: [
             {
                 path: '',

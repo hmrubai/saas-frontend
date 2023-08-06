@@ -126,6 +126,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'mentor-ongoing-class-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./mentor-ongoing-class-list/mentor-ongoing-class-list.module').then(m => m.MentorOngoingClassListModule)
+            }
+        ]
+    },
+    {
         path: 'student-dashboard', 
         children: [
             {

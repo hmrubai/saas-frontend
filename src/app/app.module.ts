@@ -36,6 +36,7 @@ import { StudentDashboardComponent } from './student-dashboard/student-dashboard
 import { MentorStudentListComponent } from './mentor-student-list/mentor-student-list.component';
 import { MentorScheduleListComponent } from './mentor-schedule-list/mentor-schedule-list.component';
 import { MentorCompletedClassListComponent } from './mentor-completed-class-list/mentor-completed-class-list.component';
+import { MentorOngoingClassListComponent } from './mentor-ongoing-class-list/mentor-ongoing-class-list.component';
 
 import { TruncatePipe } from './_helpers/truncate-pipe';
 
@@ -64,7 +65,8 @@ import { TruncatePipe } from './_helpers/truncate-pipe';
     StudentDashboardComponent,
     MentorStudentListComponent,
     MentorScheduleListComponent,
-    MentorCompletedClassListComponent
+    MentorCompletedClassListComponent,
+    MentorOngoingClassListComponent
   ],
   imports: [
     CommonModule,

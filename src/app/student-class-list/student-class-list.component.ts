@@ -7,15 +7,15 @@ import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
-    selector: 'app-student-dashboard',
-    templateUrl: './student-dashboard.component.html',
-    styleUrls: ['./student-dashboard.component.scss']
+    selector: 'app-student-class-list',
+    templateUrl: './student-class-list.component.html',
+    styleUrls: ['./student-class-list.component.scss']
 })
-export class StudentDashboardComponent implements OnInit {
+export class StudentClassListComponent implements OnInit {
 
     @BlockUI() blockUI: NgBlockUI;
     is_authenticated = false;
-    courseList: Array<any> = [];
+    classList: Array<any> = [];
     is_loaded = false;
     user_id: any = '';
 
@@ -45,8 +45,8 @@ export class StudentDashboardComponent implements OnInit {
 
     getCourseDetails() {
         this.blockUI.start('Loading...');
-        this._service.get('website/student-course-list').subscribe(res => {
-            this.courseList = res.data;
+        this._service.get('website/student-class-list').subscribe(res => {
+            this.classList = res.data;
             this.is_loaded = true;
             this.blockUI.stop();
         }, err => {

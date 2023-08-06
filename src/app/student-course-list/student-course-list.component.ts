@@ -7,11 +7,11 @@ import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 
 @Component({
-    selector: 'app-student-dashboard',
-    templateUrl: './student-dashboard.component.html',
-    styleUrls: ['./student-dashboard.component.scss']
+    selector: 'app-student-course-list',
+    templateUrl: './student-course-list.component.html',
+    styleUrls: ['./student-course-list.component.scss']
 })
-export class StudentDashboardComponent implements OnInit {
+export class StudentCourseListComponent implements OnInit {
 
     @BlockUI() blockUI: NgBlockUI;
     is_authenticated = false;

@@ -135,11 +135,38 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'mentor-update-link', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./mentor-update-link/mentor-update-link.module').then(m => m.MentorUpdateLinkModule)
+            }
+        ]
+    },
+    {
         path: 'student-dashboard', 
         children: [
             {
                 path: '',
                 loadChildren: () => import('./student-dashboard/student-dashboard.module').then(m => m.StudentDashboardModule)
+            }
+        ]
+    },
+    {
+        path: 'student-course-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./student-course-list/student-course-list.module').then(m => m.StudentCourseListModule)
+            }
+        ]
+    },
+    {
+        path: 'student-class-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./student-class-list/student-class-list.module').then(m => m.StudentClassListModule)
             }
         ]
     },

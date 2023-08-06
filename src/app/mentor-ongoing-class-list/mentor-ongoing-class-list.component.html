@@ -32,6 +32,11 @@
                         <p class="mb-1"><i class="fa-solid fa-file-invoice-dollar"></i> Attended Class List</p>
                     </div>
                 </a>
+                <a [routerLink]="['/mentor-update-link']" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-gear"></i> Update Link</p>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-md-9">
@@ -62,7 +67,8 @@
                             </td>
                             <td>
                                 <button class="btn btn-success mx-2 btn-sm" *ngIf="item.has_completed"><i class="fa-solid fa-circle-check"></i> Completed</button>
-                                <button class="btn btn-info mx-2 btn-sm" *ngIf="!item.has_completed && item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button>
+                                <a href="{{ item.join_link }}" target="_blank"><button class="btn btn-info mx-2 btn-sm" *ngIf="!item.has_completed && item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button></a>
+                                <button class="btn btn-danger mx-2 btn-sm" *ngIf="!item.has_completed && item.can_join && item.has_started"><i class="fa-solid fa-power-off"></i> End Class</button>
                                 <button class="btn btn-secondary mx-2 btn-sm disabled" *ngIf="!item.has_completed && !item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button>
                             </td>
                         </tr>

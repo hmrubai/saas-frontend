@@ -6,18 +6,23 @@
                     <div class="d-flex w-100 mt-4 justify-content-between">
                         <img src="assets/images/2793695.png" alt="" class="profile-img" />
                     </div>
-                    <p class="mb-1 text-center mt-2 text-primary"><strong><i class="fa-solid fa-user"></i> Hosne Mobarak Rubai</strong></p>
-                    <p class="mb-51 text-center text-success"><i class="fa-solid fa-phone"></i> 01714536772</p>
-                    <p class="mb-51 text-center text-secondary"> <i class="fa-solid fa-user-secret"></i> Student</p>
+                    <p class="mb-1 text-center mt-2 text-primary"><strong><i class="fa-solid fa-user"></i> {{ currentUser.full_name }}</strong></p>
+                    <p class="mb-51 text-center text-success"><i class="fa-solid fa-phone"></i> {{ currentUser.contact_no }}</p>
+                    <p class="mb-51 text-center text-secondary"> <i class="fa-solid fa-user-secret"></i> {{ currentUser.user_type }}</p>
                     <br/>
                     <br/>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">
+                <a [routerLink]="['/student-dashboard']" class="list-group-item list-group-item-action active">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-receipt"></i> Dashboard</p>
+                    </div>
+                </a>
+                <a [routerLink]="['/student-class-list']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-receipt"></i> Class List</p>
                     </div>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">
+                <a [routerLink]="['/student-course-list']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-list"></i> My Course List</p>
                     </div>
@@ -37,9 +42,26 @@
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
                 <div class="alert alert-success" role="alert">
-                    Activity Listß
+                    <i class="fa-solid fa-list"></i> All Course List
                 </div>
-                Activity
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Course List</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  *ngFor="let item of courseList; let i = index;">
+                            <th scope="row">{{ i + 1 }}</th>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.category_name }}</td>
+                            <td><button class="btn btn-light"><i class="fa-solid fa-eye"></i> Details</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

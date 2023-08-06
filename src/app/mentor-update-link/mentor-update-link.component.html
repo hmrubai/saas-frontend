@@ -17,7 +17,7 @@
                         <p class="mb-1"><i class="fa-solid fa-receipt"></i> My Course List</p>
                     </div>
                 </a>
-                <a [routerLink]="['/mentor-student-list']" class="list-group-item list-group-item-action active">
+                <a [routerLink]="['/mentor-student-list']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-list"></i> Student List</p>
                     </div>
@@ -27,12 +27,12 @@
                         <p class="mb-1"><i class="fa-solid fa-list"></i> Ongoing Classes</p>
                     </div>
                 </a>
-                <a [routerLink]="['/mentor-completed-class-list']" class="list-group-item list-group-item-action">
+                <a [routerLink]="['/mentor-completed-class-list']"  class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-file-invoice-dollar"></i> Attended Class List</p>
                     </div>
                 </a>
-                <a [routerLink]="['/mentor-update-link']" class="list-group-item list-group-item-action">
+                <a [routerLink]="['/mentor-update-link']" class="list-group-item list-group-item-action active">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-gear"></i> Update Link</p>
                     </div>
@@ -42,31 +42,26 @@
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
                 <div class="alert alert-success" role="alert">
-                    <i class="fa-solid fa-users"></i> My Connected Student List
+                    <i class="fa-solid fa-gear"></i> Settings
                 </div>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Student</th>
-                            <th scope="col">Contact</th>
-                            <th scope="col">Course</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr  *ngFor="let item of studentList; let i = index;">
-                            <th scope="row">{{ i + 1 }}</th>
-                            <td>{{ item.student_name }}</td>
-                            <td>{{ item.student_contact_no }}</td>
-                            <td>{{ item.course_title }}</td>
-                            <td>
-                                <button class="btn btn-light mx-2"><i class="fa-solid fa-calendar-day"></i> Schedule Setup</button>
-                                <button class="btn btn-light" [routerLink]="['/mentor-schedule-list', item.mapping_id]"><i class="fa-solid fa-eye"></i> See Schedule</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+
+                <div class="row">
+                    <div class="col-12">
+                        <form class="p-4" [formGroup]="entryForm">
+                        <h6 class="">Link</h6>
+                        <div class="input-group">
+                            <input type="text" class="form-control" formControlName="link"
+                            [ngClass]="{ 'is-invalid': submitted && f['link'].errors }" placeholder="Link" autocomplete="off">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div *ngIf="submitted && f['link'].errors" class="error-text">
+                            <span *ngIf="f['link'].errors?.['required']" class="text-danger"> Link is required</span>
+                            </div>
+                        </div>
+                        <button type="submit" (click)="onFormSubmit()" class="btn btn-secondary form-control">Submit</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

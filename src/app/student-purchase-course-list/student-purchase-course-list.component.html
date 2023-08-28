@@ -12,7 +12,7 @@
                     <br/>
                     <br/>
                 </a>
-                <a [routerLink]="['/student-dashboard']" class="list-group-item list-group-item-action active">
+                <a [routerLink]="['/student-dashboard']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-receipt"></i> Dashboard</p>
                     </div>
@@ -27,7 +27,7 @@
                         <p class="mb-1"><i class="fa-solid fa-list"></i> My Course List</p>
                     </div>
                 </a>
-                <a [routerLink]="['/student-purchase-course-list']" class="list-group-item list-group-item-action">
+                <a [routerLink]="['/student-purchase-course-list']" class="list-group-item list-group-item-action active">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-list"></i> Purchase List</p>
                     </div>
@@ -42,7 +42,7 @@
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
                 <div class="alert alert-success" role="alert">
-                    <i class="fa-solid fa-list"></i> All Course List
+                    <i class="fa-solid fa-list"></i> My Course List
                 </div>
                 <table class="table table-bordered">
                     <thead>
@@ -50,6 +50,8 @@
                             <th scope="col">#</th>
                             <th scope="col">Course List</th>
                             <th scope="col">Type</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Discount</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -58,7 +60,11 @@
                             <th scope="row">{{ i + 1 }}</th>
                             <td>{{ item.title }}</td>
                             <td>{{ item.category_name }}</td>
-                            <td><button class="btn btn-light"><i class="fa-solid fa-eye"></i> Details</button></td>
+                            <td>{{ item.paid_amount }}</td>
+                            <td>{{ item.discount }}</td>
+                            <td>
+                                <button class="btn btn-light"><i class="fa-solid fa-eye"></i> Details</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

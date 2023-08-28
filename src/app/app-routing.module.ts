@@ -162,6 +162,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'student-purchase-course-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./student-purchase-course-list/student-purchase-course-list.module').then(m => m.StudentPurchaseCourseListModule)
+            }
+        ]
+    },
+    {
         path: 'student-class-list', 
         children: [
             {

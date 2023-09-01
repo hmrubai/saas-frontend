@@ -34,7 +34,7 @@
                 </a>
                 <a [routerLink]="['/student-exam-list']" class="list-group-item list-group-item-action active">
                     <div class="d-flex w-100 justify-content-between">
-                        <p class="mb-1"><i class="fa-solid fa-file-lines"></i> Exam List</p>
+                        <p class="mb-1"><i class="fa-solid fa-file-pen"></i> Exam List</p>
                     </div>
                 </a>
                 <a [routerLink]="['/student-purchase-course-list']" class="list-group-item list-group-item-action">
@@ -52,7 +52,7 @@
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
                 <div class="alert alert-success" role="alert">
-                    <i class="fa-solid fa-edit"></i> My Assignment List
+                    <i class="fa-solid fa-file-pen"></i> My Exam List
                 </div>
                 
                 <table class="table table-bordered">
@@ -72,7 +72,7 @@
                             <td>31th August 2023, 01:23PM</td>
                             <td>12.00</td>
                             <td>
-                                <button class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> Check Answer</button>
+                                <button [routerLink]="['/student-exam-result/', 1]" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> Check Answer</button>
                             </td>
                         </tr>
                         <tr>
@@ -81,7 +81,7 @@
                             <td>27th August 2023, 11:23PM</td>
                             <td>09.00</td>
                             <td>
-                                <button class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> Check Answer</button>
+                                <button [routerLink]="['/student-exam-result/', 2]" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> Check Answer</button>
                             </td>
                         </tr>
                         <tr>
@@ -90,7 +90,7 @@
                             <td>25th August 2023, 2:34PM</td>
                             <td>11.00</td>
                             <td>
-                                <button class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> Check Answer</button>
+                                <button [routerLink]="['/student-exam-result/', 3]" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> Check Answer</button>
                             </td>
                         </tr>
                     </tbody>

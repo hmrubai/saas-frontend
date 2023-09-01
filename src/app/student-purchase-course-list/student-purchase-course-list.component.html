@@ -34,7 +34,7 @@
                 </a>
                 <a [routerLink]="['/student-exam-list']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
-                        <p class="mb-1"><i class="fa-solid fa-file-lines"></i> Exam List</p>
+                        <p class="mb-1"><i class="fa-solid fa-file-pen"></i> Exam List</p>
                     </div>
                 </a>
                 <a [routerLink]="['/student-purchase-course-list']" class="list-group-item list-group-item-action active">
@@ -52,7 +52,7 @@
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
                 <div class="alert alert-success" role="alert">
-                    <i class="fa-solid fa-list"></i> My Course List
+                    <i class="fa-solid fa-list"></i> My Purchase Item List
                 </div>
                 <table class="table table-bordered">
                     <thead>
@@ -73,7 +73,7 @@
                             <td>{{ item.paid_amount }}</td>
                             <td>{{ item.discount }}</td>
                             <td>
-                                <button class="btn btn-light"><i class="fa-solid fa-eye"></i> Details</button>
+                                <button class="btn btn-success btn-sm" [routerLink]="['/course-details', item.id]"><i class="fa-solid fa-eye"></i> See Details</button>
                             </td>
                         </tr>
                     </tbody>

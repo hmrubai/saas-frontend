@@ -198,6 +198,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'student-exam-result/:exam_id', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./student-exam-result/student-exam-result.module').then(m => m.StudentExamResultModule)
+            }
+        ]
+    },
+    {
         path: 'student-class-list', 
         children: [
             {

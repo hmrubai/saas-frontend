@@ -189,6 +189,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'student-exam-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./student-exam-list/student-exam-list.module').then(m => m.StudentExamListModule)
+            }
+        ]
+    },
+    {
         path: 'student-class-list', 
         children: [
             {

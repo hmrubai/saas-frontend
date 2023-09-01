@@ -1,0 +1,157 @@
+<div class="container content-container">
+    <div class="row">
+        <div class="col-lg-3 mt-3 mb-5">
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+                    <div class="d-flex w-100 mt-4 justify-content-between">
+                        <img src="assets/images/2793695.png" alt="" class="profile-img" />
+                    </div>
+                    <p class="mb-1 text-center mt-2 text-primary"><strong><i class="fa-solid fa-user"></i> {{ currentUser.full_name }}</strong></p>
+                    <p class="mb-51 text-center text-success"><i class="fa-solid fa-phone"></i> {{ currentUser.contact_no }}</p>
+                    <p class="mb-51 text-center text-secondary"> <i class="fa-solid fa-user-secret"></i> {{ currentUser.user_type }}</p>
+                    <br/>
+                    <br/>
+                </a>
+                <a [routerLink]="['/student-dashboard']" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-receipt"></i> Dashboard</p>
+                    </div>
+                </a>
+                <a [routerLink]="['/student-class-list']" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-receipt"></i> Class List</p>
+                    </div>
+                </a>
+                <a [routerLink]="['/student-course-list']" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-list"></i> My Course List</p>
+                    </div>
+                </a>
+                <a [routerLink]="['/student-assignment-list']" class="list-group-item list-group-item-action active">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-edit"></i> My Assignment List</p>
+                    </div>
+                </a>
+                <a [routerLink]="['/student-course-list']" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-file-lines"></i> Exam List</p>
+                    </div>
+                </a>
+                <a [routerLink]="['/student-purchase-course-list']" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-list"></i> Purchase List</p>
+                    </div>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-file-invoice-dollar"></i> Payment List</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="scrollable-content mt-3">
+                <div class="alert alert-success" role="alert">
+                    <i class="fa-solid fa-edit"></i> My Assignment List
+                </div>
+
+                <div class="container-fluid bg-gradient p-5">
+                    <div class="row m-auto text-center w-100">
+                        <div class="col-4 princing-item red">
+                            <div class="pricing-divider ">
+                                <h3 class="text-light">Assignment 01</h3>
+                                <p class="text-deadline">Deadline: <b>31th August 2023, 5.00PM</b></p>
+                                <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px' id='Layer_1' preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='300px' x='0px' xml:space='preserve' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
+                                <path class='deco-layer deco-layer--1' d='M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729
+                            c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z' fill='#FFFFFF' opacity='0.6'></path>
+                                <path class='deco-layer deco-layer--2' d='M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729
+                            c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z' fill='#FFFFFF' opacity='0.6'></path>
+                                <path class='deco-layer deco-layer--3' d='M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716
+                            H42.401L43.415,98.342z' fill='#FFFFFF' opacity='0.7'></path>
+                                <path class='deco-layer deco-layer--4' d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428
+                            c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z' fill='#FFFFFF'></path>
+                                </svg>
+                            </div>
+                            <div class="card-body bg-white mt-0 shadow">
+                                <ul class="list-unstyled mb-3 position-relative">
+                                    <li><b>Bangla 1st paper: Chapter 01</b></li>
+                                    <li><b>1</b> Quiz</li>
+                                    <li><b>2</b> Script</li>
+                                    <li><b>1</b> Video</li>
+                                </ul>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+                                </div>
+                                <button type="button" class="btn btn-lg btn-block btn-custom-assignment mb-3"><i class="fa-solid fa-eye"></i> See Details</button>
+                            </div>
+                        </div>
+
+                        <div class="col-4 princing-item blue">
+                            <div class="pricing-divider ">
+                                <h3 class="text-light">Assignment 02</h3>
+                                <p class="text-deadline">Deadline: <b>14th September 2023, 11.00AM</b></p>
+                                <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px' id='Layer_1' preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='300px' x='0px' xml:space='preserve' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
+                                    <path class='deco-layer deco-layer--1' d='M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729
+                                c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z' fill='#FFFFFF' opacity='0.6'></path>
+                                    <path class='deco-layer deco-layer--2' d='M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729
+                                c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z' fill='#FFFFFF' opacity='0.6'></path>
+                                    <path class='deco-layer deco-layer--3' d='M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716
+                                H42.401L43.415,98.342z' fill='#FFFFFF' opacity='0.7'></path>
+                                    <path class='deco-layer deco-layer--4' d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428
+                                c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z' fill='#FFFFFF'></path>
+                                </svg>
+                            </div>
+
+                            <div class="card-body bg-white mt-0 shadow">
+                                <ul class="list-unstyled mb-3 position-relative">
+                                    <li><b>English 1st paper: Chapter 01</b></li>
+                                    <li><b>1</b> Quiz</li>
+                                    <li><b>2</b> Script</li>
+                                    <li><b>1</b> Video</li>
+                                </ul>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">35%</div>
+                                </div>
+                                <button type="button" class="btn btn-lg btn-block btn-custom-assignment mb-3"><i class="fa-solid fa-eye"></i> See Details</button>
+                            </div>
+                        </div>
+
+                        <div class="col-4 princing-item green">
+                            <div class="pricing-divider ">
+                                <h3 class="text-light">Assignment 03</h3>
+                                <p class="text-deadline">Deadline: <b>10th September 2023, 10.00AM</b></p>
+                                <svg class='pricing-divider-img' enable-background='new 0 0 300 100' height='100px' id='Layer_1' preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='300px' x='0px' xml:space='preserve' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
+                                    <path class='deco-layer deco-layer--1' d='M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729
+                                c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z' fill='#FFFFFF' opacity='0.6'></path>
+                                    <path class='deco-layer deco-layer--2' d='M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729
+                                c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z' fill='#FFFFFF' opacity='0.6'></path>
+                                    <path class='deco-layer deco-layer--3' d='M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716
+                                H42.401L43.415,98.342z' fill='#FFFFFF' opacity='0.7'></path>
+                                    <path class='deco-layer deco-layer--4' d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428
+                                c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z' fill='#FFFFFF'></path>
+                                </svg>
+                            </div>
+
+                            <div class="card-body bg-white mt-0 shadow">
+                                <ul class="list-unstyled mb-3 position-relative">
+                                    <li><b>Chemistry 1st paper: Chapter 04</b></li>
+                                    <li><b>3</b> Quiz</li>
+                                    <li><b>2</b> Script</li>
+                                    <li><b>4</b> Video</li>
+                                </ul>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">70%</div>
+                                </div>
+                                <button type="button" class="btn btn-lg btn-block btn-custom-assignment mb-3"><i class="fa-solid fa-eye"></i> See Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

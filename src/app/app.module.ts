@@ -41,6 +41,8 @@ import { MentorUpdateLinkComponent } from './mentor-update-link/mentor-update-li
 import { StudentCourseListComponent } from './student-course-list/student-course-list.component';
 import { StudentClassListComponent } from './student-class-list/student-class-list.component';
 import { StudentPurchaseCourseListComponent } from './student-purchase-course-list/student-purchase-course-list.component';
+import { StudentPaymentListComponent } from './student-payment-list/student-payment-list.component';
+import { StudentAssignmentListComponent } from './student-assignment-list/student-assignment-list.component';
 
 import { TruncatePipe } from './_helpers/truncate-pipe';
 
@@ -74,7 +76,9 @@ import { TruncatePipe } from './_helpers/truncate-pipe';
     MentorUpdateLinkComponent,
     StudentCourseListComponent,
     StudentClassListComponent,
-    StudentPurchaseCourseListComponent
+    StudentPurchaseCourseListComponent,
+    StudentPaymentListComponent,
+    StudentAssignmentListComponent
   ],
   imports: [
     CommonModule,

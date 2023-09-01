@@ -27,12 +27,22 @@
                         <p class="mb-1"><i class="fa-solid fa-list"></i> My Course List</p>
                     </div>
                 </a>
+                <a [routerLink]="['/student-assignment-list']" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-edit"></i> My Assignment List</p>
+                    </div>
+                </a>
+                <a [routerLink]="['/student-course-list']" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-file-lines"></i> Exam List</p>
+                    </div>
+                </a>
                 <a [routerLink]="['/student-purchase-course-list']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-list"></i> Purchase List</p>
                     </div>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">
+                <a [routerLink]="['/student-payment-list']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-file-invoice-dollar"></i> Payment List</p>
                     </div>

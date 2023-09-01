@@ -171,6 +171,24 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'student-payment-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./student-payment-list/student-payment-list.module').then(m => m.StudentPaymentListModule)
+            }
+        ]
+    },
+    {
+        path: 'student-assignment-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./student-assignment-list/student-assignment-list.module').then(m => m.StudentAssignmentListModule)
+            }
+        ]
+    },
+    {
         path: 'student-class-list', 
         children: [
             {

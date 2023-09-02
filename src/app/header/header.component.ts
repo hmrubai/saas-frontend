@@ -16,11 +16,15 @@ export class HeaderComponent implements OnInit {
     is_authenticated = false;
     menuList: Array<any> = [];
     is_menu_loaded = false;
+    is_site_loaded = false;
 
     public user_role = null;
     public currentUser: any = {};
 
-    profile_image = 'assets/img/avatars/profile.png'
+    public websiteSettings: any = {};
+
+    profile_image = 'assets/img/avatars/profile.png';
+    site_logo = 'assets/images/lms_logo-1.png';
 
     constructor(
         private _service: CommonService,
@@ -43,17 +47,35 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.getMenuList();
+        this.organizationSettings();
     }
 
     getMenuList() {
         this._service.get('website/menu-list').subscribe(res => {
-            //console.log(res);
             this.menuList = res.data;
             this.is_menu_loaded = true;
             //this.blockUI.stop();
         }, err => {
             //this.blockUI.stop();
         }
+        );
+    }
+
+    organizationSettings(){
+        this._service.get('website/organization-details-by-id/1').subscribe(res => {
+                this.websiteSettings = res.data;
+                console.log(this.websiteSettings);
+                if(this.websiteSettings.logo){
+                    this.site_logo = environment.imageURL + this.websiteSettings.logo
+                }
+
+                let expireDate = new Date('2030-07-19');
+                Cookie.set('.BBSAASLMS.SiteSettings', JSON.stringify(this.websiteSettings), expireDate, '/', window.location.hostname, false);
+                this.is_site_loaded = true;
+                //this.blockUI.stop();
+            }, err => {
+                //this.blockUI.stop();
+            }
         );
     }
 

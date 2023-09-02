@@ -2,7 +2,7 @@
     <div class="container">
       <div class="row py-4">
         <div class="col-md-3">
-          <img src="assets/images/lms_logo-1.png" alt="Company Logo" class="img-fluid logo">
+          <img src="{{ site_logo }}" alt="Company Logo" class="img-fluid logo">
         </div>
         <div class="col-md-3 col-6">
           <h5 class="fw-bold text-dark">Company</h5>
@@ -23,8 +23,9 @@
         </div>
         <div class="col-md-3 text-dark">
           <h6 class="fw-bold">Contact</h6>
-          <p>Phone: +1 123 456 789</p>
-          <p>Email: info@example.com</p>
+          <p><strong>Phone:</strong> {{ footerSettings.contact_number }}</p>
+          <p><strong>Email:</strong> {{ footerSettings.email }}</p>
+          <p><strong>Address:</strong> {{ footerSettings.address }}</p>
         </div>
       </div>
     </div>

@@ -7,6 +7,6 @@ export const environment = {
 
   // Local
   apiUrl: 'http://localhost:8000/api/',
-  imageURL: 'http://localhost:8000/',
+  imageURL: 'http://localhost:8000/uploads/',
   baseUrl: 'http://localhost:8000/api/',
 };

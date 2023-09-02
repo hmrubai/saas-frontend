@@ -258,8 +258,8 @@
               Pay Now
             </button>
 
-            <button class="btn btn-success col-md-12 mb-4" *ngIf="is_authenticated && courseDetails.is_purchased">
-              Purchased
+            <button class="btn btn-warning col-md-12 mb-4" *ngIf="is_authenticated && courseDetails.is_purchased">
+              <strong><i>Purchased</i></strong>
             </button>
 
             <button class="btn btn-success col-md-12 mb-4" *ngIf="!is_authenticated && !courseDetails.is_purchased" [routerLink]="['/login']">

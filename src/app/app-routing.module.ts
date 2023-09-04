@@ -189,6 +189,24 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'mentor-assignment-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./mentor-assignment-list/mentor-assignment-list.module').then(m => m.MentorAssignmentListModule)
+            }
+        ]
+    },
+    {
+        path: 'mentor-student-progress-list', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./mentor-student-progress-list/mentor-student-progress-list.module').then(m => m.MentorStudentProgressListModule)
+            }
+        ]
+    },
+    {
         path: 'student-exam-list', 
         children: [
             {

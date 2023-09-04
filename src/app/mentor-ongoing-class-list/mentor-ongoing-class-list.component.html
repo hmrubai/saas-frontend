@@ -27,6 +27,11 @@
                         <p class="mb-1"><i class="fa-solid fa-list"></i> Ongoing Classes</p>
                     </div>
                 </a>
+                <a [routerLink]="['/mentor-assignment-list']" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p class="mb-1"><i class="fa-solid fa-edit"></i> Assignment List</p>
+                    </div>
+                </a>
                 <a [routerLink]="['/mentor-completed-class-list']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-file-invoice-dollar"></i> Attended Class List</p>
@@ -70,6 +75,11 @@
                                 <a href="{{ item.join_link }}" target="_blank"><button class="btn btn-info mx-2 btn-sm" *ngIf="!item.has_completed && item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button></a>
                                 <button class="btn btn-danger mx-2 btn-sm" *ngIf="!item.has_completed && item.can_join && item.has_started"><i class="fa-solid fa-power-off"></i> End Class</button>
                                 <button class="btn btn-secondary mx-2 btn-sm disabled" *ngIf="!item.has_completed && !item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="classList.length <= 0">
+                            <td colspan="5">
+                                <span class="mx-2 mt-2 mb-2">No Class Found!</span>
                             </td>
                         </tr>
                     </tbody>

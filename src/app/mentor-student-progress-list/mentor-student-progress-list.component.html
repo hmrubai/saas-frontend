@@ -27,12 +27,12 @@
                         <p class="mb-1"><i class="fa-solid fa-list"></i> Ongoing Classes</p>
                     </div>
                 </a>
-                <a [routerLink]="['/mentor-assignment-list']" class="list-group-item list-group-item-action">
+                <a [routerLink]="['/mentor-assignment-list']" class="list-group-item list-group-item-action active">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-edit"></i> Assignment List</p>
                     </div>
                 </a>
-                <a [routerLink]="['/mentor-completed-class-list']" class="list-group-item list-group-item-action active">
+                <a [routerLink]="['/mentor-completed-class-list']" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-file-invoice-dollar"></i> Attended Class List</p>
                     </div>
@@ -46,36 +46,30 @@
         </div>
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
-                <div class="alert alert-info" role="alert">
-                    <i class="fa-solid fa-calendar-day"></i> My Completed Class List
+                <div class="alert alert-success" role="alert">
+                    <i class="fa-solid fa-chart"></i> Student Progress
                 </div>
-                <table class="table table-bordered table-sm">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Student</th>
-                            <th scope="col">Course</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Start</th>
-                            <th scope="col">End</th>
+                            <th scope="col">Contact</th>
+                            <th scope="col">Progress</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr  *ngFor="let item of classList; let i = index;">
-                            <th scope="row">{{ i + 1 }}</th>
-                            <td>
-                                {{ item.student_name }} ({{ item.student_contact_no }})
-                            </td>
-                            <td>{{ item.course_title }}</td>
-                            <td>
-                                {{ item.schedule_datetime | date :'MMM d, y, h:mm a' }}
-                            </td>
-                            <td>
-                                {{ item.start_time | date :'MMM d, y, h:mm a' }}
-                            </td>
-                            <td>
-                                {{ item.end_time | date :'MMM d, y, h:mm a' }}
-                            </td>
+                        <tr>
+                            <th>1</th>
+                            <td>Hosne Mobarak Rubai</td>
+                            <td>01714536772</td>
+                            <td>76%</td>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <td>Student</td>
+                            <td>01714536770</td>
+                            <td>53%</td>
                         </tr>
                     </tbody>
                 </table>

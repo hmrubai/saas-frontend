@@ -45,6 +45,10 @@ import { StudentPaymentListComponent } from './student-payment-list/student-paym
 import { StudentAssignmentListComponent } from './student-assignment-list/student-assignment-list.component';
 import { StudentExamListComponent } from './student-exam-list/student-exam-list.component';
 import { StudentExamResultComponent } from './student-exam-result/student-exam-result.component';
+import { MentorAssignmentListComponent } from './mentor-assignment-list/mentor-assignment-list.component';
+import { MentorStudentProgressListComponent } from './mentor-student-progress-list/mentor-student-progress-list.component';
+
+
 
 import { TruncatePipe } from './_helpers/truncate-pipe';
 
@@ -82,7 +86,9 @@ import { TruncatePipe } from './_helpers/truncate-pipe';
     StudentPaymentListComponent,
     StudentAssignmentListComponent,
     StudentExamListComponent,
-    StudentExamResultComponent
+    StudentExamResultComponent,
+    MentorAssignmentListComponent,
+    MentorStudentProgressListComponent
   ],
   imports: [
     CommonModule,

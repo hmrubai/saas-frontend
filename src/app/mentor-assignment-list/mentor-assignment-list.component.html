@@ -27,12 +27,12 @@
                         <p class="mb-1"><i class="fa-solid fa-list"></i> Ongoing Classes</p>
                     </div>
                 </a>
-                <a [routerLink]="['/mentor-assignment-list']" class="list-group-item list-group-item-action">
+                <a [routerLink]="['/mentor-assignment-list']" class="list-group-item list-group-item-action active">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-edit"></i> Assignment List</p>
                     </div>
                 </a>
-                <a [routerLink]="['/mentor-completed-class-list']" class="list-group-item list-group-item-action active">
+                <a [routerLink]="['/mentor-completed-class-list']"  class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <p class="mb-1"><i class="fa-solid fa-file-invoice-dollar"></i> Attended Class List</p>
                     </div>
@@ -46,39 +46,61 @@
         </div>
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
-                <div class="alert alert-info" role="alert">
-                    <i class="fa-solid fa-calendar-day"></i> My Completed Class List
+                <div class="alert alert-success" role="alert">
+                    <i class="fa-solid fa-edit"></i> Assignment List 
+                    <button class="btn btn-success btn-sm float-end"><i class="fa-solid fa-plus"></i> Create New Assignment</button>
                 </div>
-                <table class="table table-bordered table-sm">
+                
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Student</th>
-                            <th scope="col">Course</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Start</th>
-                            <th scope="col">End</th>
+                            <th scope="col">Assignment</th>
+                            <th scope="col">Deadline</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr  *ngFor="let item of classList; let i = index;">
-                            <th scope="row">{{ i + 1 }}</th>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Assignment One</td>
+                            <td>5th September 2023, 10.00AM</td>
+                            <td class="text-success">Ongoing</td>
                             <td>
-                                {{ item.student_name }} ({{ item.student_contact_no }})
+                                <button [routerLink]="['/mentor-student-progress-list']" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> See Details</button>
                             </td>
-                            <td>{{ item.course_title }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Assignment Two</td>
+                            <td>10th September 2023, 5.00PM</td>
+                            <td class="text-success">Ongoing</td>
                             <td>
-                                {{ item.schedule_datetime | date :'MMM d, y, h:mm a' }}
+                                <button [routerLink]="['/mentor-student-progress-list']" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> See Details</button>
                             </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Assignment Three</td>
+                            <td>13th September 2023, 3.00PM</td>
+                            <td class="text-success">Ongoing</td>
                             <td>
-                                {{ item.start_time | date :'MMM d, y, h:mm a' }}
+                                <button [routerLink]="['/mentor-student-progress-list']" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> See Details</button>
                             </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Assignment Three</td>
+                            <td>28th August 2023, 3.00PM</td>
+                            <td class="text-warning">Finished</td>
                             <td>
-                                {{ item.end_time | date :'MMM d, y, h:mm a' }}
+                                <button [routerLink]="['/mentor-student-progress-list']" class="btn btn-light btn-sm"><i class="fa-solid fa-eye"></i> See Details</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>

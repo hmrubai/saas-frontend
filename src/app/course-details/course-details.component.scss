@@ -134,7 +134,7 @@ background: linear-gradient(90deg, rgba(223,232,238,1) 0%, rgba(221,240,240,1) 1
   }
 
   .scrollable-content {
-    max-height: 900px; /* Set the maximum height of the scrollable content */
+    // max-height: 900px; /* Set the maximum height of the scrollable content */
     overflow-y: auto; /* Enable vertical scrolling */
     scrollbar-width: none; /* Show a thin scrollbar (adjust as needed) */
     scrollbar-color: none; /* Customize the scrollbar color */

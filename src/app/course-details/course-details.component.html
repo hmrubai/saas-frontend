@@ -87,34 +87,21 @@
         <div class="">
           <h3 class="mb-3 mt-2">সচরাচর জিজ্ঞাসা</h3>
           <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
+            <div class="accordion-item" *ngFor="let item of courseDetails.course_faq; let i = index;">
               <h2 class="accordion-header" id="headingOne">
-                <button
-                  class="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne"
-                >
-                  1. কোর্সটি কাদের জন্য?
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#collapseOne_'+i" aria-expanded="true" [attr.aria-controls]="'collapseOne_'+i"
+                    >
+                  {{ i + 1 }}. {{ item.title }}
                 </button>
               </h2>
-              <div
-                id="collapseOne"
-                class="accordion-collapse collapse show"
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample"
-              >
+              <div id="collapseOne_{{ i }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                  ঢাকা বিশ্ববিদ্যালয়ের B এবং C ইউনিটের ভর্তি পরিক্ষার্থীদের জন্য
-                  এবং যাদের ভর্তি পরীক্ষায় অন্য বিষয়গুলোর সাথে ইংরেজিতেও লিখিত
-                  পরীক্ষা দিতে হবে। তবে অন্য সকল পাবলিক বিশ্ববিদ্যালয়ের
-                  ভর্তিচ্ছু শিক্ষার্থীদের জন্যও কোর্সটি দারুনভাবে কার্যকরী।
+                    {{ item.answer }}
                 </div>
               </div>
             </div>
-            <div class="accordion-item">
+            <!--<div class="accordion-item">
               <h2 class="accordion-header" id="headingTwo">
                 <button
                   class="accordion-button collapsed"
@@ -190,7 +177,7 @@
                   হওয়া পর্যন্ত সচল থাকবে।
                 </div>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>

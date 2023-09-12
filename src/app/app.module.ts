@@ -27,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { BlockUIModule } from 'ng-block-ui';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { CourseListComponent } from './course-list/course-list.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
@@ -100,6 +101,7 @@ import { TruncatePipe } from './_helpers/truncate-pipe';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ModalModule.forRoot()
   ],
   providers: [
     {

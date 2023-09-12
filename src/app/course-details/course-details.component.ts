@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AuthenticationService } from '../_services/authentication.service';
 import { environment } from '../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from '../_services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-course-details',
@@ -18,6 +20,11 @@ export class CourseDetailsComponent implements OnInit {
     courseList: Array<any> = [];
     is_loaded = false;
     user_id: any = '';
+    modalRef?: BsModalRef;
+
+    video_url: any;
+    modal_title = 'Video';
+    modalConfig: any = { class: 'gray modal-xl', backdrop: 'static' };
 
     courseDetails: any = {};
 
@@ -30,7 +37,9 @@ export class CourseDetailsComponent implements OnInit {
         private authService: AuthenticationService,
         private toastr: ToastrService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private modalService: BsModalService,
+        private _sanitizer: DomSanitizer
     ) {
         if (this.authService.isAuthenticated()) {
             this.is_authenticated = true;
@@ -43,6 +52,32 @@ export class CourseDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         this.getCourseDetails();
+    }
+
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template);
+    }
+
+    safeURL(videoURL: string){
+        return this._sanitizer.bypassSecurityTrustResourceUrl(videoURL);
+     }
+
+    showVideo(item: any, template: TemplateRef<any>){
+
+        if(!this.is_authenticated){
+            this.toastr.warning("Please login first!", 'Attention!', { timeOut: 2000 });
+            return;
+        }
+
+        if(!this.courseDetails.is_purchased){
+            this.toastr.warning("Please purchase first!", 'Attention!', { timeOut: 2000 });
+            return;
+        }
+
+        console.log(item);
+        this.modal_title = item.title;
+        this.video_url = item.video_youtube_url;
+        this.openModal(template);
     }
 
     getCourseDetails() {

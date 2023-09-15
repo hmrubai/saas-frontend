@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild  } from '@angular/core';
 import { AuthenticationService } from '../_services/authentication.service';
 import { environment } from '../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,14 +9,18 @@ import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
+import { ModalDirective } from 'ngx-bootstrap/modal';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-quiz-participation',
     templateUrl: './quiz-participation.component.html',
     styleUrls: ['./quiz-participation.component.scss']
 })
-export class QuizParticipationComponent implements OnInit {
-
+export class QuizParticipationComponent implements OnInit 
+{
+    // @ViewChild('autoSubmitModal') templateRef: TemplateRef<any>;
+    @ViewChild('autoSubmitModal') public autoSubmitModal: ModalDirective;
     @BlockUI() blockUI: NgBlockUI;
     is_authenticated = false;
     courseList: Array<any> = [];
@@ -25,6 +29,7 @@ export class QuizParticipationComponent implements OnInit {
     modalRef?: BsModalRef;
     timer: Timer = new Timer();
     quizRunning: boolean = false;
+    is_auto_submitted: boolean = false;
 
     assetURL = environment.imageURL;
 
@@ -53,7 +58,8 @@ export class QuizParticipationComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private modalService: BsModalService,
-        private _sanitizer: DomSanitizer
+        private _sanitizer: DomSanitizer,
+        private location: Location
     ) {
         if (this.authService.isAuthenticated()) {
             this.is_authenticated = true;
@@ -63,8 +69,6 @@ export class QuizParticipationComponent implements OnInit {
         }
         this.quiz_id = this.route.snapshot.paramMap.get("quiz_id");
         this.result_id = this.route.snapshot.paramMap.get("result_id");
-        console.log(this.quiz_id)
-        console.log(this.result_id)
     }
 
     ngOnInit(): void {
@@ -112,10 +116,9 @@ export class QuizParticipationComponent implements OnInit {
         this.quizRunning = true;
         this.timerSubscription = this.timer.start(duration * 60).subscribe(status => {
             if (status === 'ended') {
-                //this.onTimesUp();
-                console.log('Auto Submitted!')
+                this.is_auto_submitted = true;
                 this.submitAnswer();
-                this.timerSubscription.unsubscribe();
+                this.autoSubmitModal.show();
             }
         });
     }
@@ -137,9 +140,6 @@ export class QuizParticipationComponent implements OnInit {
             (x.answer1 !== null || x.answer2 !== null || x.answer3 !== null || x.answer4 !== null)
         ).length;
 
-        console.log(submittedQuestions)
-        console.log(noOfAnsweredQs)
-
         let param = {
             chapter_quiz_id: this.quiz_id,
             result_id: this.result_id,
@@ -149,16 +149,23 @@ export class QuizParticipationComponent implements OnInit {
         this.blockUI.start('Submitting Answer...');
         this._service.post('website/submit-quiz', param).subscribe(res => {
             this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
-            
+            this.stopQuiz();
             this.blockUI.stop();
+
+            if(!this.is_auto_submitted){
+                this.backToPaage();
+            }
         }, err => {
             this.blockUI.stop();
         });
-
     }
 
-    stopQuizConfirm(){
-        console.log("Stopped")
+    openAutoSubmittedModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template);
+    }
+
+    stopQuizConfirm(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
     }
 
     openConfirmModal(template: TemplateRef<any>) {
@@ -171,6 +178,15 @@ export class QuizParticipationComponent implements OnInit {
     }
     
     decline(): void {
+        this.modalRef?.hide();
+    }
+
+    confirmStop(): void {
+        this.modalRef?.hide();
+        this.submitAnswer();
+    }
+    
+    declineStop(): void {
         this.modalRef?.hide();
     }
 
@@ -229,6 +245,22 @@ export class QuizParticipationComponent implements OnInit {
         }, err => {
             this.blockUI.stop();
         });
+    }
+
+    backTo() {
+        this.autoSubmitModal.hide();
+        this.location.back();
+    }
+
+    backToPaage() {
+        this.location.back();
+    }
+
+    stopQuiz() {
+        this.quizRunning = false;
+        this.questionList = [];
+        this.timer.stop();
+        this.timerSubscription.unsubscribe();
     }
 
     PayNow(){

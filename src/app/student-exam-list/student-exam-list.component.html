@@ -55,42 +55,32 @@
                     <i class="fa-solid fa-file-pen"></i> My Exam List
                 </div>
                 
-                <table class="table table-bordered">
+                <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Exam Title</th>
                             <th scope="col">Date of Participation</th>
                             <th scope="col">Score</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Bangla Quiz 01</td>
-                            <td>31th August 2023, 01:23PM</td>
-                            <td>12.00</td>
+                    <tbody> <!-- examList -->
+                        <tr  *ngFor="let item of examList; let i = index;">
+                            <th scope="row">{{ i + 1 }}</th>
+                            <td>{{ item.title }} ({{ item.subject_name }})</td>
+                            <td>{{ item.created_at | date :'MMM d, y, h:mm a' }}</td>
+                            <td>
+                                <span *ngIf="item.mark > 0" class="text-success">{{ item.mark }}/{{ item.exam_mark }}</span>
+                                <span *ngIf="item.mark <= 0" class="text-danger">{{ item.mark }}/{{ item.exam_mark }}</span>
+                            </td>
+                            <td>
+                                <span *ngIf="item.submission_status == 'Submitted'" class="text-success">{{ item.submission_status }}</span>
+                                <span *ngIf="item.submission_status == 'Started'" class="text-warning">{{ item.submission_status }}</span>
+                            </td>
                             <td>
                                 <button [routerLink]="['/student-exam-result/', 1]" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> Check Answer</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>English Quiz: Noun</td>
-                            <td>27th August 2023, 11:23PM</td>
-                            <td>09.00</td>
-                            <td>
-                                <button [routerLink]="['/student-exam-result/', 2]" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> Check Answer</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Chemistry Quiz: Chapter 01</td>
-                            <td>25th August 2023, 2:34PM</td>
-                            <td>11.00</td>
-                            <td>
-                                <button [routerLink]="['/student-exam-result/', 3]" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> Check Answer</button>
                             </td>
                         </tr>
                     </tbody>

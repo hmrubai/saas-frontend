@@ -16,6 +16,7 @@ export class StudentExamListComponent implements OnInit {
     @BlockUI() blockUI: NgBlockUI;
     is_authenticated = false;
     courseList: Array<any> = [];
+    examList: Array<any> = [];
     is_loaded = false;
     user_id: any = '';
 
@@ -40,18 +41,18 @@ export class StudentExamListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getCourseDetails();
+        this.getContentList();
     }
 
-    getCourseDetails() {
+    getContentList() {
         this.blockUI.start('Loading...');
-        this._service.get('website/student-purchase-list').subscribe(res => {
-            this.courseList = res.data;
+        this._service.get('website/student-quiz-participated-list').subscribe(res => {
+            this.examList = res.data;
+            console.log(this.examList)
             this.is_loaded = true;
             this.blockUI.stop();
         }, err => {
             this.blockUI.stop();
         });
     }
-
 }

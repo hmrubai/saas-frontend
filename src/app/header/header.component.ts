@@ -64,7 +64,7 @@ export class HeaderComponent implements OnInit {
     organizationSettings(){
         this._service.get('website/organization-details-by-id/1').subscribe(res => {
                 this.websiteSettings = res.data;
-                console.log(this.websiteSettings);
+                //console.log(this.websiteSettings);
                 if(this.websiteSettings.logo){
                     this.site_logo = environment.imageURL + this.websiteSettings.logo
                 }

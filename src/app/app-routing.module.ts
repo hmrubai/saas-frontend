@@ -207,6 +207,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'quiz-participation/:quiz_id/:result_id', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./quiz-participation/quiz-participation.module').then(m => m.QuizParticipationModule)
+            }
+        ]
+    },
+    {
         path: 'student-exam-list', 
         children: [
             {

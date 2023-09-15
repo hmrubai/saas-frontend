@@ -28,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { BlockUIModule } from 'ng-block-ui';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { MathjaxModule } from "mathjax-angular";
 
 import { CourseListComponent } from './course-list/course-list.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
@@ -48,7 +49,7 @@ import { StudentExamListComponent } from './student-exam-list/student-exam-list.
 import { StudentExamResultComponent } from './student-exam-result/student-exam-result.component';
 import { MentorAssignmentListComponent } from './mentor-assignment-list/mentor-assignment-list.component';
 import { MentorStudentProgressListComponent } from './mentor-student-progress-list/mentor-student-progress-list.component';
-
+import { QuizParticipationComponent } from './quiz-participation/quiz-participation.component';
 
 
 import { TruncatePipe } from './_helpers/truncate-pipe';
@@ -89,7 +90,8 @@ import { TruncatePipe } from './_helpers/truncate-pipe';
     StudentExamListComponent,
     StudentExamResultComponent,
     MentorAssignmentListComponent,
-    MentorStudentProgressListComponent
+    MentorStudentProgressListComponent,
+    QuizParticipationComponent
   ],
   imports: [
     CommonModule,
@@ -101,7 +103,8 @@ import { TruncatePipe } from './_helpers/truncate-pipe';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    MathjaxModule.forRoot()
   ],
   providers: [
     {

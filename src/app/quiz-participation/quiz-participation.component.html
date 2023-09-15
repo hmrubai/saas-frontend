@@ -1,0 +1,158 @@
+<div class="container content-container">
+  <div class="row" *ngIf="is_loaded">
+    <div class="col-md-12">
+      <div class="scrollable-content">
+        <div class="mt-4 p-3">
+          <h2 class="fw-bold">
+            {{ quizDetails.title }} ({{ quizDetails.subject_name }})
+          </h2>
+          <table class="table table-sm table-bordered mt-4 text-left">
+            <tbody>
+              <tr>
+                <td><strong>Quiz</strong></td>
+                <td>{{ quizDetails.title }} ({{ quizDetails.subject_name }})</td>
+                <td><strong>Time</strong></td>
+                <td>{{ quizDetails.duration }} Minutes</td>
+                <td><strong>No. Of Questions</strong></td>
+                <td>{{ quizDetails.number_of_question }}</td>
+              </tr>
+              <tr>
+                <td><strong>Positive Marks</strong></td>
+                <td>{{ quizDetails.positive_mark }}</td>
+                <td><strong>Negative Marks</strong></td>
+                <td>{{ quizDetails.negative_mark }}</td>
+                <td><strong>Total Marks</strong></td>
+                <td>{{ quizDetails.total_mark }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="col-xs-12" *ngIf="is_loaded">
+                    <h3>MCQ Question</h3>
+                    <hr/>
+                    <div class="row" *ngFor="let item of questionList; let i=index">
+                        <div class="col-xs-12">
+                            <b> <div [mathjax]="i+1 + '. ' + item.question"></div></b>
+                            <span *ngIf="item.question_image"> 
+                            <span *ngIf="!item.question"><b>{{i+1}}. </b></span> <img src="{{item.question_image}}" class="question_image question-img" alt="Question Image"/>
+                            <br/>
+                            </span>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="row mar-top-10">
+                                <div class="col-lg-6 question_hover">
+                                    <input type="checkbox" class="option-check-input mx-2" [checked]="item.Options[0].Selected" id="option0{{i}}" (change)="onAnswerSelect($event, item,0)">
+                                    <label *ngIf="item.Options[0].Text && !item.Options[0].image" class="my-2" for="option0{{i}}"> A. {{item.Options[0].Text}}</label>
+                                    <label *ngIf="!item.Options[0].Text && item.Options[0].image" class="my-2" for="option0{{i}}"> A. <img *ngIf="item.Options[0].image" src="{{item.Options[0].image}}" class="option_image" alt="Option Image"/></label>
+                                    <label *ngIf="item.Options[0].Text && item.Options[0].image" class="my-2" for="option0{{i}}"> A. {{item.Options[0].Text}} <br/> <img *ngIf="item.Options[0].image" src="{{item.Options[0].image}}" class="option_image" alt="Option Image"/></label>
+                                </div>
+                                <div class="col-lg-6 question_hover">
+                                    <input type="checkbox" class="option-check-input mx-2" [checked]="item.Options[1].Selected"
+                                        id="option1{{i}}" (change)="onAnswerSelect($event, item,1)">
+                                    <label *ngIf="item.Options[1].Text && !item.Options[1].image" class="my-2" for="option1{{i}}"> B. {{item.Options[1].Text}}</label>
+                                    <label *ngIf="!item.Options[1].Text && item.Options[1].image" class="my-2" for="option1{{i}}"> B. <img *ngIf="item.Options[1].image" src="{{item.Options[1].image}}" class="option_image" alt="Option Image"/></label>
+                                    <label *ngIf="item.Options[1].Text && item.Options[1].image" class="my-2" for="option1{{i}}"> B. {{item.Options[1].Text}} <br/> <img *ngIf="item.Options[1].image" src="{{item.Options[1].image}}" class="option_image" alt="Option Image"/></label>
+                                </div>
+                                <div class="col-lg-6 question_hover">
+                                    <input type="checkbox" class="option-check-input mx-2" [checked]="item.Options[2].Selected"
+                                        id="option2{{i}}"
+                                        (change)="onAnswerSelect($event, item,2)">
+                                    <label *ngIf="item.Options[2].Text && !item.Options[2].image" class="my-2" for="option2{{i}}"> C. {{item.Options[2].Text}}</label>
+                                    <label *ngIf="!item.Options[2].Text && item.Options[2].image" class="my-2" for="option2{{i}}"> C. <img *ngIf="item.Options[2].image" src="{{item.Options[2].image}}" class="option_image" alt="Option Image"/></label>
+                                    <label *ngIf="item.Options[2].Text && item.Options[2].image" class="my-2" for="option2{{i}}"> C. {{item.Options[2].Text}} <br/> <img *ngIf="item.Options[2].image" src="{{item.Options[2].image}}" class="option_image" alt="Option Image"/></label>
+                                </div>
+                                <div class="col-lg-6 question_hover">
+                                    <input type="checkbox" class="option-check-input mx-2" [checked]="item.Options[3].Selected"
+                                        id="option3{{i}}"
+                                        (change)="onAnswerSelect($event, item,3)">
+                                    <label *ngIf="item.Options[3].Text && !item.Options[3].image" class="my-2" for="option3{{i}}"> D. {{item.Options[3].Text}}</label>
+                                    <label *ngIf="!item.Options[3].Text && item.Options[3].image" class="my-2" for="option3{{i}}"> D. <img *ngIf="item.Options[3].image" src="{{item.Options[3].image}}" class="option_image" alt="Option Image"/></label>
+                                    <label *ngIf="item.Options[3].Text && item.Options[3].image" class="my-2" for="option3{{i}}"> D. {{item.Options[3].Text}} <br/> <img *ngIf="item.Options[3].image" src="{{item.Options[3].image}}" class="option_image" alt="Option Image"/></label>
+                                </div>
+                                <div class="col-lg-6 question_hover" *ngIf="item.Options[4]">
+                                    <input type="checkbox" class="option-check-input mx-2" [checked]="item.Options[4].Selected"
+                                        id="option4{{i}}"
+                                        (change)="onAnswerSelect($event, item,4)">
+                                    <label *ngIf="item.Options[4].Text && !item.Options[4].image" class="my-2" for="option4{{i}}"> E. {{item.Options[4].Text}}</label>
+                                    <label *ngIf="!item.Options[4].Text && item.Options[4].image" class="my-2" for="option4{{i}}"> E. <img *ngIf="item.Options[4].image" src="{{item.Options[4].image}}" class="option_image" alt="Option Image"/></label>
+                                    <label *ngIf="item.Options[4].Text && item.Options[4].image" class="my-2" for="option4{{i}}"> E. {{item.Options[4].Text}} <br/> <img *ngIf="item.Options[4].image" src="{{item.Options[4].image}}" class="option_image" alt="Option Image"/></label>
+                                </div>
+                                <div class="col-lg-6 question_hover" *ngIf="item.Options[5]">
+                                    <input type="checkbox" class="option-check-input mx-2" [checked]="item.Options[5].Selected"
+                                        id="option5{{i}}"
+                                        (change)="onAnswerSelect($event, item,5)">
+                                    <label *ngIf="item.Options[5].Text && !item.Options[5].image" class="my-2" for="option5{{i}}"> F. {{item.Options[5].Text}}</label>
+                                    <label *ngIf="!item.Options[5].Text && item.Options[5].image" class="my-2" for="option5{{i}}"> F. <img *ngIf="item.Options[5].image" src="{{item.Options[5].image}}" class="option_image" alt="Option Image"/></label>
+                                    <label *ngIf="item.Options[5].Text && item.Options[5].image" class="my-2" for="option5{{i}}"> F. {{item.Options[5].Text}} <br/> <img *ngIf="item.Options[5].image" src="{{item.Options[5].image}}" class="option_image" alt="Option Image"/></label>
+                                </div>
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+                    <!--<div class="row" *ngIf="writtenQuestionList">
+                    <div class="col-xs-6" *ngIf="writtenQuestionList.attachment_url">
+                        <h3>Written Question</h3>
+                        <hr/>
+                        <a href="{{ writtenQuestionList.attachment_url }}" target="_blank"> 
+                            <i class="fa fa-file fa-4x"></i> <span> View Question</span>
+                        </a>
+                        <br/><br/>
+                    </div>
+                    <div class="col-xs-6" *ngIf="writtenQuestionList.attachment_url">
+                        <h3>Upload Answer</h3>
+                        <hr/>
+                        <input type="file" class="form-control" multiple (change)="onSelectFile($event)" placeholder="Upload file" accept="image/png, image/gif, image/jpeg">
+                        <br/><br/>
+                    </div>
+                    </div>-->
+                </div>
+                <div class="col-xs-12 text-center mar-bottom-50">
+                    <button type="button" class="btn btn-success btn-lg mx-3" (click)="submitAnswer()"
+                        *ngIf="timer.isRunning">Submit</button>
+                    <button type="button" (click)="stopQuizConfirm()" class="btn btn-secondary btn-lg my-2"> Cancel</button>
+                </div>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" [innerHTML]="modal_title"></h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <iframe width="100%" height="315" [src]="safeURL(video_url)" frameborder="0" allowfullscreen></iframe>
+  </div>
+</ng-template>
+
+<div class="widget widget_countdown bg_default text-center" *ngIf="quizRunning">
+  <div class="countdown_time countdown_white">
+      <span class="countdown_box">
+          <span class="countdown hours">{{timer.hour}}</span><span class="cd_text">Hours</span>
+      </span>
+      <span class="countdown_box">
+          <span class="countdown minutes">{{timer.minute}}</span><span class="cd_text">Minutes</span>
+      </span>
+      <span class="countdown_box">
+          <span class="countdown seconds">{{timer.second}}</span><span class="cd_text">Seconds</span>
+      </span>
+  </div>
+</div>
+
+<ng-template #confirmTemplate>
+  <div class="modal-body text-center">
+    <p>Do you want to start exam?</p>
+    <button type="button" class="btn btn-outline-success mx-2" (click)="confirm()" >Yes</button>
+    <button type="button" class="btn btn-outline-danger" (click)="decline()" >No</button>
+  </div>
+</ng-template>
+
+<block-ui></block-ui>

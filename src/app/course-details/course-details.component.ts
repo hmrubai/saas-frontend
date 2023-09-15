@@ -3,10 +3,12 @@ import { AuthenticationService } from '../_services/authentication.service';
 import { environment } from '../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from '../_services/common.service';
+import { Timer } from '../_models/timer';
 import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-course-details',
@@ -21,15 +23,24 @@ export class CourseDetailsComponent implements OnInit {
     is_loaded = false;
     user_id: any = '';
     modalRef?: BsModalRef;
+    timer: Timer = new Timer();
+    quizRunning: boolean = false;
+
+    assetURL = environment.imageURL;
 
     video_url: any;
+    pdfFilePath: any;
     modal_title = 'Video';
     modalConfig: any = { class: 'gray modal-xl', backdrop: 'static' };
 
     courseDetails: any = {};
 
+    quizDetails: any = {};
+
     public user_role = null;
     public currentUser: any = {};
+
+    timerSubscription: Subscription;
 
     course_id;
     constructor(
@@ -78,6 +89,66 @@ export class CourseDetailsComponent implements OnInit {
         this.modal_title = item.title;
         this.video_url = item.video_youtube_url;
         this.openModal(template);
+    }
+
+    viewScript(item: any, template: TemplateRef<any>){
+        console.log(item)
+        if(!item.script_raw_url){
+            this.toastr.warning("No resource file has been added!", 'Attention!', { timeOut: 2000 });
+            return;
+        }
+
+        // this.pdfFilePath = this.assetURL + '../' + item.script_raw_url;
+        // this.openModal(template);
+
+        window.open(
+            this.assetURL + '../' + item.script_raw_url, '_blank'
+        );
+    }
+
+    startQuiz(){
+        this.quizRunning = true;
+        //this.quizDetails.quiz_duration
+        this.timerSubscription = this.timer.start(5 * 60).subscribe(status => {
+            if (status === 'ended') {
+                //this.onTimesUp();
+                this.timerSubscription.unsubscribe();
+            }
+        });
+    }
+
+    openConfirmModal(item: any, template: TemplateRef<any>) {
+        this.quizDetails = item;
+        console.log(this.quizDetails)
+        this.modalRef = this.modalService.show(template, {class: 'modal-md'});
+    }
+
+    submitStartQuiz(){
+        this.blockUI.start('Starting...');
+        let param = {
+            course_id: this.course_id,
+            chapter_quiz_id: this.quizDetails.chapter_quiz_id
+        };
+
+        this._service.post('website/start-quiz', param).subscribe(res => {
+            this.toastr.info("Navigating to the quiz!", 'Success!', { timeOut: 2000 });
+            this.router.navigate(['/quiz-participation/', this.quizDetails.chapter_quiz_id, res.data.id]);
+            this.blockUI.stop();
+        }, err => {
+            this.toastr.warning(err.data.message, 'Attention!', { timeOut: 2000 });
+            this.blockUI.stop();
+        });
+    }
+
+    confirm(): void {
+        this.modalRef?.hide();
+        this.submitStartQuiz();
+        //this.router.navigate(['/quiz-participation/', this.quizDetails.chapter_quiz_id]);
+        //this.startQuiz();
+    }
+    
+    decline(): void {
+        this.modalRef?.hide();
     }
 
     getCourseDetails() {

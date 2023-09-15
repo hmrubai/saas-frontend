@@ -24,13 +24,13 @@
                     <span class="badge badge-pill text-body"> <i class="fa-solid fa-clock"></i> {{ item.video_duration }} minutes</span>
                 </li>
 
-                <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="item.chapter_script_id">
+                <li class="list-group-item d-flex justify-content-between align-items-center video-link" (click)="viewScript(item, templatePDF)" *ngIf="item.chapter_script_id">
                     <span><i class="fa-solid fa-file-lines"></i> {{ item.script_title }}</span>
                     <span class="badge badge-pill text-body"><i class="fa-solid fa-book"></i> Download</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center" *ngIf="item.chapter_quiz_id">
-                    <span><i class="fa-solid fa-list-check"></i> {{ item.quiz_title }}</span>
-                    <span class="badge badge-pill text-body"><i class="fa-solid fa-clock"></i> {{ item.quiz_duration }}</span>
+                <li class="list-group-item d-flex justify-content-between align-items-center video-link" (click)="openConfirmModal(item, confirmTemplate)" *ngIf="item.chapter_quiz_id">
+                    <span><i class="fa-solid fa-list-check"></i> {{ item.quiz_title }} ({{ item.subject_name }})</span>
+                    <span class="badge badge-pill text-body"><i class="fa-solid fa-clock"></i> {{ item.quiz_duration }} minutes</span>
                 </li>
             </ul>
         </div>
@@ -146,4 +146,64 @@
     <iframe width="100%" height="315" [src]="safeURL(video_url)" frameborder="0" allowfullscreen></iframe>
   </div>
 </ng-template>
+
+<ng-template #templatePDF>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left" [innerHTML]="modal_title"></h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!--<pdf-viewer [src]="pdfFilePath" [render-text]="true" style="display: block;"></pdf-viewer>-->
+  </div>
+</ng-template>
+
+<div class="widget widget_countdown bg_default text-center" *ngIf="quizRunning">
+  <div class="countdown_time countdown_white">
+      <span class="countdown_box">
+          <span class="countdown hours">{{timer.hour}}</span><span class="cd_text">Hours</span>
+      </span>
+      <span class="countdown_box">
+          <span class="countdown minutes">{{timer.minute}}</span><span class="cd_text">Minutes</span>
+      </span>
+      <span class="countdown_box">
+          <span class="countdown seconds">{{timer.second}}</span><span class="cd_text">Seconds</span>
+      </span>
+  </div>
+</div>
+
+<ng-template #confirmTemplate>
+  <div class="modal-body">
+    <h5 class="text-center">Do you want to start exam?</h5>
+    <table class="table table-sm table-bordered mt-4 text-left">
+      <tbody>
+        <tr>
+          <td><strong>Quiz</strong></td>
+          <td>{{ quizDetails.quiz_title }} ({{ quizDetails.subject_name }})</td>
+        </tr>
+        <tr>
+          <td><strong>Time</strong></td>
+          <td>{{ quizDetails.quiz_details.duration }} Minutes</td>
+        </tr>
+        <tr>
+          <td><strong>No. Of Questions</strong></td>
+          <td>{{ quizDetails.quiz_details.number_of_question }}</td>
+        </tr>
+        <tr>
+          <td><strong>Total Marks</strong></td>
+          <td>{{ quizDetails.quiz_details.total_mark }}</td>
+        </tr>
+        <tr *ngIf="!quizDetails.quiz_details.sufficient_question">
+          <td colspan="2" class="text-danger"><i>The question is being prepared! We appreciate your patience and understanding..</i></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="col-lg-12 text-center mt-4">
+      <button type="button" class="btn btn-outline-success mx-2" *ngIf="quizDetails.quiz_details.sufficient_question" (click)="confirm()" >Start Exam</button>
+      <button type="button" class="btn btn-outline-danger" (click)="decline()" >Close</button>
+    </div>
+  </div>
+</ng-template>
+
 <block-ui></block-ui>

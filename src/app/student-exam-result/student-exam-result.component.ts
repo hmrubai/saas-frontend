@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { CommonService } from '../_services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-student-exam-result',
@@ -19,17 +20,19 @@ export class StudentExamResultComponent implements OnInit {
     is_loaded = false;
     user_id: any = '';
 
-    courseDetails: any = {};
+    resultDetails: any = {};
 
     public user_role = null;
     public currentUser: any = {};
+    result_id;
 
     constructor(
         private _service: CommonService,
         private authService: AuthenticationService,
         private toastr: ToastrService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private location: Location
     ) {
         if (this.authService.isAuthenticated()) {
             this.is_authenticated = true;
@@ -37,21 +40,30 @@ export class StudentExamResultComponent implements OnInit {
             this.user_role = this.currentUser.user_type;
             this.user_id = this.currentUser.id;
         }
+
+        this.result_id = this.route.snapshot.paramMap.get("result_id");
+
+        console.log(this.result_id)
     }
 
     ngOnInit(): void {
-        this.getCourseDetails();
+        this.getResultDetails();
     }
 
-    getCourseDetails() {
+    getResultDetails() {
         this.blockUI.start('Loading...');
-        this._service.get('website/student-purchase-list').subscribe(res => {
-            this.courseList = res.data;
+        this._service.get('website/student-quiz-result-details-by-id/' + this.result_id).subscribe(res => {
+            this.resultDetails = res.data;
+            console.log(this.resultDetails);
             this.is_loaded = true;
             this.blockUI.stop();
         }, err => {
             this.blockUI.stop();
         });
+    }
+
+    backToPage() {
+        this.location.back();
     }
 
 }

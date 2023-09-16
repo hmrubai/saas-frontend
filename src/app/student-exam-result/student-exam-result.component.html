@@ -53,27 +53,37 @@
             <div class="scrollable-content mt-3">
                 <div class="alert alert-success" role="alert">
                     <i class="fa-solid fa-file-lines"></i> Exam Result 
+                    <span (click)="backToPage()" class="float-end btn btn-secondary btn-sm"><i class="fa-solid fa-arrow-left"></i> Back</span>
                 </div>
 
-                <table class="table table-bordered">
+                <table class="table table-bordered" *ngIf="is_loaded">
                     <tbody>
                         <tr>
                             <td><strong>Exam Name</strong></td>
-                            <td>Bangla Quiz 01</td>
+                            <td>{{ resultDetails.title }} ({{ resultDetails.subject_name }})</td>
                             <td><strong>Date</strong></td>
-                            <td>31th August 2023, 01:23PM</td>
+                            <td>{{ resultDetails.created_at | date :'MMM d, y, h:mm a' }}</td>
                         </tr>
                         <tr>
                             <td><strong>Number Of Question</strong></td>
-                            <td>15</td>
+                            <td>{{ resultDetails.number_of_question }}</td>
                             <td><strong>Duration</strong></td>
-                            <td>10.00 Minutes</td>
+                            <td>{{ resultDetails.duration }} Minutes</td>
                         </tr>
                         <tr>
                             <td><strong>Total Marks</strong></td>
-                            <td>15</td>
+                            <td>{{ resultDetails.exam_mark }}</td>
                             <td><strong>Achieved</strong></td>
-                            <td><strong>12.00</strong> </td>
+                            <td>
+                                <strong *ngIf="resultDetails.mark > 0" class="text-success">{{ resultDetails.mark }}</strong> 
+                                <strong *ngIf="resultDetails.mark <= 0" class="text-danger">{{ resultDetails.mark }}</strong> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Positive Count</strong></td>
+                            <td><strong>{{ resultDetails.positive_count }}</strong></td>
+                            <td><strong>Negetive Count</strong></td>
+                            <td><strong>{{ resultDetails.negetive_count }}</strong> </td>
                         </tr>
                     </tbody>
                 </table>
@@ -82,323 +92,91 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h3 class="text-center mb-3"><i class="fa-solid fa-file-pen"></i> Answer Script</h3>
-                            <div class="alert alert-warning question-margin" role="alert">
-                                <strong>1. What does achieve mean in English?</strong>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio" id="radio1" value="1" checked/>
-                                <label for="radio1">Option 01</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio" id="radio1" />
-                                <label for="radio1">Option 02</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio" id="radio1" />
-                                <label for="radio1">Option 03</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio" id="radio1" />
-                                <label for="radio1">Option 04</label>
-                            </div>
                         </div>
                     </div>
-
-                    <div class="row mt-4">
+                    <div class="row"  *ngFor="let item of resultDetails.questions; let i = index;">
                         <div class="col-lg-12">
                             <div class="alert alert-warning question-margin" role="alert">
-                                <strong>2. What does achieved mean in a sentence?</strong>
+                                <strong> {{ i+1 }}. {{ item.question_text }}</strong>
+                                <span *ngIf="item.is_correct" class="float-end">[1]</span>
+                                <span *ngIf="!item.is_correct" class="float-end">[0]</span>
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio2" id="radio2"/>
-                                <label for="radio2">Option 01</label>
+                            <div class="funkyradio-success" *ngIf="item.correct_answer1 && item.answer1">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option1 }} </label>
+                            </div>
+                            <div class="funkyradio-danger" *ngIf="!item.correct_answer1 && item.answer1">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option1 }} </label>
+                            </div>
+                            <div class="funkyradio-success" *ngIf="item.correct_answer1 && !item.answer1">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option1 }} </label>
+                            </div>
+                            <div class="funkyradio-default" *ngIf="!item.correct_answer1 && !item.answer1">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}"/>
+                                <label for="radio{{ i }}"> {{ item.option1 }} </label>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio2" id="radio2" />
-                                <label for="radio2">Option 02</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-danger">
-                                <input type="radio" name="radio2" id="radio2" checked/>
-                                <label for="radio2">Option 03</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio2" id="radio2" />
-                                <label for="radio2">Option 04</label>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row mt-4">
-                        <div class="col-lg-12">
-                            <div class="alert alert-warning question-margin" role="alert">
-                                <strong>3. What does achieved mean in a sentence?</strong>
+                        <div class="col-sm-6">
+                            <div class="funkyradio-success" *ngIf="item.correct_answer2 && item.answer2">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option2 }} </label>
+                            </div>
+                            <div class="funkyradio-danger" *ngIf="!item.correct_answer2 && item.answer2">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option2 }} </label>
+                            </div>
+                            <div class="funkyradio-success" *ngIf="item.correct_answer2 && !item.answer2">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option2 }} </label>
+                            </div>
+                            <div class="funkyradio-default" *ngIf="!item.correct_answer2 && !item.answer2">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}"/>
+                                <label for="radio{{ i }}"> {{ item.option2 }} </label>
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio3" id="radio3"/>
-                                <label for="radio3">Option 01</label>
+                            <div class="funkyradio-success" *ngIf="item.correct_answer3 && item.answer3">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option3 }} </label>
+                            </div>
+                            <div class="funkyradio-danger" *ngIf="!item.correct_answer3 && item.answer3">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option3 }} </label>
+                            </div>
+                            <div class="funkyradio-success" *ngIf="item.correct_answer3 && !item.answer3">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option3 }} </label>
+                            </div>
+                            <div class="funkyradio-default" *ngIf="!item.correct_answer3 && !item.answer3">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}"/>
+                                <label for="radio{{ i }}"> {{ item.option3 }} </label>
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio3" id="radio3" checked/>
-                                <label for="radio3">Option 02</label>
+                            <div class="funkyradio-success" *ngIf="item.correct_answer4 && item.answer4">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option4 }} </label>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-danger">
-                                <input type="radio" name="radio3" id="radio3" />
-                                <label for="radio3">Option 03</label>
+                            <div class="funkyradio-danger" *ngIf="!item.correct_answer4 && item.answer4">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option4 }} </label>
                             </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio3" id="radio3" />
-                                <label for="radio3">Option 04</label>
+                            <div class="funkyradio-success" *ngIf="item.correct_answer4 && !item.answer4">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}" value="1" checked/>
+                                <label for="radio{{ i }}"> {{ item.option4 }} </label>
+                            </div>
+                            <div class="funkyradio-default" *ngIf="!item.correct_answer4 && !item.answer4">
+                                <input type="checkbox" name="radio{{ i }}" id="radio{{ i }}"/>
+                                <label for="radio{{ i }}"> {{ item.option4 }} </label>
                             </div>
                         </div>
                     </div>
-
-                    <div class="row mt-4">
-                        <div class="col-lg-12">
-                            <div class="alert alert-warning question-margin" role="alert">
-                                <strong>4. What does achieved mean in a sentence?</strong>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio4" id="radio4"/>
-                                <label for="radio4">Option 01</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio4" id="radio2" />
-                                <label for="radio2">Option 02</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio4" id="radio2"/>
-                                <label for="radio2">Option 03</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio4" id="radio2" checked/>
-                                <label for="radio2">Option 04</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-lg-12">
-                            <div class="alert alert-warning question-margin" role="alert">
-                                <strong>5. What does achieved mean in a sentence?</strong>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio5" id="radio2"/>
-                                <label for="radio2">Option 01</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio5" id="radio2" />
-                                <label for="radio2">Option 02</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio5" id="radio2" checked/>
-                                <label for="radio2">Option 03</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio5" id="radio2" />
-                                <label for="radio2">Option 04</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-lg-12">
-                            <div class="alert alert-warning question-margin" role="alert">
-                                <strong>6. What does achieved mean in a sentence?</strong>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio6" id="radio2"/>
-                                <label for="radio2">Option 01</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio6" id="radio2"  checked/>
-                                <label for="radio2">Option 02</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio6" id="radio2" />
-                                <label for="radio2">Option 03</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio6" id="radio2" />
-                                <label for="radio2">Option 04</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-lg-12">
-                            <div class="alert alert-warning question-margin" role="alert">
-                                <strong>7. What does achieved mean in a sentence?</strong>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio7" id="radio2" checked/>
-                                <label for="radio2">Option 01</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio7" id="radio2" />
-                                <label for="radio2">Option 02</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio7" id="radio2" />
-                                <label for="radio2">Option 03</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio7" id="radio2" />
-                                <label for="radio2">Option 04</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-lg-12">
-                            <div class="alert alert-warning question-margin" role="alert">
-                                <strong>8. What does achieved mean in a sentence?</strong>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio8" id="radio2"/>
-                                <label for="radio2">Option 01</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio8" id="radio2"/>
-                                <label for="radio2">Option 02</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio8" id="radio2" checked/>
-                                <label for="radio2">Option 03</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio8" id="radio2" />
-                                <label for="radio2">Option 04</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-lg-12">
-                            <div class="alert alert-warning question-margin" role="alert">
-                                <strong>9. What does achieved mean in a sentence?</strong>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio9" id="radio2"/>
-                                <label for="radio2">Option 01</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-danger">
-                                <input type="radio" name="radio9" id="radio2"  checked/>
-                                <label for="radio2">Option 02</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio9" id="radio2" />
-                                <label for="radio2">Option 03</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio9" id="radio2" />
-                                <label for="radio2">Option 04</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mt-4">
-                        <div class="col-lg-12">
-                            <div class="alert alert-warning question-margin" role="alert">
-                                <strong>10. What does achieved mean in a sentence?</strong>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio10" id="radio2"/>
-                                <label for="radio2">Option 01</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio10" id="radio2"/>
-                                <label for="radio2">Option 02</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-default">
-                                <input type="radio" name="radio10" id="radio2" />
-                                <label for="radio2">Option 03</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="funkyradio-success">
-                                <input type="radio" name="radio10" id="radio2" checked/>
-                                <label for="radio2">Option 04</label>
-                            </div>
-                        </div>
-                    </div>
+                    
                     
                 </div>
 

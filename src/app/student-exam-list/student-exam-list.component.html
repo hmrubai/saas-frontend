@@ -54,7 +54,6 @@
                 <div class="alert alert-success" role="alert">
                     <i class="fa-solid fa-file-pen"></i> My Exam List
                 </div>
-                
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
@@ -66,7 +65,7 @@
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
-                    <tbody> <!-- examList -->
+                    <tbody> 
                         <tr  *ngFor="let item of examList; let i = index;">
                             <th scope="row">{{ i + 1 }}</th>
                             <td>{{ item.title }} ({{ item.subject_name }})</td>
@@ -80,7 +79,7 @@
                                 <span *ngIf="item.submission_status == 'Started'" class="text-warning">{{ item.submission_status }}</span>
                             </td>
                             <td>
-                                <button [routerLink]="['/student-exam-result/', 1]" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> Check Answer</button>
+                                <button [routerLink]="['/student-exam-result/', item.id]" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> Check Answer</button>
                             </td>
                         </tr>
                     </tbody>

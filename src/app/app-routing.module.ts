@@ -225,7 +225,7 @@ const routes: Routes = [
         ]
     },
     {
-        path: 'student-exam-result/:exam_id', 
+        path: 'student-exam-result/:result_id', 
         children: [
             {
                 path: '',

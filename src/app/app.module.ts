@@ -29,6 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BlockUIModule } from 'ng-block-ui';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { MathjaxModule } from "mathjax-angular";
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { CourseListComponent } from './course-list/course-list.component';
 import { CourseDetailsComponent } from './course-details/course-details.component';
@@ -104,7 +105,8 @@ import { TruncatePipe } from './_helpers/truncate-pipe';
     ReactiveFormsModule,
     HttpClientModule,
     ModalModule.forRoot(),
-    MathjaxModule.forRoot()
+    MathjaxModule.forRoot(),
+    NgSelectModule
   ],
   providers: [
     {

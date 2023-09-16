@@ -48,7 +48,7 @@
             <div class="scrollable-content mt-3">
                 <div class="alert alert-success" role="alert">
                     <i class="fa-solid fa-edit"></i> Assignment List 
-                    <button class="btn btn-success btn-sm float-end"><i class="fa-solid fa-plus"></i> Create New Assignment</button>
+                    <button class="btn btn-success btn-sm float-end" (click)="openModal(template)"><i class="fa-solid fa-plus"></i> Create New Assignment</button>
                 </div>
                 
                 <table class="table table-bordered">
@@ -105,3 +105,84 @@
         </div>
     </div>
 </div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"><i class="fa-solid fa-calendar-plus"></i> Add New Assignment</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="hideModal()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="p-4 mb-2" [formGroup]="entryForm">
+        <h6 class="">Title</h6>
+        <div class="input-group">
+            <input type="text" class="form-control" formControlName="title"
+                [ngClass]="{ 'is-invalid': submitted && f['title'].errors }" placeholder="Title" autocomplete="off">
+        </div>
+        <div class="input-group mb-3">
+            <div *ngIf="submitted && f['title'].errors" class="error-text">
+                <span *ngIf="f['title'].errors?.['required']" class="text-danger"> Title is required</span>
+            </div>
+        </div>
+
+        <h6 class="">Description</h6>
+        <div class="input-group">
+            <textarea class="form-control" formControlName="description"
+                [ngClass]="{ 'is-invalid': submitted && f['description'].errors }" placeholder="Description" cols="30" rows="5"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <div *ngIf="submitted && f['description'].errors" class="error-text">
+                <span *ngIf="f['description'].errors?.['required']" class="text-danger"> Description is required</span>
+            </div>
+        </div>
+
+        <h6 class="">Select Course</h6>
+        <div class="input-group">
+            <ng-select [items]="cars" 
+                class="col-lg-12"
+                bindLabel="name" 
+                bindValue="id" 
+                formControlName="course_id"
+                 placeholder="Select Course"
+                [ngClass]="{ 'is-invalid': submitted && f['course_id'].errors }">
+            </ng-select>
+        </div>
+        <div class="input-group mb-3">
+            <div *ngIf="submitted && f['course_id'].errors" class="error-text">
+                <span *ngIf="f['course_id'].errors?.['required']" class="text-danger"> Course is required</span>
+            </div>
+        </div>
+
+        <h6 class="">Select Student</h6>
+        <div class="input-group">
+            <ng-select [items]="cars" 
+                class="col-lg-12"
+                bindLabel="name" 
+                bindValue="id" 
+                formControlName="course_id"
+                 placeholder="Select Student"
+                [ngClass]="{ 'is-invalid': submitted && f['course_id'].errors }">
+            </ng-select>
+        </div>
+        <div class="input-group mb-3">
+            <div *ngIf="submitted && f['course_id'].errors" class="error-text">
+                <span *ngIf="f['course_id'].errors?.['required']" class="text-danger"> Student is required</span>
+            </div>
+        </div>
+
+        <h6 class="">Deadline Date</h6>
+        <div class="input-group">
+            <input type="datetime-local" class="form-control" formControlName="deadline"
+                [ngClass]="{ 'is-invalid': submitted && f['deadline'].errors }" placeholder="Schedule Date" autocomplete="off">
+        </div>
+        <div class="input-group mb-3">
+            <div *ngIf="submitted && f['deadline'].errors" class="error-text">
+                <span *ngIf="f['deadline'].errors?.['required']" class="text-danger"> Deadline Date is required</span>
+            </div>
+        </div>
+        <button type="submit" (click)="hideModal()" class="btn btn-secondary float-end mb-2">Close</button>
+        <button type="submit" (click)="formSubmit()" class="btn btn-success float-end mx-2 mb-2">Submit</button>
+    </form>
+  </div>
+</ng-template>

@@ -61,19 +61,25 @@
                     </thead>
                     <tbody>
                         <tr  *ngFor="let item of classList; let i = index;">
-                            <th scope="row">{{ i + 1 }}</th>
-                            <td>
+                            <th class="align-middle" scope="row">{{ i + 1 }}</th>
+                            <td class="align-middle">
                                 {{ item.student_name }} ({{ item.student_contact_no }})
                             </td>
-                            <td>{{ item.course_title }}</td>
-                            <td>
+                            <td class="align-middle">{{ item.course_title }}</td>
+                            <td class="align-middle">
                                 {{ item.schedule_datetime | date :'MMM d, y, h:mm a' }}<br/>
-                                <span *ngIf="item.has_completed" class="small"><strong>Start:</strong> {{ item.start_time | date :'MMM d, y, h:mm a' }}</span>
+                                <span *ngIf="item.has_started && !item.has_completed" class="small">
+                                    <strong *ngIf="item.start_time">Start:</strong> {{ item.start_time | date :'MMM d, y, h:mm a' }}
+                                </span>
+                                <span *ngIf="item.has_completed" class="small">
+                                    <strong *ngIf="item.start_time">Start:</strong> {{ item.start_time | date :'MMM d, y, h:mm a' }}
+                                    <strong *ngIf="item.end_time">End:</strong> {{ item.end_time | date :'MMM d, y, h:mm a' }}
+                                </span>
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 <button class="btn btn-success mx-2 btn-sm" *ngIf="item.has_completed"><i class="fa-solid fa-circle-check"></i> Completed</button>
                                 <a href="{{ item.join_link }}" target="_blank"><button class="btn btn-info mx-2 btn-sm" *ngIf="!item.has_completed && item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button></a>
-                                <button class="btn btn-danger mx-2 btn-sm" *ngIf="!item.has_completed && item.can_join && item.has_started"><i class="fa-solid fa-power-off"></i> End Class</button>
+                                <button class="btn btn-danger mx-2 btn-sm" (click)="endClassConfirmModal(item, endClassConfirmTemplate)" *ngIf="item.has_started && !item.has_completed"><i class="fa-solid fa-power-off"></i> End Class</button>
                                 <button class="btn btn-secondary mx-2 btn-sm disabled" *ngIf="!item.has_completed && !item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button>
                             </td>
                         </tr>
@@ -88,3 +94,13 @@
         </div>
     </div>
 </div>
+
+<ng-template #endClassConfirmTemplate>
+  <div class="modal-body text-center">
+    <p class="text-danger">Do you want to end class?</p>
+    <button type="button" class="btn btn-outline-danger mx-2" (click)="confirmEndClass()" >End Class</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="declineEndClass()" >No</button>
+  </div>
+</ng-template>
+
+<block-ui></block-ui>

@@ -47,13 +47,14 @@
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
                 <div class="alert alert-info" role="alert">
-                    <i class="fa-solid fa-calendar-day"></i> My Schedule List
+                    <i class="fa-solid fa-calendar-day"></i> My Schedule List <span *ngIf="is_loaded_student"> <strong>({{ studentDetails.name }} - {{ studentDetails.contact_no }})</strong></span>
+                    <span (click)="backToPage()" class="float-end btn btn-secondary btn-sm"><i class="fa-solid fa-circle-left"></i> Back</span>
+                    <button (click)="openModal(template)" class="btn btn-success btn-sm float-end mx-2"><i class="fa-solid fa-calendar-plus"></i> Add Schedule</button>
                 </div>
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Student</th>
                             <th scope="col">Course</th>
                             <th scope="col">Date</th>
                             <th scope="col">Action</th>
@@ -61,19 +62,26 @@
                     </thead>
                     <tbody>
                         <tr  *ngFor="let item of classList; let i = index;">
-                            <th scope="row">{{ i + 1 }}</th>
+                            <th class="align-middle" scope="row">{{ i + 1 }}</th>
+                            <td class="align-middle">{{ item.course_title }}</td>
                             <td>
-                                {{ item.student_name }} ({{ item.student_contact_no }})
+                                {{ item.schedule_datetime | date :'MMM d, y, h:mm a' }} <br/>
+                                <span *ngIf="item.has_started && !item.has_completed" class="small">
+                                    <strong *ngIf="item.start_time">Start:</strong> {{ item.start_time | date :'MMM d, y, h:mm a' }}
+                                </span>
+                                <span *ngIf="item.has_completed" class="small">
+                                    <strong *ngIf="item.start_time">Start:</strong> {{ item.start_time | date :'MMM d, y, h:mm a' }}
+                                    <strong *ngIf="item.end_time">End:</strong> {{ item.end_time | date :'MMM d, y, h:mm a' }}
+                                </span>
                             </td>
-                            <td>{{ item.course_title }}</td>
-                            <td>
-                                {{ item.schedule_datetime | date :'MMM d, y, h:mm a' }}<br/>
-                                <span *ngIf="item.has_completed" class="small"><strong>Start:</strong> {{ item.start_time | date :'MMM d, y, h:mm a' }}</span>
-                            </td>
-                            <td>
+                            <td class="align-middle">
                                 <button class="btn btn-success mx-2 btn-sm" *ngIf="item.has_completed"><i class="fa-solid fa-circle-check"></i> Completed</button>
                                 <button class="btn btn-info mx-2 btn-sm" *ngIf="!item.has_completed && item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button>
                                 <button class="btn btn-secondary mx-2 btn-sm disabled" *ngIf="!item.has_completed && !item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button>
+                                <button class="btn btn-warning mx-2 btn-sm" (click)="openUpdateModal(item, updateTemplate)" *ngIf="!item.has_started && !item.has_completed"><i class="fa-solid fa-edit"></i> Edit</button>
+                                <button class="btn btn-secondary mx-2 btn-sm disabled" *ngIf="item.has_started && !item.has_completed"><i class="fa-solid fa-edit"></i> Edit</button>
+                                <button class="btn btn-danger mx-2 btn-sm" (click)="deleteConfirmModal(item, confirmDeleteTemplate)" *ngIf="!item.has_completed"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-info mx-2 btn-sm" (click)="endClassConfirmModal(item, endClassConfirmTemplate)" *ngIf="item.has_started && !item.has_completed"><i class="fa-solid fa-scissors"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -82,3 +90,69 @@
         </div>
     </div>
 </div>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"><i class="fa-solid fa-calendar-plus"></i> Add New Schedule</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="p-4 mb-2" [formGroup]="entryForm">
+        <h6 class="">Schedule Date</h6>
+        <div class="input-group">
+            <input type="datetime-local" class="form-control" formControlName="schedule_date"
+                [ngClass]="{ 'is-invalid': submitted && f['schedule_date'].errors }" placeholder="Schedule Date" autocomplete="off">
+        </div>
+        <div class="input-group mb-3">
+            <div *ngIf="submitted && f['schedule_date'].errors" class="error-text">
+                <span *ngIf="f['schedule_date'].errors?.['required']" class="text-danger"> Schedule Date is required</span>
+            </div>
+        </div>
+        <button type="submit" (click)="formSubmit()" class="btn btn-success form-control">Submit</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #updateTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"><i class="fa-solid fa-calendar-plus"></i> Update Schedule</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="p-4 mb-2" [formGroup]="updateForm">
+        <h6 class="">Schedule Date</h6>
+        <div class="input-group">
+            <input type="datetime-local" class="form-control" formControlName="schedule_date"
+                [ngClass]="{ 'is-invalid': submitted && uf['schedule_date'].errors }" placeholder="Schedule Date" autocomplete="off">
+        </div>
+        <div class="input-group mb-3">
+            <div *ngIf="submitted && uf['schedule_date'].errors" class="error-text">
+                <span *ngIf="uf['schedule_date'].errors?.['required']" class="text-danger"> Schedule Date is required</span>
+            </div>
+        </div>
+        <button type="submit" (click)="formUpdateSubmit()" class="btn btn-success form-control">Update</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #confirmDeleteTemplate>
+  <div class="modal-body text-center">
+    <p class="text-danger">Do you want to delete schedule?</p>
+    <button type="button" class="btn btn-outline-danger mx-2" (click)="confirmDelete()" >Delete</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="declineDelete()" >No</button>
+  </div>
+</ng-template>
+
+<ng-template #endClassConfirmTemplate>
+  <div class="modal-body text-center">
+    <p class="text-danger">Do you want to end class?</p>
+    <button type="button" class="btn btn-outline-danger mx-2" (click)="confirmEndClass()" >End Class</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="declineEndClass()" >No</button>
+  </div>
+</ng-template>
+
+<block-ui></block-ui>

@@ -42,8 +42,6 @@ export class StudentExamResultComponent implements OnInit {
         }
 
         this.result_id = this.route.snapshot.paramMap.get("result_id");
-
-        console.log(this.result_id)
     }
 
     ngOnInit(): void {

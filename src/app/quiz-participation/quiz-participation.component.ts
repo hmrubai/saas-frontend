@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild  } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AuthenticationService } from '../_services/authentication.service';
 import { environment } from '../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';

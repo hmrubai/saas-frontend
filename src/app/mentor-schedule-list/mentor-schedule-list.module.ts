@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { BlockUIModule } from 'ng-block-ui';
+import { ToastrModule } from 'ngx-toastr';
 
 import { MentorScheduleListRoutingModule } from './mentor-schedule-list-routing.module';
 
@@ -8,7 +11,11 @@ import { MentorScheduleListRoutingModule } from './mentor-schedule-list-routing.
   declarations: [],
   imports: [
     CommonModule,
-    MentorScheduleListRoutingModule
+    MentorScheduleListRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BlockUIModule,
+    ToastrModule
   ]
 })
 export class MentorScheduleListModule { }

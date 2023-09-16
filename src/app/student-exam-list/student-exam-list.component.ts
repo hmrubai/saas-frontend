@@ -48,7 +48,6 @@ export class StudentExamListComponent implements OnInit {
         this.blockUI.start('Loading...');
         this._service.get('website/student-quiz-participated-list').subscribe(res => {
             this.examList = res.data;
-            console.log(this.examList)
             this.is_loaded = true;
             this.blockUI.stop();
         }, err => {

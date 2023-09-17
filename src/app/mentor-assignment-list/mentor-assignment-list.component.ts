@@ -21,6 +21,7 @@ export class MentorAssignmentListComponent implements OnInit {
     is_authenticated = false;
     courseList: Array<any> = [];
     modalRef?: BsModalRef;
+    modalRefList?: BsModalRef;
     is_loaded = false;
     user_id: any = '';
     submitted = false;
@@ -28,6 +29,18 @@ export class MentorAssignmentListComponent implements OnInit {
     entryForm: FormGroup;
 
     courseDetails: any = {};
+    studentList: Array<any> = [];
+
+    classList: Array<any> = [];
+    subjectList: Array<any> = [];
+    chapterList: Array<any> = [];
+
+    scriptList: Array<any> = [];
+    quizList: Array<any> = [];
+    videoList: Array<any> = [];
+
+    resourceList: Array<any> = [];
+    is_resource_loaded = false;
 
     public user_role = null;
     public currentUser: any = {};
@@ -60,13 +73,17 @@ export class MentorAssignmentListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getPurchaseList();
+        this.getCourseList();
+        this.getClassList();
 
         this.entryForm = this.formBuilder.group({
-            mapping_id: [null, [Validators.required]],
             title: [null, [Validators.required]],
             description: [null, [Validators.required]],
             course_id: [null, [Validators.required]],
+            student_id: [null, [Validators.required]],
+            class_id: [null],
+            subject_id: [null],
+            chapter_id: [null],
             deadline: [null, [Validators.required]],
         });
     }
@@ -84,12 +101,24 @@ export class MentorAssignmentListComponent implements OnInit {
         if (this.entryForm.invalid) {
             return;
         }
-        this.blockUI.start('Loading...');
+
+        console.log(this.entryForm.value)
+        //this.blockUI.start('Loading...');
     }
 
-    getPurchaseList() {
+    hideModal(){
+        this.submitted = false;
+        this.modalRef?.hide();
+        this.entryForm.reset();
+    }
+
+    openResorceModal(template: TemplateRef<any>) {
+        this.modalRefList = this.modalService.show(template);
+    }
+
+    getCourseList() {
         this.blockUI.start('Loading...');
-        this._service.get('website/student-purchase-list').subscribe(res => {
+        this._service.get('website/mentor-course-list').subscribe(res => {
             this.courseList = res.data;
             this.is_loaded = true;
             this.blockUI.stop();
@@ -98,10 +127,66 @@ export class MentorAssignmentListComponent implements OnInit {
         });
     }
 
-    hideModal(){
-        this.submitted = false;
-        this.modalRef?.hide();
-        this.entryForm.reset();
+    getStudentList(event:any){
+        this.studentList = [];
+        this.blockUI.start('Loading...');
+        this._service.get('website/mentor-student-list-by-course/' + event.id).subscribe(res => {
+            this.studentList = res.data;
+            this.blockUI.stop();
+        }, err => {
+            this.blockUI.stop();
+        });
+    }
+
+    getClassList(){
+        this.blockUI.start('Loading...');
+        this._service.get('website/class-list').subscribe(res => {
+            this.classList = res.data;
+            this.blockUI.stop();
+        }, err => {
+            this.blockUI.stop();
+        });
+    }
+
+    getSubjectList(event:any){
+        this.subjectList = [];
+        this.chapterList = [];
+        this.entryForm.controls['subject_id'].setValue(null);
+        this.entryForm.controls['chapter_id'].setValue(null);
+        this.blockUI.start('Loading...');
+        this._service.get('website/subject-list-by-class-id/' + event.id).subscribe(res => {
+            this.subjectList = res.data;
+            this.blockUI.stop();
+        }, err => {
+            this.blockUI.stop();
+        });
+    }
+
+    getChapterList(event:any){
+        this.chapterList = [];
+        this.blockUI.start('Loading...');
+        this._service.get('website/chapter-list-by-subject-id/' + event.id).subscribe(res => {
+            this.chapterList = res.data;
+            this.blockUI.stop();
+        }, err => {
+            this.blockUI.stop();
+        });
+    }
+
+    changeGetResourceList(event:any){
+        this.resourceList = [];
+        this.blockUI.start('Loading...');
+        this._service.get('website/resource-list-by-chapter-id/' + event.id).subscribe(res => {
+            this.resourceList = res.data;
+
+            this.scriptList = res.data.script_list;
+            this.quizList = res.data.quiz_list;
+            this.videoList = res.data.video_list;
+            this.is_resource_loaded = true;
+            this.blockUI.stop();
+        }, err => {
+            this.blockUI.stop();
+        });
     }
 
 }

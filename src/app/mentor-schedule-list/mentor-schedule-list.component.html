@@ -93,7 +93,7 @@
 
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left"><i class="fa-solid fa-calendar-plus"></i> Add New Schedule</h4>
+    <h5 class="modal-title pull-left"><i class="fa-solid fa-calendar-plus"></i> Add New Schedule <span *ngIf="is_loaded_student"> <strong>({{ studentDetails.name }})</strong></span></h5>
     <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
@@ -117,7 +117,7 @@
 
 <ng-template #updateTemplate>
   <div class="modal-header">
-    <h4 class="modal-title pull-left"><i class="fa-solid fa-calendar-plus"></i> Update Schedule</h4>
+    <h5 class="modal-title pull-left"><i class="fa-solid fa-calendar-plus"></i> Update Schedule <span *ngIf="is_loaded_student"> <strong>({{ studentDetails.name }})</strong></span></h5>
     <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>

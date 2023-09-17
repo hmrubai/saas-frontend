@@ -84,7 +84,6 @@ export class MentorScheduleListComponent implements OnInit {
     }
 
     openUpdateModal(item: any, template: TemplateRef<any>) {
-        console.log(item);
         this.updateForm.controls['schedule_id'].setValue(item.id);
         this.updateForm.controls['schedule_date'].setValue(this.getDateFormatModal(item.schedule_datetime));
         this.modalRef = this.modalService.show(template);

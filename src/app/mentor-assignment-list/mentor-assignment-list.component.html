@@ -48,7 +48,7 @@
             <div class="scrollable-content mt-3">
                 <div class="alert alert-success" role="alert">
                     <i class="fa-solid fa-edit"></i> Assignment List 
-                    <button class="btn btn-success btn-sm float-end" (click)="openModal(template)"><i class="fa-solid fa-plus"></i> Create New Assignment</button>
+                    <button class="btn btn-success btn-sm float-end" (click)="openModal(template)"><i class="fa-solid fa-circle-plus"></i> Create New Assignment</button>
                 </div>
                 
                 <table class="table table-bordered">
@@ -139,9 +139,9 @@
 
         <h6 class="">Select Course</h6>
         <div class="input-group">
-            <ng-select [items]="cars" 
+            <ng-select [items]="courseList" (change)="getStudentList($event)"
                 class="col-lg-12"
-                bindLabel="name" 
+                bindLabel="title" 
                 bindValue="id" 
                 formControlName="course_id"
                  placeholder="Select Course"
@@ -156,18 +156,19 @@
 
         <h6 class="">Select Student</h6>
         <div class="input-group">
-            <ng-select [items]="cars" 
+            <ng-select [items]="studentList" 
                 class="col-lg-12"
-                bindLabel="name" 
-                bindValue="id" 
-                formControlName="course_id"
+                bindLabel="student_name" 
+                bindValue="student_id" 
+                formControlName="student_id"
                  placeholder="Select Student"
-                [ngClass]="{ 'is-invalid': submitted && f['course_id'].errors }">
+                 [multiple]="true"
+                [ngClass]="{ 'is-invalid': submitted && f['student_id'].errors }">
             </ng-select>
         </div>
         <div class="input-group mb-3">
-            <div *ngIf="submitted && f['course_id'].errors" class="error-text">
-                <span *ngIf="f['course_id'].errors?.['required']" class="text-danger"> Student is required</span>
+            <div *ngIf="submitted && f['student_id'].errors" class="error-text">
+                <span *ngIf="f['student_id'].errors?.['required']" class="text-danger"> Student is required</span>
             </div>
         </div>
 
@@ -181,8 +182,197 @@
                 <span *ngIf="f['deadline'].errors?.['required']" class="text-danger"> Deadline Date is required</span>
             </div>
         </div>
+
+        <div class="row mb-4">
+            <div class="col-sm-4">
+                <h6 class="">Select Class</h6>
+                <div class="input-group">
+                    <ng-select [items]="classList" (change)="getSubjectList($event)"
+                        class="col-lg-12"
+                        bindLabel="name" 
+                        bindValue="id" 
+                        formControlName="class_id"
+                        placeholder="Select Class"
+                        [ngClass]="{ 'is-invalid': submitted && f['class_id'].errors }">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h6 class="">Select Subject</h6>
+                <div class="input-group">
+                    <ng-select [items]="subjectList" (change)="getChapterList($event)"
+                        class="col-lg-12"
+                        bindLabel="name" 
+                        bindValue="id" 
+                        formControlName="subject_id"
+                        placeholder="Select Subject"
+                        [ngClass]="{ 'is-invalid': submitted && f['subject_id'].errors }">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h6 class="">Select Chapter</h6>
+                <div class="input-group">
+                    <ng-select [items]="chapterList" (change)="changeGetResourceList($event)"
+                        class="col-lg-12"
+                        bindLabel="name" 
+                        bindValue="id" 
+                        formControlName="chapter_id"
+                        placeholder="Select Chapter"
+                        [ngClass]="{ 'is-invalid': submitted && f['chapter_id'].errors }">
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-sm-4">
+                <button class="btn btn-success btn-lg btn-block btn-add-lg" (click)="openResorceModal(scriptTemplate)"><i class="fa-solid fa-circle-plus"></i> Add Script</button>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-success btn-lg btn-block btn-add-lg" (click)="openResorceModal(videoTemplate)"><i class="fa-solid fa-circle-plus"></i> Add Video</button>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-success btn-lg btn-block btn-add-lg" (click)="openResorceModal(quizTemplate)"><i class="fa-solid fa-circle-plus"></i> Add Quiz</button>
+            </div>
+        </div>
+
         <button type="submit" (click)="hideModal()" class="btn btn-secondary float-end mb-2">Close</button>
         <button type="submit" (click)="formSubmit()" class="btn btn-success float-end mx-2 mb-2">Submit</button>
     </form>
+  </div>
+</ng-template>
+
+<ng-template #scriptTemplate>
+  <div class="modal-header">
+    <h5 class="modal-title pull-left"><i class="fa-solid fa-circle-plus"></i> Script List</h5>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRefList?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-bordered" *ngIf="is_resource_loaded">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of scriptList; let i = index;">
+                <th scope="row">{{ i+1 }}</th>
+                <td>{{ item.title }}</td>
+                <td><input type="checkbox" /></td>
+            </tr>
+            <tr *ngIf="scriptList.length <= 0">
+                <th colspan="3">No Data Found!</th>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered" *ngIf="!is_resource_loaded">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="scriptList.length <= 0">
+                <th colspan="3">No Data Found!</th>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</ng-template>
+
+<ng-template #videoTemplate>
+  <div class="modal-header">
+    <h5 class="modal-title pull-left"><i class="fa-solid fa-circle-plus"></i> Video List</h5>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRefList?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-bordered" *ngIf="is_resource_loaded">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of videoList; let i = index;">
+                <th scope="row">{{ i+1 }}</th>
+                <td>{{ item.title }}</td>
+                <td><input type="checkbox" /></td>
+            </tr>
+
+            <tr *ngIf="videoList.length <= 0">
+                <th colspan="3">No Data Found!</th>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered" *ngIf="!is_resource_loaded">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="scriptList.length <= 0">
+                <th colspan="3">No Data Found!</th>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</ng-template>
+
+<ng-template #quizTemplate>
+  <div class="modal-header">
+    <h5 class="modal-title pull-left"><i class="fa-solid fa-circle-plus"></i> Quiz List</h5>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRefList?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-bordered" *ngIf="is_resource_loaded">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of quizList; let i = index;">
+                <th scope="row">{{ i+1 }}</th>
+                <td>{{ item.title }}</td>
+                <td><input type="checkbox" /></td>
+            </tr>
+
+            <tr *ngIf="quizList.length <= 0">
+                <th colspan="3">No Data Found!</th>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered" *ngIf="!is_resource_loaded">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="scriptList.length <= 0">
+                <th colspan="3">No Data Found!</th>
+            </tr>
+        </tbody>
+    </table>
   </div>
 </ng-template>

@@ -258,6 +258,7 @@ export class MentorScheduleListComponent implements OnInit {
         this.entryForm.reset();
         this.updateForm.reset();
         this.schedule_id = null;
+        this.scheduleDetails = {};
     }
 
     getDateFormatModal(value: Date) {

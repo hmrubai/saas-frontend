@@ -78,7 +78,7 @@
                             </td>
                             <td class="align-middle">
                                 <button class="btn btn-success mx-2 btn-sm" *ngIf="item.has_completed"><i class="fa-solid fa-circle-check"></i> Completed</button>
-                                <a href="{{ item.join_link }}" target="_blank"><button class="btn btn-info mx-2 btn-sm" *ngIf="!item.has_completed && item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button></a>
+                                <button class="btn btn-info mx-2 btn-sm" (click)="startClassConfirmModal(item, startClassConfirmTemplate)" *ngIf="!item.has_completed && item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button>
                                 <button class="btn btn-danger mx-2 btn-sm" (click)="endClassConfirmModal(item, endClassConfirmTemplate)" *ngIf="item.has_started && !item.has_completed"><i class="fa-solid fa-power-off"></i> End Class</button>
                                 <button class="btn btn-secondary mx-2 btn-sm disabled" *ngIf="!item.has_completed && !item.can_join"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button>
                             </td>
@@ -100,6 +100,14 @@
     <p class="text-danger">Do you want to end class?</p>
     <button type="button" class="btn btn-outline-danger mx-2" (click)="confirmEndClass()" >End Class</button>
     <button type="button" class="btn btn-outline-secondary" (click)="declineEndClass()" >No</button>
+  </div>
+</ng-template>
+
+<ng-template #startClassConfirmTemplate>
+  <div class="modal-body text-center">
+    <p class="text-success">Do you want to start class?</p>
+    <button type="button" class="btn btn-outline-success mx-2" (click)="confirmStartClass()" >Start Class</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="declineStartClass()" >No</button>
   </div>
 </ng-template>
 

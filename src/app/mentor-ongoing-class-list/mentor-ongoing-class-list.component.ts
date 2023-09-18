@@ -23,6 +23,7 @@ export class MentorOngoingClassListComponent implements OnInit {
     user_id: any = '';
 
     courseDetails: any = {};
+    scheduleDetails: any = {};
 
     schedule_id: any;
 
@@ -67,6 +68,29 @@ export class MentorOngoingClassListComponent implements OnInit {
         this.modalRef = this.modalService.show(template);
     }
 
+    startClassSubmit(){
+        this.blockUI.start('Starting...');
+        console.log(this.scheduleDetails);
+        let param = {
+            schedule_id: this.schedule_id
+        }
+
+        this._service.post('website/start-live-class', param).subscribe(res => {
+            this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
+            this.getScheduleList();
+            this.schedule_id = null;
+            this.hideModal();
+
+            window.open(
+                this.scheduleDetails.join_link, '_blank'
+            );
+
+            this.blockUI.stop();
+        }, err => {
+            this.blockUI.stop();
+        });
+    }
+
     endClassSubmit(){
         this.blockUI.start('Ending...');
         let param = {
@@ -86,6 +110,12 @@ export class MentorOngoingClassListComponent implements OnInit {
         this.blockUI.stop();
     }
 
+    startClassConfirmModal(item: any, template: TemplateRef<any>){
+        this.schedule_id = item.id;
+        this.scheduleDetails = item;
+        this.modalRef = this.modalService.show(template);
+    }
+
     confirmEndClass(): void {
         this.modalRef?.hide();
         this.endClassSubmit();
@@ -96,9 +126,20 @@ export class MentorOngoingClassListComponent implements OnInit {
         this.schedule_id = null;
     }
 
+    confirmStartClass(): void {
+        this.modalRef?.hide();
+        this.startClassSubmit();
+    }
+    
+    declineStartClass(): void {
+        this.modalRef?.hide();
+        this.schedule_id = null;
+    }
+
     hideModal(){
         this.modalRef?.hide();
         this.schedule_id = null;
+        this.scheduleDetails = {};
     }
 
 }

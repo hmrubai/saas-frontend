@@ -30,6 +30,7 @@ export class MentorScheduleListComponent implements OnInit {
     submitted = false;
 
     studentDetails: any = {};
+    scheduleDetails: any = {};
 
     public user_role = null;
     public currentUser: any = {};
@@ -96,6 +97,12 @@ export class MentorScheduleListComponent implements OnInit {
 
     endClassConfirmModal(item: any, template: TemplateRef<any>){
         this.schedule_id = item.id;
+        this.modalRef = this.modalService.show(template);
+    }
+
+    startClassConfirmModal(item: any, template: TemplateRef<any>){
+        this.schedule_id = item.id;
+        this.scheduleDetails = item;
         this.modalRef = this.modalService.show(template);
     }
 
@@ -175,6 +182,29 @@ export class MentorScheduleListComponent implements OnInit {
         });
     }
 
+    startClassSubmit(){
+        this.blockUI.start('Starting...');
+        console.log(this.scheduleDetails);
+        let param = {
+            schedule_id: this.schedule_id
+        }
+
+        this._service.post('website/start-live-class', param).subscribe(res => {
+            this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
+            this.getScheduleList();
+            this.schedule_id = null;
+            this.hideModal();
+
+            window.open(
+                this.scheduleDetails.join_link, '_blank'
+            );
+
+            this.blockUI.stop();
+        }, err => {
+            this.blockUI.stop();
+        });
+    }
+
     endClassSubmit(){
         this.blockUI.start('Ending...');
         let param = {
@@ -190,8 +220,6 @@ export class MentorScheduleListComponent implements OnInit {
         }, err => {
             this.blockUI.stop();
         });
-
-        this.blockUI.stop();
     }
 
     confirmDelete(): void {
@@ -210,6 +238,16 @@ export class MentorScheduleListComponent implements OnInit {
     }
     
     declineEndClass(): void {
+        this.modalRef?.hide();
+        this.schedule_id = null;
+    }
+
+    confirmStartClass(): void {
+        this.modalRef?.hide();
+        this.startClassSubmit();
+    }
+    
+    declineStartClass(): void {
         this.modalRef?.hide();
         this.schedule_id = null;
     }

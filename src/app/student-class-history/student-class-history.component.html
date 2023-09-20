@@ -52,7 +52,8 @@
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
                 <div class="alert alert-success" role="alert">
-                    <i class="fa-solid fa-list"></i> My Class List
+                    <i class="fa-solid fa-list"></i> My Class History
+                    <span (click)="backToPage()" class="float-end btn btn-secondary btn-sm"><i class="fa-solid fa-circle-left"></i> Back</span>
                 </div>
                 <table class="table table-bordered table-sm">
                     <thead>
@@ -60,8 +61,8 @@
                             <th scope="col">#</th>
                             <th scope="col">Mentor</th>
                             <th scope="col">Course</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Schedule Time</th>
+                            <th scope="col">Join Time</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,21 +73,14 @@
                             </td>
                             <td class="align-middle">{{ item.course_title }}</td>
                             <td class="align-middle">
-                                {{ item.schedule_datetime | date :'MMM d, y, h:mm a' }}<br/>
-                                <span *ngIf="item.has_started && !item.has_completed" class="small">
-                                    <strong *ngIf="item.start_time">Start:</strong> {{ item.start_time | date :'MMM d, y, h:mm a' }}
-                                </span>
-                                <span *ngIf="item.has_completed" class="small">
-                                    <strong *ngIf="item.start_time">Start:</strong> {{ item.start_time | date :'MMM d, y, h:mm a' }}
-                                    <strong *ngIf="item.end_time">End:</strong> {{ item.end_time | date :'MMM d, y, h:mm a' }}
-                                </span>
+                                {{ item.schedule_datetime | date :'MMM d, y, h:mm a' }}
                             </td>
                             <td class="align-middle">
-                                <button class="btn btn-success mx-1 btn-sm" *ngIf="item.has_completed"><i class="fa-solid fa-circle-check"></i> Completed</button>
-                                <button class="btn btn-info mx-1 btn-sm" *ngIf="!item.has_completed && item.can_join" (click)="startClassConfirmModal(item, startClassConfirmTemplate)"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button>
-                                <button class="btn btn-secondary mx-1 btn-sm disabled" *ngIf="!item.has_completed && !item.can_join"><i class="fa-solid fa-headset"></i> Join Class</button>
-                                <button class="btn btn-outline-secondary mx-1 btn-sm" [routerLink]="['/student-class-history', item.id]" *ngIf="item.has_completed"><i class="fa-solid fa-clock-rotate-left"></i></button>
+                                {{ item.join_time | date :'MMM d, y, h:mm a' }}
                             </td>
+                        </tr>
+                        <tr  *ngIf="classList.length <= 0">
+                            <th class="align-middle" colspan="5">No Data Found!</th>
                         </tr>
                     </tbody>
                 </table>

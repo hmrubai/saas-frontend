@@ -51,6 +51,8 @@ import { StudentExamResultComponent } from './student-exam-result/student-exam-r
 import { MentorAssignmentListComponent } from './mentor-assignment-list/mentor-assignment-list.component';
 import { MentorStudentProgressListComponent } from './mentor-student-progress-list/mentor-student-progress-list.component';
 import { QuizParticipationComponent } from './quiz-participation/quiz-participation.component';
+import { MentorProfileComponent } from './mentor-profile/mentor-profile.component';
+import { StudentClassHistoryComponent } from './student-class-history/student-class-history.component';
 
 
 import { TruncatePipe } from './_helpers/truncate-pipe';
@@ -92,7 +94,9 @@ import { TruncatePipe } from './_helpers/truncate-pipe';
     StudentExamResultComponent,
     MentorAssignmentListComponent,
     MentorStudentProgressListComponent,
-    QuizParticipationComponent
+    QuizParticipationComponent,
+    MentorProfileComponent,
+    StudentClassHistoryComponent
   ],
   imports: [
     CommonModule,

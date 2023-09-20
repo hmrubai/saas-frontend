@@ -1,19 +1,19 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
-import { environment } from '../../environments/environment';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { environment } from '../../environments/environment';
 import { CommonService } from '../_services/common.service';
 import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { Location } from '@angular/common';
 
 @Component({
-    selector: 'app-mentor-ongoing-class-list',
-    templateUrl: './mentor-ongoing-class-list.component.html',
-    styleUrls: ['./mentor-ongoing-class-list.component.scss']
+    selector: 'app-student-class-history',
+    templateUrl: './student-class-history.component.html',
+    styleUrls: ['./student-class-history.component.scss']
 })
-export class MentorOngoingClassListComponent implements OnInit {
+export class StudentClassHistoryComponent implements OnInit {
 
     @BlockUI() blockUI: NgBlockUI;
     is_authenticated = false;
@@ -30,7 +30,6 @@ export class MentorOngoingClassListComponent implements OnInit {
     public user_role = null;
     public currentUser: any = {};
 
-    //mapping_id;
     constructor(
         private _service: CommonService,
         private authService: AuthenticationService,
@@ -46,15 +45,17 @@ export class MentorOngoingClassListComponent implements OnInit {
             this.user_role = this.currentUser.user_type;
             this.user_id = this.currentUser.id;
         }
+
+        this.schedule_id = this.route.snapshot.paramMap.get("schedule_id");
     }
 
     ngOnInit(): void {
-        this.getScheduleList()
+        this.getScheduleList();
     }
 
     getScheduleList() {
         this.blockUI.start('Loading...');
-        this._service.get('website/mentor-ongoing-class-list').subscribe(res => {
+        this._service.get('website/student-join-history/' + this.schedule_id).subscribe(res => {
             this.classList = res.data;
             this.is_loaded = true;
             this.blockUI.stop();
@@ -71,27 +72,20 @@ export class MentorOngoingClassListComponent implements OnInit {
 
     startClassSubmit(){
         this.blockUI.start('Starting...');
-        console.log(this.scheduleDetails);
         let param = {
             schedule_id: this.schedule_id
         }
 
-        if(this.scheduleDetails.has_started && this.scheduleDetails.join_link){
-            window.open(
-                this.scheduleDetails.join_link, '_blank'
-            );
-        }
-
-        this._service.post('website/start-live-class', param).subscribe(res => {
+        this._service.post('website/join-live-class', param).subscribe(res => {
             this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
-            this.getScheduleList();
             this.schedule_id = null;
-            this.hideModal();
 
             window.open(
                 this.scheduleDetails.join_link, '_blank'
             );
 
+            this.getScheduleList();
+            this.hideModal();
             this.blockUI.stop();
         }, err => {
             this.toastr.warning(err.message, 'Attention!', { timeOut: 2000 });
@@ -149,6 +143,9 @@ export class MentorOngoingClassListComponent implements OnInit {
         this.modalRef?.hide();
         this.schedule_id = null;
         this.scheduleDetails = {};
+    }
+    backToPage() {
+        this.location.back();
     }
 
 }

@@ -99,6 +99,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'mentor-profile', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./mentor-profile/mentor-profile.module').then(m => m.MentorProfileModule)
+            }
+        ]
+    },
+    {
         path: 'mentor-student-list', 
         children: [
             {
@@ -239,6 +248,15 @@ const routes: Routes = [
             {
                 path: '',
                 loadChildren: () => import('./student-class-list/student-class-list.module').then(m => m.StudentClassListModule)
+            }
+        ]
+    },
+    {
+        path: 'student-class-history/:schedule_id', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./student-class-history/student-class-history.module').then(m => m.StudentClassHistoryModule)
             }
         ]
     },

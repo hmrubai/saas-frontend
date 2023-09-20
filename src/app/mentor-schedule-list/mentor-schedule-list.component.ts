@@ -113,6 +113,7 @@ export class MentorScheduleListComponent implements OnInit {
             this.is_loaded = true;
             this.blockUI.stop();
         }, err => {
+            this.toastr.warning(err.message, 'Attention!', { timeOut: 2000 });
             this.blockUI.stop();
         });
     }
@@ -124,6 +125,7 @@ export class MentorScheduleListComponent implements OnInit {
             this.is_loaded_student = true;
             this.blockUI.stop();
         }, err => {
+            this.toastr.warning(err.message, 'Attention!', { timeOut: 2000 });
             this.blockUI.stop();
         });
     }
@@ -141,6 +143,7 @@ export class MentorScheduleListComponent implements OnInit {
             this.hideModal();
             this.blockUI.stop();
         }, err => {
+            this.toastr.warning(err.message, 'Attention!', { timeOut: 2000 });
             this.blockUI.stop();
         });
     }
@@ -160,6 +163,7 @@ export class MentorScheduleListComponent implements OnInit {
             this.hideModal();
             this.blockUI.stop();
         }, err => {
+            this.toastr.warning(err.message, 'Attention!', { timeOut: 2000 });
             this.blockUI.stop();
         });
     }
@@ -189,6 +193,12 @@ export class MentorScheduleListComponent implements OnInit {
             schedule_id: this.schedule_id
         }
 
+        if(this.scheduleDetails.has_started && this.scheduleDetails.join_link){
+            window.open(
+                this.scheduleDetails.join_link, '_blank'
+            );
+        }
+
         this._service.post('website/start-live-class', param).subscribe(res => {
             this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
             this.getScheduleList();
@@ -201,6 +211,7 @@ export class MentorScheduleListComponent implements OnInit {
 
             this.blockUI.stop();
         }, err => {
+            this.toastr.warning(err.message, 'Attention!', { timeOut: 2000 });
             this.blockUI.stop();
         });
     }
@@ -218,6 +229,7 @@ export class MentorScheduleListComponent implements OnInit {
             this.hideModal();
             this.blockUI.stop();
         }, err => {
+            this.toastr.warning(err.message, 'Attention!', { timeOut: 2000 });
             this.blockUI.stop();
         });
     }

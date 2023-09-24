@@ -85,6 +85,10 @@
                             <td><strong>Negetive Count</strong></td>
                             <td><strong>{{ resultDetails.negetive_count }}</strong> </td>
                         </tr>
+                        <tr>
+                            <td><strong>Subject Wise Result</strong></td>
+                            <td colspan="3"> <button class="btn btn-outline-primary btn-sm" (click)="openModal(subjectTemplate)">See Subject Wise Result</button></td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -184,3 +188,37 @@
         </div>
     </div>
 </div>
+
+<ng-template #subjectTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Subject Wise Result</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" *ngIf="is_subject_loaded">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Positive Count</th>
+                <th scope="col">Negetive Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr  *ngFor="let item of subjectWiseResult; let i = index;">
+                <th scope="row">{{ i+1 }}</th>
+                <td>{{ item.name }}</td>
+                <td>{{ item.positive_count }}</td>
+                <td>{{ item.negetive_count }}</td>
+            </tr>
+            <tr  *ngIf="subjectWiseResult.length <= 0">
+                <th colspan="4">No Data Found!</th>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</ng-template>
+
+<block-ui></block-ui>

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../_services/authentication.service';
 import { environment } from '../../environments/environment';
 import { CommonService } from '../_services/common.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { Location } from '@angular/common';
@@ -17,10 +18,15 @@ export class StudentExamResultComponent implements OnInit {
     @BlockUI() blockUI: NgBlockUI;
     is_authenticated = false;
     courseList: Array<any> = [];
+
+    modalRef?: BsModalRef;
+
     is_loaded = false;
+    is_subject_loaded = false;
     user_id: any = '';
 
     resultDetails: any = {};
+    subjectWiseResult: Array<any> = [];
 
     public user_role = null;
     public currentUser: any = {};
@@ -31,6 +37,7 @@ export class StudentExamResultComponent implements OnInit {
         private authService: AuthenticationService,
         private toastr: ToastrService,
         private route: ActivatedRoute,
+        private modalService: BsModalService,
         private router: Router,
         private location: Location
     ) {
@@ -48,12 +55,27 @@ export class StudentExamResultComponent implements OnInit {
         this.getResultDetails();
     }
 
+    openModal(template: TemplateRef<any>) {
+        this.getSubjectWiseResultDetails();
+        this.modalRef = this.modalService.show(template);
+    }
+
     getResultDetails() {
         this.blockUI.start('Loading...');
         this._service.get('website/student-quiz-result-details-by-id/' + this.result_id).subscribe(res => {
             this.resultDetails = res.data;
-            console.log(this.resultDetails);
             this.is_loaded = true;
+            this.blockUI.stop();
+        }, err => {
+            this.blockUI.stop();
+        });
+    }
+
+    getSubjectWiseResultDetails() {
+        this.blockUI.start('Loading...');
+        this._service.get('website/student-subject-wise-result/' + this.result_id).subscribe(res => {
+            this.subjectWiseResult = res.data;
+            this.is_subject_loaded = true;
             this.blockUI.stop();
         }, err => {
             this.blockUI.stop();

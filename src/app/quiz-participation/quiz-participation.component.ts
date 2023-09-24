@@ -30,6 +30,9 @@ export class QuizParticipationComponent implements OnInit
     timer: Timer = new Timer();
     quizRunning: boolean = false;
     is_auto_submitted: boolean = false;
+    is_mcq_submitted: boolean = false;
+
+    start_written = false;
 
     assetURL = environment.imageURL;
 
@@ -42,6 +45,7 @@ export class QuizParticipationComponent implements OnInit
 
     courseDetails: any = {};
     quizDetails: any = {};
+    writtenQuestion: any = {};
 
     public user_role = null;
     public currentUser: any = {};
@@ -50,6 +54,9 @@ export class QuizParticipationComponent implements OnInit
 
     quiz_id;
     result_id;
+
+    urls: Array<any> = [];
+    files: Array<any> = [];
 
     constructor(
         private _service: CommonService,
@@ -81,7 +88,7 @@ export class QuizParticipationComponent implements OnInit
 
     safeURL(videoURL: string){
         return this._sanitizer.bypassSecurityTrustResourceUrl(videoURL);
-     }
+    }
 
     showVideo(item: any, template: TemplateRef<any>){
 
@@ -117,7 +124,14 @@ export class QuizParticipationComponent implements OnInit
         this.timerSubscription = this.timer.start(duration * 60).subscribe(status => {
             if (status === 'ended') {
                 this.is_auto_submitted = true;
-                this.submitAnswer();
+
+                if(!this.is_mcq_submitted){
+                    this.submitAnswer();
+                }
+                
+                if(this.writtenQuestion){
+                    this.submitWrittenAnswer();
+                }
                 this.autoSubmitModal.show();
             }
         });
@@ -149,6 +163,48 @@ export class QuizParticipationComponent implements OnInit
         this.blockUI.start('Submitting Answer...');
         this._service.post('website/submit-quiz', param).subscribe(res => {
             this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
+            //this.stopQuiz();
+            this.blockUI.stop();
+
+            this.is_mcq_submitted = true;
+
+            if(!this.writtenQuestion){
+                this.stopQuiz();
+                this.backToPaage();
+            }
+
+            this.questionList = [];
+
+            // if(!this.is_auto_submitted){
+            //     this.backToPaage();
+            // }
+        }, err => {
+            this.blockUI.stop();
+        });
+    }
+
+    submitWrittenAnswer(){
+        const params = {
+            chapter_quiz_id: this.quiz_id,
+            result_id: this.result_id,
+            attach_count: this.files.length
+        };
+
+        if(!this.files.length){
+            return;
+        }
+        
+        const formData = new FormData();
+        formData.append('data', JSON.stringify(params));
+
+        for (let i = 0; i < this.files.length; i++) {
+            let index = 'attachment_' + i;
+            formData.append(index, this.files[i]);
+        }
+
+        this.blockUI.start('Submitting Answer...');
+        this._service.post('website/submit-written-answer', formData).subscribe(res => {
+            this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
             this.stopQuiz();
             this.blockUI.stop();
 
@@ -156,8 +212,32 @@ export class QuizParticipationComponent implements OnInit
                 this.backToPaage();
             }
         }, err => {
+            this.toastr.warning(err.message, 'Attention!', { timeOut: 2000 });
             this.blockUI.stop();
         });
+    }
+
+    startWrittenExam(template: TemplateRef<any>){
+        this.modalRef = this.modalService.show(template);
+    }
+
+    onSelectFile(event: any) {
+        this.urls = [];
+        this.files = [];
+
+        if (event.target.files.length > 0) {
+            for (let i = 0; i < event.target.files.length; i++) {
+                this.files.push(event.target.files[i]);
+            }
+            console.log(this.files);
+            this.files.forEach(element => {
+                if (element.size > 2000000){
+                    this.toastr.error('File size is more then 2MB', 'Failed to changed!', { timeOut: 3000 });
+                    this.files = [];
+                    return;
+                }
+            });
+        }
     }
 
     openAutoSubmittedModal(template: TemplateRef<any>) {
@@ -190,12 +270,21 @@ export class QuizParticipationComponent implements OnInit
         this.modalRef?.hide();
     }
 
+    confirmStartWritten(): void {
+        this.modalRef?.hide();
+        this.start_written = true;
+        this.submitAnswer();
+    }
+
+    declineStartWritten(): void {
+        this.modalRef?.hide();
+    }
+
     getQuizDetails(){
         this.blockUI.start('Loading...');
         this.quizDetails = {};
         this._service.get('website/quiz-details-by-id/' + this.quiz_id).subscribe(res => {
             this.quizDetails = res.data;
-            console.log(this.quizDetails)
 
             this.quizDetails.questions.forEach((element:any) => {
                 this.questionList.push({
@@ -215,6 +304,7 @@ export class QuizParticipationComponent implements OnInit
                 });
             });
 
+            this.writtenQuestion = this.quizDetails.written_question;
             this.startQuiz(this.quizDetails.duration);
             this.is_loaded = true;
             this.blockUI.stop();

@@ -30,7 +30,7 @@
 
         <div class="card">
             <div class="card-body">
-                <div class="col-xs-12" *ngIf="is_loaded">
+                <div class="col-xs-12" *ngIf="is_loaded && !start_written">
                     <h3>MCQ Question</h3>
                     <hr/>
                     <div class="row" *ngFor="let item of questionList; let i=index">
@@ -92,25 +92,34 @@
                             <hr />
                         </div>
                     </div>
-                    <!--<div class="row" *ngIf="writtenQuestionList">
-                    <div class="col-xs-6" *ngIf="writtenQuestionList.attachment_url">
-                        <h3>Written Question</h3>
-                        <hr/>
-                        <a href="{{ writtenQuestionList.attachment_url }}" target="_blank"> 
-                            <i class="fa fa-file fa-4x"></i> <span> View Question</span>
-                        </a>
-                        <br/><br/>
-                    </div>
-                    <div class="col-xs-6" *ngIf="writtenQuestionList.attachment_url">
-                        <h3>Upload Answer</h3>
-                        <hr/>
-                        <input type="file" class="form-control" multiple (change)="onSelectFile($event)" placeholder="Upload file" accept="image/png, image/gif, image/jpeg">
-                        <br/><br/>
-                    </div>
-                    </div>-->
                 </div>
-                <div class="col-xs-12 text-center mar-bottom-50">
-                    <button type="button" class="btn btn-success btn-lg mx-3" (click)="submitAnswer()"
+
+                <div class="col-lg-12" *ngIf="!start_written">
+                    <div class="col-xs-12 text-center mar-bottom-50">
+                        <button type="button" class="btn btn-success btn-lg mx-3" (click)="startWrittenExam(startWrittenExamTemplate)" *ngIf="timer.isRunning">Start Written</button>
+                    </div>
+                </div>
+
+                <div class="col-lg-12" *ngIf="start_written">
+                    <div class="row" *ngIf="writtenQuestion.question_attachment">
+                      <div class="col-lg-6" *ngIf="writtenQuestion.question_attachment">
+                          <h3>Written Question</h3>
+                          <hr/>
+                          <a href="{{ assetURL + writtenQuestion.question_attachment }}" target="_blank"> 
+                              <i class="fa fa-file fa-2x mx-2"></i> <span>View Question</span>
+                          </a>
+                          <br/><br/>
+                      </div>
+                      <div class="col-lg-6" *ngIf="writtenQuestion.question_attachment">
+                          <h3>Upload Answer</h3>
+                          <hr/>
+                          <input type="file" class="form-control" multiple (change)="onSelectFile($event)" placeholder="Upload file" accept="image/png, image/gif, image/jpeg">
+                          <br/><br/>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 text-center mar-bottom-50" *ngIf="start_written">
+                    <button type="button" class="btn btn-success btn-lg mx-3" (click)="submitWrittenAnswer()"
                         *ngIf="timer.isRunning">Submit</button>
                     <button type="button" (click)="stopQuizConfirm(confirmStopTemplate)" class="btn btn-secondary btn-lg my-2"> Cancel</button>
                 </div>
@@ -160,6 +169,14 @@
     <p class="text-danger">Do you want to stop exam? The Answer will be submitted autometically!</p>
     <button type="button" class="btn btn-outline-success mx-2" (click)="confirmStop()" >Stop Exam</button>
     <button type="button" class="btn btn-outline-danger" (click)="declineStop()" >No</button>
+  </div>
+</ng-template>
+
+<ng-template #startWrittenExamTemplate>
+  <div class="modal-body text-center">
+    <p class="text-danger">Do you want to start written exam? The MCQ Answer will be submitted autometically before start!</p>
+    <button type="button" class="btn btn-outline-success mx-2" (click)="confirmStartWritten()" >Start Written Exam</button>
+    <button type="button" class="btn btn-outline-danger" (click)="declineStartWritten()" >No</button>
   </div>
 </ng-template>
 

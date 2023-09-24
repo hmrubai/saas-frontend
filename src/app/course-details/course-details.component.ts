@@ -85,21 +85,27 @@ export class CourseDetailsComponent implements OnInit {
             return;
         }
 
-        console.log(item);
         this.modal_title = item.title;
         this.video_url = item.video_youtube_url;
         this.openModal(template);
     }
 
     viewScript(item: any, template: TemplateRef<any>){
-        console.log(item)
+
+        if(!this.is_authenticated){
+            this.toastr.warning("Please login first!", 'Attention!', { timeOut: 2000 });
+            return;
+        }
+
+        if(!this.courseDetails.is_purchased){
+            this.toastr.warning("Please purchase first!", 'Attention!', { timeOut: 2000 });
+            return;
+        }
+
         if(!item.script_raw_url){
             this.toastr.warning("No resource file has been added!", 'Attention!', { timeOut: 2000 });
             return;
         }
-
-        // this.pdfFilePath = this.assetURL + '../' + item.script_raw_url;
-        // this.openModal(template);
 
         window.open(
             this.assetURL + '../' + item.script_raw_url, '_blank'
@@ -119,7 +125,17 @@ export class CourseDetailsComponent implements OnInit {
 
     openConfirmModal(item: any, template: TemplateRef<any>) {
         this.quizDetails = item;
-        console.log(this.quizDetails)
+
+        if(!this.is_authenticated){
+            this.toastr.warning("Please login first!", 'Attention!', { timeOut: 2000 });
+            return;
+        }
+
+        if(!this.courseDetails.is_purchased){
+            this.toastr.warning("Please purchase first!", 'Attention!', { timeOut: 2000 });
+            return;
+        }
+
         this.modalRef = this.modalService.show(template, {class: 'modal-md'});
     }
 

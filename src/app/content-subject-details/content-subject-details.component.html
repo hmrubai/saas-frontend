@@ -1,9 +1,21 @@
+<div class="bg-dark">
+    <div class="back pt-5 pb-2">
+        <div class="container content-container">
+            <div class="row justify-content-center" *ngIf="is_loaded">
+                <div class="content text-center col-md-9">
+                    <h1 class="text-white fw-bold">{{ outlineDetails.subject_name }}</h1>
+                    <p class="text-white">{{ outlineDetails.content_name }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container content-container">
   <div class="row">
     <div class="col-md-8">
       <div class="scrollable-content">
-        <div class="mt-4 p-3">
-          <h2 class="fw-bold">English</h2>
+        <!--<div class="mt-4 p-3" *ngIf="is_loaded">
+          <h2 class="fw-bold"> {{ outlineDetails.subject_name }} </h2>
           <p>
             এসএসসি’র থেকে দ্বিগুনেরও বেশি অধ্যায় নিয়ে তৈরি এইচএসসি পরীক্ষার
             সিলেবাস। এইচএসসি পরীক্ষায় কাঙ্খিত ভাল ফলাফল অর্জণ করতে ১ম এবং ২য়
@@ -12,7 +24,7 @@
             চমৎকার ইন্টারেক্টিভ লাইভ ক্লাসের মাধ্যমে উভয় পত্রের প্রিপারেশন নিয়ে
             নাও টেন মিনিট স্কুলের HSC 2025 অনলাইন ব্যাচের সাথে।
           </p>
-        </div>
+        </div>-->
         <div class="">
           <h3 class="mb-3">কোর্স সিলেবাস</h3>
           <div class="accordion" id="accordionExample">
@@ -305,3 +317,5 @@
     </div>
   </div>
 </div>
+
+<block-ui></block-ui>

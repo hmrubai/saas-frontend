@@ -90,6 +90,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'content-subject-details/:content_subject_id', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./content-subject-details/content-subject-details.module').then(m => m.ContentSubjectDetailsModule)
+            }
+        ]
+    },
+    {
         path: 'content-details/:content_id', 
         children: [
             {

@@ -50,10 +50,8 @@ export class ContentSubjectListComponent implements OnInit {
     contentDetailsByID() {
         this.blockUI.start('Loading...');
         this._service.get('website/content-details-by-id/' + this.menu_id).subscribe(res => {
-            console.log(res);
             this.contentDetails = res.data;
             this.subjectList = res.data.subjects;
-            console.log(this.subjectList)
             this.is_loaded = true;
             this.blockUI.stop();
         }, err => {
@@ -64,9 +62,7 @@ export class ContentSubjectListComponent implements OnInit {
     getContentList() {
         this.blockUI.start('Loading...');
         this._service.get('website/course-list-by-id/' + this.menu_id).subscribe(res => {
-            console.log(res);
             this.contentList = res.data.contents;
-            console.log(this.contentList)
             this.is_loaded = true;
             this.blockUI.stop();
         }, err => {
@@ -75,7 +71,7 @@ export class ContentSubjectListComponent implements OnInit {
     }
 
     GoToContentOutline(item: any) {
-        console.log(item)
+        this.router.navigate(['/content-subject-details/', item.id]);
     }
 
 }

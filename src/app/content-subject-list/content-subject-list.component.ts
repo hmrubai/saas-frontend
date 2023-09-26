@@ -74,7 +74,7 @@ export class ContentSubjectListComponent implements OnInit {
         });
     }
 
-    GoToContentOutline(item: any){
+    GoToContentOutline(item: any) {
         console.log(item)
     }
 

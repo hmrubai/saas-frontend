@@ -81,6 +81,15 @@ const routes: Routes = [
         ]
     },
     {
+        path: 'content-subject-list/:menu_id', 
+        children: [
+            {
+                path: '',
+                loadChildren: () => import('./content-subject-list/content-subject-list.module').then(m => m.ContentSubjectListModule)
+            }
+        ]
+    },
+    {
         path: 'content-details/:content_id', 
         children: [
             {

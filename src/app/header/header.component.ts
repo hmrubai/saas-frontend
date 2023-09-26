@@ -80,8 +80,6 @@ export class HeaderComponent implements OnInit {
     }
 
     GotoPage(type: any, item: any){
-        //console.log(type)
-        //console.log(item)
         if(item.is_course){
             this.router.onSameUrlNavigation = 'reload';
             this.router.navigate(['/course-list/', item.id]);
@@ -102,12 +100,9 @@ export class HeaderComponent implements OnInit {
         }
         if(item.is_content){
             this.router.onSameUrlNavigation = 'reload';
-            this.router.navigate(['/content-details/', sub_item.sub_menu_id ]);
+            this.router.navigate(['/content-subject-list/', sub_item.sub_menu_id ]);
+            //this.router.navigate(['/content-details/', sub_item.sub_menu_id ]);
         }
-
-        // console.log(type)
-        // console.log(item)
-        // console.log(sub_item)
     }
 
     userLogout() {

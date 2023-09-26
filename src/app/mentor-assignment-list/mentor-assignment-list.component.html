@@ -227,13 +227,16 @@
 
         <div class="row mb-4">
             <div class="col-sm-4">
-                <button class="btn btn-success btn-lg btn-block btn-add-lg" (click)="openResorceModal(scriptTemplate)"><i class="fa-solid fa-circle-plus"></i> Add Script</button>
+                <button class="btn btn-success btn-lg btn-block btn-add-lg" (click)="openResorceModal(scriptTemplate)"><i class="fa-solid fa-circle-plus"></i> Add Script ({{ scriptCount }})</button>
+                <span class="text-danger"><i><small>Total Script {{ scriptList.length }} </small></i></span>
             </div>
             <div class="col-sm-4">
-                <button class="btn btn-success btn-lg btn-block btn-add-lg" (click)="openResorceModal(videoTemplate)"><i class="fa-solid fa-circle-plus"></i> Add Video</button>
+                <button class="btn btn-success btn-lg btn-block btn-add-lg" (click)="openResorceModal(videoTemplate)"><i class="fa-solid fa-circle-plus"></i> Add Video ({{ videoCount }})</button>
+                <span class="text-danger"><i><small>Total Video {{ videoList.length }} </small></i></span>
             </div>
             <div class="col-sm-4">
-                <button class="btn btn-success btn-lg btn-block btn-add-lg" (click)="openResorceModal(quizTemplate)"><i class="fa-solid fa-circle-plus"></i> Add Quiz</button>
+                <button class="btn btn-success btn-lg btn-block btn-add-lg" (click)="openResorceModal(quizTemplate)"><i class="fa-solid fa-circle-plus"></i> Add Quiz ({{ quizCount }})</button>
+                <span class="text-danger"><i><small>Total Quiz {{ quizList.length }} </small></i></span>
             </div>
         </div>
 
@@ -263,7 +266,7 @@
             <tr *ngFor="let item of scriptList; let i = index;">
                 <th scope="row">{{ i+1 }}</th>
                 <td>{{ item.title }}</td>
-                <td><input type="checkbox" /></td>
+                <td><input type="checkbox" [checked]="item.is_checked" (change)="item.is_checked = !item.is_checked" (click)="checkCount()"/></td>
             </tr>
             <tr *ngIf="scriptList.length <= 0">
                 <th colspan="3">No Data Found!</th>
@@ -307,7 +310,7 @@
             <tr *ngFor="let item of videoList; let i = index;">
                 <th scope="row">{{ i+1 }}</th>
                 <td>{{ item.title }}</td>
-                <td><input type="checkbox" /></td>
+                <td><input type="checkbox"  [checked]="item.is_checked" (change)="item.is_checked = !item.is_checked" (click)="checkCount()"/></td>
             </tr>
 
             <tr *ngIf="videoList.length <= 0">
@@ -352,7 +355,8 @@
             <tr *ngFor="let item of quizList; let i = index;">
                 <th scope="row">{{ i+1 }}</th>
                 <td>{{ item.title }}</td>
-                <td><input type="checkbox" /></td>
+                <!--(click)="addRemoveItem(item, 'qiuz')"-->
+                <td><input type="checkbox" [checked]="item.is_checked" (change)="item.is_checked = !item.is_checked" (click)="checkCount()"/></td>
             </tr>
 
             <tr *ngIf="quizList.length <= 0">

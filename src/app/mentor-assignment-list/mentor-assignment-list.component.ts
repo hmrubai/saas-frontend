@@ -39,20 +39,15 @@ export class MentorAssignmentListComponent implements OnInit {
     quizList: Array<any> = [];
     videoList: Array<any> = [];
 
+    scriptCount = 0;
+    quizCount = 0;
+    videoCount = 0;
+
     resourceList: Array<any> = [];
     is_resource_loaded = false;
 
     public user_role = null;
     public currentUser: any = {};
-
-    selectedCar: number;
-
-    cars = [
-        { id: 1, name: 'Volvo' },
-        { id: 2, name: 'Saab' },
-        { id: 3, name: 'Opel' },
-        { id: 4, name: 'Audi' },
-    ];
 
     constructor(
         private _service: CommonService,
@@ -102,6 +97,20 @@ export class MentorAssignmentListComponent implements OnInit {
             return;
         }
 
+        let script = this.scriptList.filter(function (item) {
+            return item.is_checked == true;
+        });
+
+        let video = this.videoList.filter(function (item) {
+            return item.is_checked == true;
+        });
+
+        let quiz = this.quizList.filter(function (item) {
+            return item.is_checked == true;
+        });
+
+        console.log(script, video, quiz)
+
         console.log(this.entryForm.value)
         //this.blockUI.start('Loading...');
     }
@@ -110,6 +119,23 @@ export class MentorAssignmentListComponent implements OnInit {
         this.submitted = false;
         this.modalRef?.hide();
         this.entryForm.reset();
+    }
+
+    checkCount(){
+        console.log('click');
+        this.scriptCount = this.scriptList.filter(function (item) {
+            return item.is_checked == true;
+        }).length;
+
+        this.quizCount = this.quizList.filter(function (item) {
+            return item.is_checked == true;
+        }).length;
+
+        this.videoCount = this.videoList.filter(function (item) {
+            return item.is_checked == true;
+        }).length;
+        
+        console.log(this.videoList)
     }
 
     openResorceModal(template: TemplateRef<any>) {
@@ -180,8 +206,20 @@ export class MentorAssignmentListComponent implements OnInit {
             this.resourceList = res.data;
 
             this.scriptList = res.data.script_list;
+            this.scriptList.forEach(item => {
+                item.is_checked = false;
+            });
+
             this.quizList = res.data.quiz_list;
+            this.quizList.forEach(item => {
+                item.is_checked = false;
+            });
+
             this.videoList = res.data.video_list;
+            this.videoList.forEach(item => {
+                item.is_checked = false;
+            });
+
             this.is_resource_loaded = true;
             this.blockUI.stop();
         }, err => {

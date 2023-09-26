@@ -1,0 +1,58 @@
+<div class="bg-dark">
+  <div class="back pt-5 pb-2">
+    <div class="container  content-container ">
+      <div class="row justify-content-center" *ngIf="is_loaded">
+        <div class="content  text-center col-md-9">
+          <h1 class="text-white fw-bold"> {{ contentDetails.title }} </h1>
+          <p class="text-white">{{ contentDetails.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!--<div class="container ">
+      <div class="row mt-5">
+        <div class="col-md-6 mt-3 mb-3">
+
+          <div>
+            <h3 class="text-white mt-2">CLASS</h3>
+          </div>
+          <div>
+            <p class="text-white">There are many more including recorded/live programs to add a different dimension to education.</p>
+          </div>
+
+        </div>
+
+        <div class="col-md-6 d-flex justify-content-end d-flex align-items-center">
+          ><img class="bg-dark" src="assets/images/hsc.png" style="background-color: rgb(7, 7, 7);  height: 100px" />
+        </div>
+      </div>
+
+    </div>-->
+  </div>
+  <div class="container">
+    <div class="row  mt-4">
+      <div class="col-12 mb-3">
+          <h5> <i class="fa-solid fa-book-atlas"></i> Subject List</h5>
+      </div>
+
+      <div class="row">
+            <div class="col-lg-4" *ngFor="let item of subjectList; let i = index;">
+              <div class="wrap text-center" (click)="GoToContentOutline(item)">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <div class="ico-wrap mt-4">
+                          <span class="mbr-iconfont fa-solid fa-book-atlas mx-3"></span>
+                      </div>
+                    </div>
+                    <div class="col-sm-12">
+                      <div class="text-wrap mt-4">
+                          <h2 class="mbr-bold display-5"><span> {{ item.subject_name }} </span></h2>
+                      </div>
+                    </div>
+                  </div>  
+              </div>
+            </div>
+        </div>
+
+    </div>
+  </div>

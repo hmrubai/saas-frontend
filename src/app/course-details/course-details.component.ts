@@ -28,6 +28,8 @@ export class CourseDetailsComponent implements OnInit {
 
     assetURL = environment.imageURL;
 
+    image_thumbnail = "assets/images/images.png";
+
     video_url: any;
     pdfFilePath: any;
     modal_title = 'Video';
@@ -173,6 +175,11 @@ export class CourseDetailsComponent implements OnInit {
         this.user_id = this.user_id ? this.user_id : 0;
         this._service.get('website/course-details-by-user/' + this.user_id + '/' + this.course_id).subscribe(res => {
             this.courseDetails = res.data;
+
+            if(this.courseDetails.thumbnail){
+                this.image_thumbnail = this.assetURL + this.courseDetails.thumbnail;
+            }
+
             this.is_loaded = true;
             this.blockUI.stop();
         }, err => {

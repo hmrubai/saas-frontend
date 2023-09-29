@@ -18,13 +18,18 @@ export class MentorCompletedClassListComponent implements OnInit {
     classList: Array<any> = [];
     is_loaded = false;
     user_id: any = '';
+    total_time: "00:00:00";
 
+    start_date = '';
+    end_date = '';
+    range = null;
     courseDetails: any = {};
+
+    assetURL = environment.imageURL;
 
     public user_role = null;
     public currentUser: any = {};
 
-    //mapping_id;
     constructor(
         private _service: CommonService,
         private authService: AuthenticationService,
@@ -49,12 +54,34 @@ export class MentorCompletedClassListComponent implements OnInit {
     getCourseDetails() {
         this.blockUI.start('Loading...');
         this._service.get('website/mentor-completed-class-list').subscribe(res => {
-            this.classList = res.data;
+            this.classList = res.data.list;
+            this.total_time = res.data.total_time;
             this.is_loaded = true;
             this.blockUI.stop();
         }, err => {
             this.blockUI.stop();
         });
+    }
+
+    changeDate(){
+        console.log(this.start_date)
+        console.log(this.end_date)
+        if(this.start_date && this,this.end_date){
+            let param = {
+                start_date: this.start_date,
+                end_date: this.end_date,
+            }
+
+            this.blockUI.start('Loading...');
+            this._service.get('website/mentor-completed-class-list', param).subscribe(res => {
+                this.classList = res.data.list;
+                this.total_time = res.data.total_time;
+                this.is_loaded = true;
+                this.blockUI.stop();
+            }, err => {
+                this.blockUI.stop();
+            });
+        }
     }
 
 }

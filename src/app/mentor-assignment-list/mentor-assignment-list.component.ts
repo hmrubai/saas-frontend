@@ -25,6 +25,8 @@ export class MentorAssignmentListComponent implements OnInit {
     is_loaded = false;
     user_id: any = '';
     submitted = false;
+    
+    assetURL = environment.imageURL;
 
     entryForm: FormGroup;
 

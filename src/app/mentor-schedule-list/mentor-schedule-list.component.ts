@@ -24,6 +24,7 @@ export class MentorScheduleListComponent implements OnInit {
     is_loaded = false;
     is_loaded_student = false;
     user_id: any = '';
+    assetURL = environment.imageURL;
 
     entryForm: FormGroup;
     updateForm: FormGroup;
@@ -197,18 +198,20 @@ export class MentorScheduleListComponent implements OnInit {
             window.open(
                 this.scheduleDetails.join_link, '_blank'
             );
+            this.blockUI.stop();
+            return;
         }
 
         this._service.post('website/start-live-class', param).subscribe(res => {
             this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
-            this.getScheduleList();
-            this.schedule_id = null;
-            this.hideModal();
 
             window.open(
                 this.scheduleDetails.join_link, '_blank'
             );
 
+            this.hideModal();
+            this.getScheduleList();
+            this.schedule_id = null;
             this.blockUI.stop();
         }, err => {
             this.toastr.warning(err.message, 'Attention!', { timeOut: 2000 });

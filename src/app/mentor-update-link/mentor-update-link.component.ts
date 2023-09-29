@@ -21,6 +21,7 @@ export class MentorUpdateLinkComponent implements OnInit {
     courseList: Array<any> = [];
     is_loaded = false;
     user_id: any = '';
+    assetURL = environment.imageURL;
 
     liveLink: any = {};
 

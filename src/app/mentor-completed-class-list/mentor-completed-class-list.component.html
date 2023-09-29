@@ -4,7 +4,8 @@
             <div class="list-group">
                 <a href="#" class="list-group-item list-group-item-action" aria-current="true">
                     <div class="d-flex w-100 mt-4 justify-content-between">
-                        <img src="assets/images/2793695.png" alt="" class="profile-img" />
+                        <img *ngIf="!currentUser.image" src="assets/images/2793695.png" alt="" class="profile-img" />
+                        <img *ngIf="currentUser.image" src="{{ assetURL+currentUser.image }}" alt="" class="profile-img" />
                     </div>
                     <p class="mb-1 text-center mt-2 text-primary"><strong><i class="fa-solid fa-user"></i> {{ currentUser.full_name }}</strong></p>
                     <p class="mb-51 text-center text-success"><i class="fa-solid fa-phone"></i> {{ currentUser.contact_no }}</p>
@@ -46,36 +47,57 @@
         </div>
         <div class="col-md-9">
             <div class="scrollable-content mt-3">
-                <div class="alert alert-info" role="alert">
+                <div class="alert alert-success" role="alert">
                     <i class="fa-solid fa-calendar-day"></i> My Completed Class List
                 </div>
-                <table class="table table-bordered table-sm">
+                <div class="row">
+                    <div class="col-sm-4 mb-3">
+                        <p><i class="fa-solid fa-calendar-day"></i> Start Date</p>
+                        <input  type="date" class="form-control" (change)="changeDate()" [(ngModel)]="start_date" />
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <p><i class="fa-solid fa-calendar-day"></i> End Date</p>
+                        <input  type="date" class="form-control" (change)="changeDate()" [(ngModel)]="end_date" />
+                    </div>
+                    <div class="col-sm-4 mt-4" *ngIf="classList.length > 0">
+                        <div class="notice notice-danger">
+                            <strong><i class="fa-solid fa-clock"></i> Total Time: </strong> <span><strong>{{ total_time }}</strong></span>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-sm">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Student</th>
-                            <th scope="col">Course</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Start</th>
-                            <th scope="col">End</th>
+                            <th class="bg-success text-white" scope="col">#</th>
+                            <th class="bg-success text-white" scope="col">Student & Course</th>
+                            <th class="bg-success text-white" scope="col">Date</th>
+                            <th class="bg-success text-white" scope="col">Start</th>
+                            <th class="bg-success text-white" scope="col">End</th>
+                            <th class="bg-success text-white" scope="col">Total (Min)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr  *ngFor="let item of classList; let i = index;">
-                            <th scope="row">{{ i + 1 }}</th>
-                            <td>
-                                {{ item.student_name }} ({{ item.student_contact_no }})
+                            <th  class="align-middle" scope="row">{{ i + 1 }}</th>
+                            <td class="align-middle">
+                                <small>{{ item.student_name }} ({{ item.student_contact_no }})</small><br/>
+                                <small>{{ item.course_title }}</small>
                             </td>
-                            <td>{{ item.course_title }}</td>
-                            <td>
-                                {{ item.schedule_datetime | date :'MMM d, y, h:mm a' }}
+                            <td class="align-middle">
+                                <small>{{ item.schedule_datetime | date :'MMM d, y, h:mm a' }}</small>
                             </td>
-                            <td>
-                                {{ item.start_time | date :'MMM d, y, h:mm a' }}
+                            <td class="align-middle">
+                                <small>{{ item.start_time_gmt | date :'MMM d, y, h:mm a' }}</small>
                             </td>
-                            <td>
-                                {{ item.end_time | date :'MMM d, y, h:mm a' }}
+                            <td class="align-middle">
+                                <small>{{ item.end_time_gmt | date :'MMM d, y, h:mm a' }}</small>
                             </td>
+                            <td class="align-middle">
+                                <small><strong>{{ item.total_minutes }}</strong></small>
+                            </td>
+                        </tr>
+                        <tr *ngIf="classList.length <= 0">
+                            <td colspan="6">No Data Found!</td>
                         </tr>
                     </tbody>
                 </table>

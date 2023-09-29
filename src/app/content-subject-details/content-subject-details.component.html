@@ -14,182 +14,42 @@
   <div class="row">
     <div class="col-md-8">
       <div class="scrollable-content">
-        <!--<div class="mt-4 p-3" *ngIf="is_loaded">
-          <h2 class="fw-bold"> {{ outlineDetails.subject_name }} </h2>
-          <p>
-            এসএসসি’র থেকে দ্বিগুনেরও বেশি অধ্যায় নিয়ে তৈরি এইচএসসি পরীক্ষার
-            সিলেবাস। এইচএসসি পরীক্ষায় কাঙ্খিত ভাল ফলাফল অর্জণ করতে ১ম এবং ২য়
-            পত্র দুটিতেই দরকার সমান প্রস্ততি। উভয় পত্রে নিজের দখলই প্রমাণ করবে
-            তোমার একশোতে একশো প্রস্ততি। সঠিক পরিকল্পনা আর কার্যকরী রুটিনের সাথে
-            চমৎকার ইন্টারেক্টিভ লাইভ ক্লাসের মাধ্যমে উভয় পত্রের প্রিপারেশন নিয়ে
-            নাও টেন মিনিট স্কুলের HSC 2025 অনলাইন ব্যাচের সাথে।
-          </p>
-        </div>-->
         <div class="">
           <h3 class="mb-3">কোর্স সিলেবাস</h3>
+          <div class="container">
+            <div class="notice notice-warning" *ngIf="outline.length <= 0">
+                <strong>Attention: </strong> <span> <strong> No Data Found! The content is being prepared!</strong></span>
+            </div>
+          </div>
           <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
+            <div class="accordion-item" *ngFor="let item of outline; let i = index">
               <h2 class="accordion-header" id="headingOne">
                 <button
-                  class="accordion-button"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne"
-                >
-                  Lecture Sheet 01
+                  class="accordion-button" type="button" data-bs-toggle="collapse"
+                  [attr.data-bs-target]="'#collapseOne_'+i" aria-expanded="true" aria-controls="collapseOne">
+                    <strong>{{ item.name }}</strong>
                 </button>
               </h2>
-              <div
-                id="collapseOne"
-                class="accordion-collapse collapse show"
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample"
-              >
+              <div id="collapseOne_{{ i }}" class="accordion-collapse collapse show" aria-labelledby="headingOne"  data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                  
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-video"></i> Part One</span>
-                            <span class="badge badge-pill text-body"> <i class="fa-solid fa-clock"></i> Part 01 13:48 minutes</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-file-lines"></i> Script One</span>
-                            <span class="badge badge-pill text-body"><i class="fa-solid fa-book"></i> 12 Pages</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-list-check"></i> Quiz One</span>
-                            <span class="badge badge-pill text-body"><i class="fa-solid fa-clock"></i> 15 minutes</span>
-                        </li>
-                    </ul>
-                  
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingTwo">
-                <button
-                  class="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseTwo"
-                  aria-expanded="false"
-                  aria-controls="collapseTwo"
-                >
-                  Lecture Sheet 02
-                </button>
-              </h2>
-              <div
-                id="collapseTwo"
-                class="accordion-collapse collapse"
-                aria-labelledby="headingTwo"
-                data-bs-parent="#accordionExample"
-              >
-                <div class="accordion-body">
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-video"></i> Part Two</span>
-                            <span class="badge badge-pill text-body"> <i class="fa-solid fa-clock"></i> Part 01 13:48 minutes</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-file-lines"></i> Script Two</span>
-                            <span class="badge badge-pill text-body"><i class="fa-solid fa-book"></i> 12 Pages</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-list-check"></i> Quiz Two</span>
-                            <span class="badge badge-pill text-body"><i class="fa-solid fa-clock"></i> 15 minutes</span>
-                        </li>
-                    </ul>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingThree">
-                <button
-                  class="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseThree"
-                  aria-expanded="false"
-                  aria-controls="collapseThree"
-                >
-                  Lecture Sheet 03
-                </button>
-              </h2>
-              <div
-                id="collapseThree"
-                class="accordion-collapse collapse"
-                aria-labelledby="headingThree"
-                data-bs-parent="#accordionExample"
-              >
-                <div class="accordion-body">
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-video"></i> Part Three</span>
-                            <span class="badge badge-pill text-body"> <i class="fa-solid fa-clock"></i> Part 01 13:48 minutes</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-file-lines"></i> Script Three</span>
-                            <span class="badge badge-pill text-body"><i class="fa-solid fa-book"></i> 12 Pages</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-list-check"></i> Quiz Three</span>
-                            <span class="badge badge-pill text-body"><i class="fa-solid fa-clock"></i> 15 minutes</span>
-                        </li>
-                    </ul>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingFour">
-                <button
-                  class="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseFour"
-                  aria-expanded="false"
-                  aria-controls="collapseThree"
-                >
-                  Lecture Sheet 04
-                </button>
-              </h2>
-              <div
-                id="collapseFour"
-                class="accordion-collapse collapse"
-                aria-labelledby="headingFour"
-                data-bs-parent="#accordionExample"
-              >
-                <div class="accordion-body">
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-video"></i> Part Four</span>
-                            <span class="badge badge-pill text-body"> <i class="fa-solid fa-clock"></i> Part 01 13:48 minutes</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-file-lines"></i> Script Four</span>
-                            <span class="badge badge-pill text-body"><i class="fa-solid fa-book"></i> 12 Pages</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span><i class="fa-solid fa-list-check"></i> Quiz Four</span>
-                            <span class="badge badge-pill text-body"><i class="fa-solid fa-clock"></i> 15 minutes</span>
-                        </li>
-                    </ul>
+                  <div class="container">
+                      <div class="notice notice-success" *ngFor="let video of item.videos; let v = index">
+                          <strong><i class="fa-solid fa-circle-play"></i> {{ video.title }}</strong> <span class="float-end"> <i class="fa-solid fa-clock"></i> {{ video.duration }} minutes </span>
+                      </div>
+                      <div class="notice notice-info" *ngFor="let script of item.scripts; let s = index">
+                          <strong><i class="fa-solid fa-file-lines"></i> {{ script.title }}</strong> <span class="float-end"> <i class="fa-solid fa-book"></i> Read</span>
+                      </div>
+                      <div class="notice notice-warning" *ngFor="let single_quiz of item.quiz; let s = index">
+                          <strong><i class="fa-solid fa-clipboard-check"></i> {{ single_quiz.title }}</strong> <span class="float-end"> <i class="fa-solid fa-clock"></i> {{ single_quiz.duration }} minutes | <i class="fa-solid fa-book"></i> Start</span>
+                      </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         <div class="mt-5">
-          <h4>যেভাবে পেমেন্ট করবেন</h4>
-          <div class="card">
-            <div class="card-body">
-              <p>ইন্টারনেট সংযোগ (ওয়াইফাই বা মোবাইল ইন্টারনেট)</p>
-              <p>স্মার্টফোন অথবা পিসি</p>
-            </div>
-          </div>
-        </div>
-        <div class="">
           <h3 class="mb-3 mt-2">সচরাচর জিজ্ঞাসা</h3>
           <div class="accordion" id="accordionExample">
             <div class="accordion-item">
@@ -292,15 +152,10 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-6 p-5">
-      <!-- Content for the second column -->
+    <!--<div class="col-lg-4 col-md-6 p-5">
       <div class="card col-md-12">
         <div class="card-body p-0">
-          <img
-            src="assets/images/images.png "
-            alt=""
-            class="w-100 rounded-top"
-          />
+          <img src="assets/images/images.png" alt="" class="w-100 rounded-top"/>
           <h3 class="px-2">৳1500</h3>
           <div class="p-3">
             <button class="btn btn-success p-2 col-md-12">
@@ -314,8 +169,24 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </div>
+
+  <!--<div class="notice notice-danger">
+      <strong>Notice</strong> notice-danger
+  </div>
+  <div class="notice notice-info">
+      <strong>Notice</strong> notice-info
+  </div>
+  <div class="notice notice-warning">
+      <strong>Notice</strong> notice-warning
+  </div>
+  <div class="notice notice-lg">
+      <strong>Big notice</strong> notice-lg
+  </div>
+  <div class="notice notice-sm">
+      <strong>Small notice</strong> notice-sm
+  </div>-->
 
 <block-ui></block-ui>

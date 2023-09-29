@@ -11,9 +11,58 @@
           </p>
         </div>
         <div class="">
-            <h3 class="mb-3">Course Outline</h3>
+            <h4 class="mb-3">কোর্স সিলেবাস</h4>
+            <div class="container">
+              <div class="notice notice-warning" *ngIf="courseDetails.structured_outline <= 0">
+                  <strong>Attention: </strong> <span> <strong> The content is being prepared!</strong></span>
+              </div>
+            </div>
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item" *ngFor="let item of courseDetails.structured_outline; let i = index">
+                <h2 class="accordion-header" id="headingOne">
+                  <button 
+                    class="accordion-button" type="button" data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#collapseOne_'+i" aria-expanded="true" aria-controls="collapseOne">
+                      <strong>{{ item.title }}</strong>
+                  </button>
+                </h2>
+                <div id="collapseOne_{{ i }}" class="accordion-collapse collapse show" aria-labelledby="headingOne"  data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-lg-12" *ngFor="let single_content of item.content; let v = index">
+                          <div class="notice notice-success"  (click)="showVideo(single_content, template)" *ngIf="single_content.chapter_video_id">
+                              <strong><i class="fa-solid fa-circle-play"></i> {{ single_content.title }}</strong> <span class="float-end"> <i class="fa-solid fa-clock"></i> {{ single_content.video_duration }} minutes <span *ngIf="!is_authenticated" class="small"> | <i class="fa-solid fa-lock"></i></span></span> 
+                          </div>
+                          <div class="notice notice-info" (click)="viewScript(single_content, templatePDF)" *ngIf="single_content.chapter_script_id">
+                              <strong><i class="fa-solid fa-file-lines"></i> {{ single_content.title }}</strong> <span class="float-end"> <i class="fa-solid fa-book"></i> Read</span>
+                          </div>
+                          <div class="notice notice-warning" (click)="openConfirmModal(single_content, confirmTemplate)" *ngIf="single_content.chapter_quiz_id">
+                            <strong><i class="fa-solid fa-clipboard-check"></i> {{ single_content.quiz_title }}</strong> 
+                              <span class="float-end"> <i class="fa-solid fa-clock"></i> {{ single_content.quiz_duration }} minutes 
+                                <span *ngIf="!is_authenticated" class="small"> | <i class="fa-solid fa-lock"></i></span>
+                                <span *ngIf="is_authenticated" class="small"> | Start <i class="fa-solid fa-arrow-right-to-bracket"></i></span> 
+                              </span>
+                          </div>
+                        </div>
+                      </div>
+                        <!-- <div class="notice notice-success" *ngFor="let video of item.content; let v = index">
+                            <strong><i class="fa-solid fa-circle-play"></i> {{ video.title }}</strong> <span class="float-end"> <i class="fa-solid fa-clock"></i> {{ video.duration }} minutes </span>
+                        </div>
+                        <div class="notice notice-info" *ngFor="let script of item.scripts; let s = index">
+                            <strong><i class="fa-solid fa-file-lines"></i> {{ script.title }}</strong> <span class="float-end"> <i class="fa-solid fa-book"></i> Read</span>
+                        </div>
+                        <div class="notice notice-warning" *ngFor="let single_quiz of item.quiz; let s = index">
+                            <strong><i class="fa-solid fa-clipboard-check"></i> {{ single_quiz.title }}</strong> <span class="float-end"> <i class="fa-solid fa-clock"></i> {{ single_quiz.duration }} minutes | <i class="fa-solid fa-book"></i> Start</span>
+                        </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           
-            <ul class="list-group" *ngFor="let item of courseDetails.course_outline; let i = index;">
+            <!--<ul class="list-group" *ngFor="let item of courseDetails.course_outline; let i = index;">
 
                 <li class="list-group-item d-flex justify-content-between align-items-center mt-2 active" *ngIf="item.is_only_note">
                     <span><i class="fa-solid fa-list"></i>  {{item.title}}</span>
@@ -32,10 +81,10 @@
                     <span><i class="fa-solid fa-list-check"></i> {{ item.quiz_title }} ({{ item.subject_name }})</span>
                     <span class="badge badge-pill text-body"><i class="fa-solid fa-clock"></i> {{ item.quiz_duration }} minutes</span>
                 </li>
-            </ul>
+            </ul>-->
         </div>
 
-        <div class="mb-5 mt-4">
+        <div class="mb-5 mt-5">
           <h4>ক্লাস রুটিন</h4>
           <table class="table table-bordered text-center mt-3">
             <thead>
@@ -56,13 +105,14 @@
           </table>
         </div>
         <div class="mt-5">
-          <h3 class="mb-3">ক্লাস নেবেন যারা</h3>
+          <h4 class="mb-3">ক্লাস নেবেন যারা</h4>
           <div class="row">
             <div class="col-12 col-md-6" *ngFor="let item of courseDetails.course_mentor; let i = index;">
                 <div class="list-group">
                     <a href="#" class="list-group-item list-group-item-action" aria-current="true">
                         <div class="d-flex w-100 mt-4 justify-content-between">
-                            <img src="assets/images/2793695.png" alt="" class="profile-img" />
+                            <img *ngIf="item.mentor_image" src="{{ assetURL+item.mentor_image }}" alt="" class="profile-img" />
+                            <img *ngIf="!item.mentor_image" src="assets/images/2793695.png" alt="" class="profile-img" />
                         </div>
                         <p class="mb-1 text-center mt-2 text-primary"><strong><i class="fa-solid fa-user"></i> {{ item.name }}</strong></p>
                         <p class="mb-51 text-center text-success"><i class="fa-solid fa-book-open"></i> {{ item.education }}</p>
@@ -75,31 +125,19 @@
             </div>
           </div>
         </div>
-        <div class="mt-5">
-          <h4>যেভাবে পেমেন্ট করবেন</h4>
-          <!--<button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button>-->
-          <div class="card">
-            <div class="card-body">
-              <p>ইন্টারনেট সংযোগ (ওয়াইফাই বা মোবাইল ইন্টারনেট)</p>
-              <p>স্মার্টফোন অথবা পিসি</p>
-            </div>
-          </div>
-        </div>
-        <div class="">
-          <h3 class="mb-3 mt-2">সচরাচর জিজ্ঞাসা</h3>
-          <div class="accordion" id="accordionExample">
-            <div class="accordion-item" *ngFor="let item of courseDetails.course_faq; let i = index;">
-              <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                    [attr.data-bs-target]="'#collapseOne_'+i" aria-expanded="true" [attr.aria-controls]="'collapseOne_'+i"
-                    >
-                  {{ i + 1 }}. {{ item.title }}
-                </button>
-              </h2>
-              <div id="collapseOne_{{ i }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    {{ item.answer }}
-                </div>
+        <h4 class="mb-3 mt-5">সচরাচর জিজ্ঞাসা</h4>
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item" *ngFor="let item of courseDetails.course_faq; let i = index;">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                  [attr.data-bs-target]="'#collapseOne_'+i" aria-expanded="true" [attr.aria-controls]="'collapseOne_'+i"
+                  >
+                {{ i + 1 }}. {{ item.title }}
+              </button>
+            </h2>
+            <div id="collapseOne_{{ i }}" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                  {{ item.answer }}
               </div>
             </div>
           </div>
@@ -111,11 +149,13 @@
       <div class="card col-md-12">
         <div class="card-body p-0">
           <img src="{{ image_thumbnail }}" alt="" class="w-100 rounded-top"/>
-            <button class="btn btn-secondary btn-btom btn-custom d-flex justify-content-between price-btn" type="button">
-                <div class="l-text-btn-btom">৳{{ courseDetails.sale_price }}</div>
-                <div class="r-text-btn-btom"><s>৳{{ courseDetails.regular_price }}</s></div>
-            </button>
+          <button class="btn btn-secondary btn-btom btn-custom d-flex justify-content-between price-btn" type="button">
+              <div class="l-text-btn-btom">৳{{ courseDetails.sale_price }}</div>
+              <div class="r-text-btn-btom"><s>৳{{ courseDetails.regular_price }}</s></div>
+          </button>
           <div class="p-3">
+            <p *ngFor="let item of courseDetails.course_feature; let i = index;"><i class="fa-solid fa-circle-check text-success"></i> {{ item.title }}</p>
+            <br/>
             <button class="btn btn-success col-md-12 mb-4" *ngIf="is_authenticated && !courseDetails.is_purchased" (click)="PayNow()">
               Pay Now
             </button>
@@ -127,8 +167,6 @@
             <button class="btn btn-success col-md-12 mb-4" *ngIf="!is_authenticated && !courseDetails.is_purchased" [routerLink]="['/login']">
               Pay Now (Login First)
             </button>
-            <br/>
-            <p *ngFor="let item of courseDetails.course_feature; let i = index;"><i class="fa-solid fa-circle-check text-success"></i> {{ item.title }}</p>
           </div>
         </div>
       </div>

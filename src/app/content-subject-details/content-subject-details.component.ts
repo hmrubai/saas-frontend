@@ -34,6 +34,10 @@ export class ContentSubjectDetailsComponent implements OnInit {
     modalConfig: any = { class: 'gray modal-xl', backdrop: 'static' };
 
     outlineDetails: any = {};
+    outline: Array<any> = [];
+    scriptList: Array<any> = [];
+    videoList: Array<any> = [];
+    quizList: Array<any> = [];
 
     quizDetails: any = {};
 
@@ -72,6 +76,12 @@ export class ContentSubjectDetailsComponent implements OnInit {
         this.user_id = this.user_id ? this.user_id : 0;
         this._service.get('website/content-outline-details-by-id/' + this.content_subject_id).subscribe(res => {
             this.outlineDetails = res.data;
+            this.outline = this.outlineDetails.outline;
+            this.scriptList = this.outlineDetails.outline.scripts;
+            this.videoList = this.outlineDetails.outline.videos;
+            this.quizList = this.outlineDetails.outline.quiz;
+
+            console.log(this.outlineDetails.outline)
 
             // if(this.courseDetails.thumbnail){
             //     this.image_thumbnail = this.assetURL + this.courseDetails.thumbnail;

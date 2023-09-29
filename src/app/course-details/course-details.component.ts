@@ -110,7 +110,7 @@ export class CourseDetailsComponent implements OnInit {
         }
 
         window.open(
-            this.assetURL + '../' + item.script_raw_url, '_blank'
+            this.assetURL + item.script_raw_url, '_blank'
         );
     }
 

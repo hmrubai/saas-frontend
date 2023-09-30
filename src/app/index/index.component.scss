@@ -23,7 +23,14 @@
 }
 .intro{
   margin-top: 60px;
+  margin-right: 0px !important;
 }
+
+.sub-intro{
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
 .download{
   background: rgb(4,45,76);
   background: linear-gradient(90deg, rgba(4,45,76,1) 11%, rgba(3,106,98,1) 45%, rgba(22,100,109,1) 76%, rgba(11,71,87,1) 99%);

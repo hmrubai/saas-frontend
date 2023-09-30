@@ -52,7 +52,7 @@
                     <button class="btn btn-success btn-sm float-end" (click)="openModal(template)"><i class="fa-solid fa-circle-plus"></i> Create New Assignment</button>
                 </div>
                 
-                <table class="table table-bordered">
+                <table class="table table-bordered" *ngIf="is_assignment_loaded">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -63,40 +63,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Assignment One</td>
-                            <td>5th September 2023, 10.00AM</td>
-                            <td class="text-success">Ongoing</td>
+                        <tr *ngFor="let item of assignmentList; let i = index;">
+                            <th scope="row">{{ i+1 }}</th>
+                            <td> {{ item.title }} </td>
+                            <td>{{ item.deadline | date :'MMM d, y, h:mm a' }}</td>
+                            <td *ngIf="item.status == 'Unpublished'" class="text-secondary">
+                                {{ item.status }}
+                                <button class=" btn btn-primary btn-sm" (click)="openConfirmPublishModal(item, confirmPublishTemplate)"><i class="fa-solid fa-clipboard-check"></i> Publish</button> 
+                            </td>
+                            <td *ngIf="item.status == 'Ongoing'" class="text-success">
+                                {{ item.status }} <br/>
+                                <span class="small" *ngIf="item.publish_date">{{ item.publish_date | date :'MMM d, y, h:mm a' }}</span>
+                            </td>
+                            <td *ngIf="item.status == 'OnHold'" class="text-danger">
+                                {{ item.status }} <br/>
+                                <span class="small" *ngIf="item.publish_date">{{ item.publish_date | date :'MMM d, y, h:mm a' }}</span>
+                            </td>
+                            <td *ngIf="item.status == 'Finished'" class="text-info">
+                                {{ item.status }} <br/>
+                                <span class="small" *ngIf="item.publish_date">{{ item.publish_date | date :'MMM d, y, h:mm a' }}</span>
+                            </td>
                             <td>
                                 <button [routerLink]="['/mentor-student-progress-list']" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> See Details</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Assignment Two</td>
-                            <td>10th September 2023, 5.00PM</td>
-                            <td class="text-success">Ongoing</td>
-                            <td>
-                                <button [routerLink]="['/mentor-student-progress-list']" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> See Details</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Assignment Three</td>
-                            <td>13th September 2023, 3.00PM</td>
-                            <td class="text-success">Ongoing</td>
-                            <td>
-                                <button [routerLink]="['/mentor-student-progress-list']" class="btn btn-success btn-sm"><i class="fa-solid fa-eye"></i> See Details</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Assignment Three</td>
-                            <td>28th August 2023, 3.00PM</td>
-                            <td class="text-warning">Finished</td>
-                            <td>
-                                <button [routerLink]="['/mentor-student-progress-list']" class="btn btn-light btn-sm"><i class="fa-solid fa-eye"></i> See Details</button>
                             </td>
                         </tr>
                     </tbody>
@@ -381,3 +369,13 @@
     </table>
   </div>
 </ng-template>
+
+<ng-template #confirmPublishTemplate>
+  <div class="modal-body text-center">
+    <p class="text-success">Do you want to publish the Assignment?</p>
+    <button type="button" class="btn btn-outline-success mx-2" (click)="confirmPublish()" >Publish Now</button>
+    <button type="button" class="btn btn-outline-danger" (click)="declinePublish()" >No</button>
+  </div>
+</ng-template>
+
+<block-ui></block-ui>

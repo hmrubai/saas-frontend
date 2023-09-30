@@ -15,7 +15,7 @@ export class StudentAssignmentListComponent implements OnInit {
 
     @BlockUI() blockUI: NgBlockUI;
     is_authenticated = false;
-    courseList: Array<any> = [];
+    assignmentList: Array<any> = [];
     is_loaded = false;
     user_id: any = '';
 
@@ -45,8 +45,8 @@ export class StudentAssignmentListComponent implements OnInit {
 
     getCourseDetails() {
         this.blockUI.start('Loading...');
-        this._service.get('website/student-purchase-list').subscribe(res => {
-            this.courseList = res.data;
+        this._service.get('website/student-assignment-list').subscribe(res => {
+            this.assignmentList = res.data;
             this.is_loaded = true;
             this.blockUI.stop();
         }, err => {

@@ -23,6 +23,7 @@ export class MentorAssignmentListComponent implements OnInit {
     modalRef?: BsModalRef;
     modalRefList?: BsModalRef;
     is_loaded = false;
+    is_assignment_loaded = false;
     user_id: any = '';
     submitted = false;
     
@@ -32,6 +33,10 @@ export class MentorAssignmentListComponent implements OnInit {
 
     courseDetails: any = {};
     studentList: Array<any> = [];
+
+    assignmentList: Array<any> = [];
+
+    assignmentDetails: any = {};
 
     classList: Array<any> = [];
     subjectList: Array<any> = [];
@@ -72,6 +77,7 @@ export class MentorAssignmentListComponent implements OnInit {
     ngOnInit(): void {
         this.getCourseList();
         this.getClassList();
+        this.getAssignmentList();
 
         this.entryForm = this.formBuilder.group({
             title: [null, [Validators.required]],
@@ -111,16 +117,41 @@ export class MentorAssignmentListComponent implements OnInit {
             return item.is_checked == true;
         });
 
-        console.log(script, video, quiz)
+        let params = {
+            "course_id": this.entryForm.value.course_id,
+            "title":  this.entryForm.value.title,
+            "title_bn": this.entryForm.value.title,
+            "description": this.entryForm.value.description,
+            "deadline": this.entryForm.value.deadline,
+            "student_id": this.entryForm.value.student_id,
+            "script": script,
+            "video": video,
+            "quiz": quiz
+        }
 
-        console.log(this.entryForm.value)
-        //this.blockUI.start('Loading...');
+        this.blockUI.start('Creating Assignment...');
+        this._service.post('website/create-assignment', params).subscribe(res => {
+            this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
+            this.hideModal();
+            this.resetList();
+            this.getAssignmentList();
+            this.blockUI.stop();
+        }, err => {
+            this.toastr.warning(err.message, 'Attention!', { timeOut: 2000 });
+            this.blockUI.stop();
+        });
     }
 
     hideModal(){
         this.submitted = false;
         this.modalRef?.hide();
         this.entryForm.reset();
+    }
+
+    resetList(){
+        this.scriptList = [];
+        this.quizList = [];
+        this.videoList = [];
     }
 
     checkCount(){
@@ -137,7 +168,6 @@ export class MentorAssignmentListComponent implements OnInit {
             return item.is_checked == true;
         }).length;
         
-        console.log(this.videoList)
     }
 
     openResorceModal(template: TemplateRef<any>) {
@@ -164,6 +194,49 @@ export class MentorAssignmentListComponent implements OnInit {
         }, err => {
             this.blockUI.stop();
         });
+    }
+
+    getAssignmentList(){
+        this.blockUI.start('Loading...');
+        this._service.get('website/assignment-list').subscribe(res => {
+            this.assignmentList = res.data;
+            this.is_assignment_loaded = true;
+            this.blockUI.stop();
+        }, err => {
+            this.blockUI.stop();
+        });
+    }
+
+    publishAssignment(){
+        let params = {
+            assignment_id: this.assignmentDetails.id
+        }
+
+        this.blockUI.start('Updating Assignment...');
+        this._service.post('website/publish-assignment', params).subscribe(res => {
+            this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
+            this.hideModal();
+            this.getAssignmentList();
+            this.blockUI.stop();
+        }, err => {
+            this.toastr.warning(err.message, 'Attention!', { timeOut: 2000 });
+            this.blockUI.stop();
+        });
+    }
+
+    openConfirmPublishModal(item:any, template: TemplateRef<any>) {
+        this.assignmentDetails = item;
+        this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+    }
+
+    confirmPublish(): void {
+        this.modalRef?.hide();
+        console.log(this.assignmentDetails);
+        this.publishAssignment();
+    }
+    
+    declinePublish(): void {
+        this.modalRef?.hide();
     }
 
     getClassList(){

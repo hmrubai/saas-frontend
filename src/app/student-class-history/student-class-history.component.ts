@@ -21,6 +21,8 @@ export class StudentClassHistoryComponent implements OnInit {
     modalRef?: BsModalRef;
     is_loaded = false;
     user_id: any = '';
+    
+    assetURL = environment.imageURL;
 
     courseDetails: any = {};
     scheduleDetails: any = {};

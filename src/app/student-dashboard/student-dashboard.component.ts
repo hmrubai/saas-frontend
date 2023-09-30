@@ -18,6 +18,8 @@ export class StudentDashboardComponent implements OnInit {
     courseList: Array<any> = [];
     is_loaded = false;
     user_id: any = '';
+    
+    assetURL = environment.imageURL;
 
     courseDetails: any = {};
 

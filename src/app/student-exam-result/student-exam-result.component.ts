@@ -24,6 +24,8 @@ export class StudentExamResultComponent implements OnInit {
     is_loaded = false;
     is_subject_loaded = false;
     user_id: any = '';
+    
+    assetURL = environment.imageURL;
 
     resultDetails: any = {};
     subjectWiseResult: Array<any> = [];

@@ -17,7 +17,9 @@ export class StudentAssignmentListComponent implements OnInit {
     is_authenticated = false;
     assignmentList: Array<any> = [];
     is_loaded = false;
-    user_id: any = '';
+    user_id: any = '';    
+    
+    assetURL = environment.imageURL;
 
     courseDetails: any = {};
 

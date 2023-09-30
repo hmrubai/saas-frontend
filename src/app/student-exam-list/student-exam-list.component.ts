@@ -19,6 +19,8 @@ export class StudentExamListComponent implements OnInit {
     examList: Array<any> = [];
     is_loaded = false;
     user_id: any = '';
+    
+    assetURL = environment.imageURL;
 
     courseDetails: any = {};
 

@@ -87,6 +87,7 @@
                                 <button class="btn btn-info mx-1 btn-sm" *ngIf="!item.has_completed && item.can_join" (click)="startClassConfirmModal(item, startClassConfirmTemplate)"><i class="fa-solid fa-headset"></i> Join Class <i class="fa-solid fa-arrow-up-right-dots"></i></button>
                                 <button class="btn btn-secondary mx-1 btn-sm disabled" *ngIf="!item.has_completed && !item.can_join"><i class="fa-solid fa-headset"></i> Join Class</button>
                                 <button class="btn btn-outline-secondary mx-1 btn-sm" [routerLink]="['/student-class-history', item.id]" *ngIf="item.has_completed"><i class="fa-solid fa-clock-rotate-left"></i></button>
+                                <button class="btn btn-danger mx-2 btn-sm" (click)="endClassConfirmModal(item, endClassConfirmTemplate)" *ngIf="item.has_started && !item.has_completed && !item.student_end_time"><i class="fa-solid fa-scissors"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -101,6 +102,14 @@
     <p class="text-success">Do you want to join?</p>
     <button type="button" class="btn btn-outline-success mx-2" (click)="confirmStartClass()" >Join</button>
     <button type="button" class="btn btn-outline-secondary" (click)="declineStartClass()" >No</button>
+  </div>
+</ng-template>
+
+<ng-template #endClassConfirmTemplate>
+  <div class="modal-body text-center">
+    <p class="text-danger">Do you want to end class?</p>
+    <button type="button" class="btn btn-outline-danger mx-2" (click)="confirmEndClass()" >End Class</button>
+    <button type="button" class="btn btn-outline-secondary" (click)="declineEndClass()" >No</button>
   </div>
 </ng-template>
 

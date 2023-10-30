@@ -99,7 +99,7 @@ export class StudentClassListComponent implements OnInit {
             schedule_id: this.schedule_id
         }
 
-        this._service.post('website/end-live-class', param).subscribe(res => {
+        this._service.post('website/student-end-live-class', param).subscribe(res => {
             this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
             this.getScheduleList();
             this.schedule_id = null;

@@ -85,13 +85,14 @@ export class MentorOngoingClassListComponent implements OnInit {
 
         this._service.post('website/start-live-class', param).subscribe(res => {
             this.toastr.success(res.message, 'Success!', { timeOut: 2000 });
-            this.getScheduleList();
-            this.schedule_id = null;
-            this.hideModal();
 
             window.open(
                 this.scheduleDetails.join_link, '_blank'
             );
+            
+            this.getScheduleList();
+            this.schedule_id = null;
+            this.hideModal();
 
             this.blockUI.stop();
         }, err => {
